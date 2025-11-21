@@ -26,7 +26,7 @@ export default function SampleReport() {
       <div className="section-container">
         <h2 className="heading-2 text-center mb-4">Real Sample Report</h2>
         <p className="text-center text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-          We don't hide behind generic advice. Here is an example of the <strong>Prioritized Action Plan</strong> page you'll receive—clear, actionable, and ranked by impact.
+          We don&apos;t hide behind generic advice. Here is an example of the <strong>Prioritized Action Plan</strong> page you&apos;ll receive—clear, actionable, and ranked by impact.
         </p>
         
         {/* PDF Preview Mockup - High Fidelity Action Plan */}
@@ -101,7 +101,7 @@ export default function SampleReport() {
                         <td className="px-6 py-4">
                           <p className="text-sm text-gray-800 font-medium mb-1">LCP is 4.2s (Target: &lt;2.5s)</p>
                           <p className="text-sm text-gray-600">Large hero image <code>banner-main.jpg</code> is not preloaded and lacks explicit width/height.</p>
-                          <p className="text-sm text-blue-600 mt-1 font-medium">Action: Convert to WebP & add <code>&lt;link rel="preload"&gt;</code></p>
+                          <p className="text-sm text-blue-600 mt-1 font-medium">Action: Convert to WebP & add <code>&lt;link rel=&quot;preload&quot;&gt;</code></p>
                         </td>
                         <td className="px-6 py-4 align-top">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">

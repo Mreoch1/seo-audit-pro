@@ -25,12 +25,12 @@ export default function SampleReportContent() {
           <div className="text-center mb-12">
             <h1 className="heading-1 mb-4">Sample SEO Audit Report</h1>
             <p className="text-xl text-gray-600 mb-8">
-              Don't settle for generic automated stats. See the depth of a manually-verified enterprise audit.
+              Don&apos;t settle for generic automated stats. See the depth of a manually-verified enterprise audit.
             </p>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="heading-3 mb-6">Inside Your Report: The "Action Plan" Page</h2>
+            <h2 className="heading-3 mb-6">Inside Your Report: The &quot;Action Plan&quot; Page</h2>
             <p className="text-gray-600 mb-8">
               Every report includes a <strong>Prioritized Action Plan</strong> like the one below. It translates technical data into a clear checklist for your dev team.
             </p>
@@ -114,7 +114,7 @@ export default function SampleReportContent() {
               <div className="border-l-4 border-primary-500 pl-4">
                 <h3 className="font-bold text-gray-900 mb-2">Code-Level Specifics</h3>
                 <p className="text-gray-600 text-sm">
-                  We don't just say "Fix it." We give you the exact Nginx config, HTML tag, or CSS change needed.
+                  We don&apos;t just say &quot;Fix it.&quot; We give you the exact Nginx config, HTML tag, or CSS change needed.
                 </p>
               </div>
             </div>
