@@ -107,7 +107,7 @@ export default function Features() {
               Agency-Ready White Label
             </p>
             <p className="text-gray-700">
-              Perfect for agencies. We can deliver unbranded reports you can present directly to your clients.
+              Perfect for agencies. We deliver unbranded reports you can present directly to your clients.
             </p>
           </div>
         </div>

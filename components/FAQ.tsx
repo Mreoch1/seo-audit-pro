@@ -18,11 +18,11 @@ const faqs: FAQItem[] = [
   },
   {
     question: "Will you implement the fixes for me?",
-    answer: "The audit is a diagnostic service. You&apos;ll receive a detailed PDF with all issues and how to fix them. Implement changes yourself or share the report with your developer or SEO team.",
+    answer: "The audit is a diagnostic service. You&apos;ll receive a detailed PDF with all issues and instructions on how to fix them. You can implement the changes yourself or share the report with your developer or SEO team.",
   },
   {
     question: "Is this using the same kind of checks as SEMrush / Ahrefs / SEOptimer?",
-    answer: "Similar foundation, but deeper. I use real crawling with JavaScript rendering (Puppeteer), not just shallow HTML scans. Plus unique features like LLM Readability Analysis and a more personalized, actionable report format.",
+    answer: "It builds on a similar foundation, but goes deeper. I use real crawling with JavaScript rendering (Puppeteer), not just shallow HTML scans. Plus, it includes unique features like LLM Readability Analysis and a more personalized, actionable report format.",
   },
   {
     question: "Do you use AI? How?",

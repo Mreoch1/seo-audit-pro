@@ -135,7 +135,7 @@ export default function Pricing() {
       <div className="section-container">
         <h2 className="heading-2 text-center mb-4">Simple, Transparent Pricing</h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          Professional SEO audits starting at just $19. No monthly fees, no subscriptions. just high-impact data.
+          Professional SEO audits starting at just $19. No monthly fees, no subscriptions. Just high-impact data.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
