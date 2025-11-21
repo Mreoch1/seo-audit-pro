@@ -12,10 +12,10 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <a
-              href="mailto:Mreoch82@hotmail.com"
+              href="mailto:contact@seoauditpro.net"
               className="text-gray-300 hover:text-accent-400 transition-colors"
             >
-              Mreoch82@hotmail.com
+              contact@seoauditpro.net
             </a>
           </div>
           <div>

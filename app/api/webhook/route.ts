@@ -157,7 +157,7 @@ This email was sent from the SEO Audit Pro website.
 
     // Send email using Resend API
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    const TO_EMAIL = process.env.TO_EMAIL || "mreoch82@hotmail.com";
+    const TO_EMAIL = process.env.TO_EMAIL || "contact@seoauditpro.net";
 
     logger.info("Preparing to send order notification email", { 
       to: TO_EMAIL, 

@@ -80,7 +80,7 @@ seo-audit-pro/
 
 ## Ordering Flow
 
-Users select a tier and add-ons, fill out the form, and click "Send Request". This opens their email client with a pre-filled message to `Mreoch82@hotmail.com` containing all order details.
+Users select a tier and add-ons, fill out the form, and click "Send Request". This opens their email client with a pre-filled message to `contact@seoauditpro.net` containing all order details.
 
 ## Build for Production
 

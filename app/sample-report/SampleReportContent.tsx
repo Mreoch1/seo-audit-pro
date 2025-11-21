@@ -96,7 +96,7 @@ export default function SampleReportContent() {
               {!pdfExists && (
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 max-w-2xl mx-auto">
                   <p className="text-sm text-yellow-800">
-                    <strong>Note:</strong> The sample PDF is currently being prepared. In the meantime, you can see a preview of the report structure above, or <a href="mailto:Mreoch82@hotmail.com" className="text-yellow-800 underline hover:text-yellow-900">contact us directly</a> to request a sample report.
+                    <strong>Note:</strong> The sample PDF is currently being prepared. In the meantime, you can see a preview of the report structure above, or <a href="mailto:contact@seoauditpro.net" className="text-yellow-800 underline hover:text-yellow-900">contact us directly</a> to request a sample report.
                   </p>
                 </div>
               )}

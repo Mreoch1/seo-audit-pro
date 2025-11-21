@@ -173,7 +173,7 @@ export default function RootLayout({
               logo: "https://seoauditpro.netlify.app/logo.png",
               contactPoint: {
                 "@type": "ContactPoint",
-                email: "mreoch82@hotmail.com",
+                email: "contact@seoauditpro.net",
                 contactType: "Customer Service",
                 areaServed: "Worldwide",
                 availableLanguage: "English",
