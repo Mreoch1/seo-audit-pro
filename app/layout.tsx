@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://seoauditpro.netlify.app",
+    canonical: "https://seoauditpro.net",
   },
   category: "SEO Services",
   classification: "Business",
