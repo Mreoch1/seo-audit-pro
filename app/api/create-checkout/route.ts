@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { validateEmail, validateURL, validateName, validateTier, validateNotes, validatePrice, sanitizeString } from "@/lib/validation";
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2025-11-17.clover",
@@ -21,6 +23,25 @@ const addOnPrices: Record<string, { name: string; price: number }> = {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - 10 requests per minute per IP
+    const clientIP = getClientIP(request);
+    const rateLimit = checkRateLimit(clientIP, 10, 60000);
+    
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': '10',
+            'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+            'X-RateLimit-Reset': new Date(rateLimit.resetTime).toISOString(),
+            'Retry-After': Math.ceil((rateLimit.resetTime - Date.now()) / 1000).toString(),
+          }
+        }
+      );
+    }
+
     // Check if Stripe secret key is configured
     if (!process.env.STRIPE_SECRET_KEY) {
       console.error("STRIPE_SECRET_KEY is not set in environment variables");
@@ -31,12 +52,61 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, websiteUrl, tier, addOns, totalPrice, notes, extraPages, extraKeywords, whiteLabel } = body;
+    let { name, email, websiteUrl, tier, addOns, totalPrice, notes, extraPages, extraKeywords, whiteLabel } = body;
 
-    // Validate required fields
-    if (!name || !email || !websiteUrl || !totalPrice) {
+    // Sanitize all string inputs
+    name = sanitizeString(name || '', 100);
+    email = sanitizeString(email || '', 254);
+    websiteUrl = sanitizeString(websiteUrl || '', 2048);
+    tier = sanitizeString(tier || '', 50);
+    notes = sanitizeString(notes || '', 2000);
+
+    // Validate required fields with proper validation functions
+    const nameValidation = validateName(name);
+    if (!nameValidation.valid) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: nameValidation.error },
+        { status: 400 }
+      );
+    }
+
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.valid) {
+      return NextResponse.json(
+        { error: emailValidation.error },
+        { status: 400 }
+      );
+    }
+
+    const urlValidation = validateURL(websiteUrl);
+    if (!urlValidation.valid) {
+      return NextResponse.json(
+        { error: urlValidation.error },
+        { status: 400 }
+      );
+    }
+
+    const tierValidation = validateTier(tier);
+    if (!tierValidation.valid) {
+      return NextResponse.json(
+        { error: tierValidation.error },
+        { status: 400 }
+      );
+    }
+
+    const notesValidation = validateNotes(notes);
+    if (!notesValidation.valid) {
+      return NextResponse.json(
+        { error: notesValidation.error },
+        { status: 400 }
+      );
+    }
+
+    // Validate price (prevent manipulation)
+    const priceNum = typeof totalPrice === 'number' ? totalPrice : parseFloat(totalPrice);
+    if (isNaN(priceNum) || priceNum < 19 || priceNum > 500) {
+      return NextResponse.json(
+        { error: "Invalid price" },
         { status: 400 }
       );
     }

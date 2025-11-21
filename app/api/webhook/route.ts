@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { logger } from "@/lib/logger";
+import { getClientIP } from "@/lib/rate-limit";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2025-11-17.clover",
@@ -8,12 +10,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 export async function POST(request: NextRequest) {
-  console.log("📥 Webhook endpoint called");
+  const clientIP = getClientIP(request);
+  const userAgent = request.headers.get("user-agent") || "unknown";
+  
+  logger.info("Webhook endpoint called", { ip: clientIP, userAgent });
+  
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
   if (!signature) {
-    console.error("❌ No Stripe signature in request");
+    logger.warn("Webhook called without signature", { ip: clientIP });
     return NextResponse.json(
       { error: "No signature" },
       { status: 400 }
@@ -21,7 +27,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (!webhookSecret) {
-    console.error("❌ STRIPE_WEBHOOK_SECRET not configured");
+    logger.error("STRIPE_WEBHOOK_SECRET not configured");
     return NextResponse.json(
       { error: "Webhook secret not configured" },
       { status: 500 }
@@ -30,22 +36,28 @@ export async function POST(request: NextRequest) {
 
   let event: Stripe.Event;
 
+  let event: Stripe.Event;
+  
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-    console.log("✅ Webhook signature verified. Event type:", event.type);
+    logger.info("Webhook signature verified", { eventType: event.type, ip: clientIP });
   } catch (err: any) {
-    console.error("❌ Webhook signature verification failed:", err.message);
+    logger.error("Webhook signature verification failed", err, { ip: clientIP });
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
       { status: 400 }
     );
   }
 
-  // Handle the checkout.session.completed event
-  if (event.type === "checkout.session.completed") {
-    console.log("✅ Webhook received: checkout.session.completed");
-    const session = event.data.object as Stripe.Checkout.Session;
-    const metadata = session.metadata;
+      // Handle the checkout.session.completed event
+      if (event.type === "checkout.session.completed") {
+        logger.info("Webhook received: checkout.session.completed", { 
+          sessionId: (event.data.object as Stripe.Checkout.Session).id,
+          ip: clientIP 
+        });
+        
+        const session = event.data.object as Stripe.Checkout.Session;
+        const metadata = session.metadata;
 
     console.log("Session metadata:", JSON.stringify(metadata, null, 2));
 
