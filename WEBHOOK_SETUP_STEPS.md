@@ -21,6 +21,8 @@ You're currently in **Workbench** (test mode). You need to switch to **LIVE mode
 
 1. Click the **"+ Add endpoint"** button (purple button)
 2. **Endpoint URL:** Enter: `https://seoauditpro.net/api/webhook`
+   - ⚠️ **IMPORTANT:** Use `seoauditpro.net` (custom domain), NOT `seoauditpro.netlify.app`
+   - The custom domain is required for production webhooks
 3. **Description (optional):** "SEO Audit Pro - Order notifications"
 4. **Events to send:** 
    - Click **"Select events"**
