@@ -99,7 +99,7 @@ export default function Features() {
               No Generic Advice
             </p>
             <p className="text-gray-700">
-              Every issue includes specific, step-by-step fix instructions tailored to your site's technology stack.
+              Every issue includes specific, step-by-step fix instructions tailored to your site&apos;s technology stack.
             </p>
           </div>
           <div className="bg-accent-50 border border-accent-200 rounded-lg p-6 text-center">

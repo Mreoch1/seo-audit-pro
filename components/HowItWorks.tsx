@@ -47,7 +47,7 @@ export default function HowItWorks() {
       <div className="section-container">
         <h2 className="heading-2 text-center mb-4">How It Works</h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          No automated "instant" fluff. This is a comprehensive service where I use advanced tools to inspect your site structure, security, and content depth.
+          No automated &quot;instant&quot; fluff. This is a comprehensive service where I use advanced tools to inspect your site structure, security, and content depth.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
