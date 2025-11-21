@@ -6,10 +6,25 @@ A modern, high-converting marketing website for SEO Audit Pro, a service that pr
 
 - **Single-page landing site** with all sections
 - **Interactive pricing** with tier selection and add-ons
-- **Email-based ordering** via mailto links (no payment processing)
+- **Stripe Checkout** integration for secure payments
+- **Email notifications** via Resend API
 - **Fully responsive** design (mobile-first)
 - **Modern UI** with Tailwind CSS
 - **TypeScript** for type safety
+- **Comprehensive SEO** optimization for search engines
+
+## SEO Features
+
+- ✅ Complete meta tags (title, description, keywords)
+- ✅ Open Graph and Twitter Card tags
+- ✅ Structured data (JSON-LD) for rich snippets
+- ✅ XML Sitemap (auto-generated)
+- ✅ Robots.txt (auto-generated)
+- ✅ Canonical URLs
+- ✅ Semantic HTML5
+- ✅ Performance optimizations
+- ✅ Mobile-friendly meta tags
+- ✅ PWA manifest
 
 ## Tech Stack
 

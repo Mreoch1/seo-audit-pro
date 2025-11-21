@@ -12,12 +12,12 @@ export default function Hero() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white">
+    <section className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white" aria-label="Hero section">
       <div className="section-container text-center">
         <h1 className="heading-1 text-white mb-6">
-          Data-Driven SEO Audits
+          Professional SEO Audit Service
           <br />
-          <span className="text-accent-400">Starting at $19</span>
+          <span className="text-accent-400">Agency-Grade Reports Starting at $19</span>
         </h1>
         <p className="text-xl sm:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
           Get an agency-grade SEO audit with clear scores, prioritized fixes, and a step-by-step action plan. You send your URL — I do the rest.
