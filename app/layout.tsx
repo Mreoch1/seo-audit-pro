@@ -155,7 +155,7 @@ export default function RootLayout({
                 "@type": "SearchAction",
                 target: {
                   "@type": "EntryPoint",
-                  urlTemplate: "https://seoauditpro.netlify.app/?q={search_term_string}",
+                  urlTemplate: "https://seoauditpro.net/?q={search_term_string}",
                 },
                 "query-input": "required name=search_term_string",
               },
@@ -170,7 +170,7 @@ export default function RootLayout({
               "@type": "Organization",
               name: "SEO Audit Pro",
               url: "https://seoauditpro.net",
-              logo: "https://seoauditpro.netlify.app/logo.png",
+              logo: "https://seoauditpro.net/logo.png",
               contactPoint: {
                 "@type": "ContactPoint",
                 email: "contact@seoauditpro.net",

@@ -4,7 +4,7 @@ import { logger } from "@/lib/logger";
 import { getClientIP } from "@/lib/rate-limit";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2025-11-17.clover",
+  apiVersion: "2025-11-17.clover" as any, // Casting as any because types might be outdated
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
@@ -47,15 +47,15 @@ export async function POST(request: NextRequest) {
     );
   }
 
-      // Handle the checkout.session.completed event
-      if (event.type === "checkout.session.completed") {
-        logger.info("Webhook received: checkout.session.completed", { 
-          sessionId: (event.data.object as Stripe.Checkout.Session).id,
-          ip: clientIP 
-        });
-        
-        const session = event.data.object as Stripe.Checkout.Session;
-        const metadata = session.metadata;
+  // Handle the checkout.session.completed event
+  if (event.type === "checkout.session.completed") {
+    logger.info("Webhook received: checkout.session.completed", { 
+      sessionId: (event.data.object as Stripe.Checkout.Session).id,
+      ip: clientIP 
+    });
+    
+    const session = event.data.object as Stripe.Checkout.Session;
+    const metadata = session.metadata;
 
     if (!metadata) {
       logger.warn("Webhook: No metadata found in session", { sessionId: session.id });
@@ -108,11 +108,11 @@ export async function POST(request: NextRequest) {
       : [];
 
     // Create email content
-    const emailSubject = `SEO Audit Request – ${tier} – ${websiteUrl} [PAID]`;
+    const emailSubject = `🎯 New SEO Audit Order - ${tier.charAt(0).toUpperCase() + tier.slice(1)} Tier - ${websiteUrl}`;
     
     let emailBody = `Hello,
 
-You have received a new SEO audit request (PAYMENT RECEIVED):
+You have received a new SEO audit order:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLIENT INFORMATION
@@ -120,7 +120,7 @@ CLIENT INFORMATION
 Name: ${name}
 Email: ${email}
 Website URL: ${websiteUrl}
-Payment: ✅ PAID ($${totalPrice})
+White Label: ${whiteLabel ? "Yes" : "No"}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
@@ -139,10 +139,6 @@ Add-ons:`;
 
     emailBody += `\n\nTotal Price: $${totalPrice}`;
 
-    // Add report type
-    const reportType = whiteLabel === "true" ? "White Label (No Branding)" : "Branded (SEO Audit Pro)";
-    emailBody += `\n\nReport Type: ${reportType}`;
-
     if (notes && notes.trim()) {
       emailBody += `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTES / SPECIAL REQUESTS
@@ -151,13 +147,12 @@ ${notes}`;
     }
 
     emailBody += `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Stripe Session ID: ${session.id}
-This email was sent from the SEO Audit Pro website.
+This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
     // Send email using Resend API
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    const TO_EMAIL = process.env.TO_EMAIL || "contact@seoauditpro.net";
+    const TO_EMAIL = process.env.TO_EMAIL || "contact@seoauditpro.com";
 
     logger.info("Preparing to send order notification email", { 
       to: TO_EMAIL, 
@@ -173,7 +168,7 @@ This email was sent from the SEO Audit Pro website.
             Authorization: `Bearer ${RESEND_API_KEY}`,
           },
           body: JSON.stringify({
-            from: "SEO Audit Pro <onboarding@resend.dev>",
+            from: "SEO Audit Pro <contact@seoauditpro.com>",
             to: TO_EMAIL,
             reply_to: email,
             subject: emailSubject,
@@ -210,4 +205,3 @@ This email was sent from the SEO Audit Pro website.
 
   return NextResponse.json({ received: true });
 }
-

@@ -70,7 +70,7 @@ This email was sent from the SEO Audit Pro website.
 
     // Send email using Resend API
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    const TO_EMAIL = process.env.TO_EMAIL || "contact@seoauditpro.net";
+    const TO_EMAIL = process.env.TO_EMAIL || "contact@seoauditpro.com";
 
     if (!RESEND_API_KEY) {
       // Fallback: log to console in development
@@ -94,7 +94,7 @@ This email was sent from the SEO Audit Pro website.
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "SEO Audit Pro <onboarding@resend.dev>", // You'll need to verify your domain
+        from: "SEO Audit Pro <contact@seoauditpro.com>",
         to: TO_EMAIL,
         reply_to: email,
         subject: emailSubject,
