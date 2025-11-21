@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sample SEO Audit Report - SEO Audit Pro",
     description: "View a sample SEO audit report to see exactly what you'll receive with your order.",
-    url: "https://seoauditpro.netlify.app/sample-report",
+    url: "https://seoauditpro.net/sample-report",
   },
   alternates: {
-    canonical: "https://seoauditpro.netlify.app/sample-report",
+    canonical: "https://seoauditpro.net/sample-report",
   },
 };
 

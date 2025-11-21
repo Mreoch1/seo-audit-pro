@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://seoauditpro.netlify.app";
+  const baseUrl = "https://seoauditpro.net";
 
   return {
     rules: [

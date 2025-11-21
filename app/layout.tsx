@@ -6,7 +6,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://seoauditpro.netlify.app"),
+  metadataBase: new URL("https://seoauditpro.net"),
   title: {
     default: "SEO Audit Pro - Agency-Grade SEO Audits Without the Agency Price",
     template: "%s | SEO Audit Pro",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://seoauditpro.netlify.app",
+    url: "https://seoauditpro.net",
     siteName: "SEO Audit Pro",
     title: "SEO Audit Pro - Agency-Grade SEO Audits Without the Agency Price",
     description: "Get a professional, data-driven SEO audit with clear scores, prioritized fixes, and step-by-step action plans. Starting at $19.",
@@ -90,7 +90,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="canonical" href="https://seoauditpro.netlify.app" />
+        <link rel="canonical" href="https://seoauditpro.net" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
@@ -108,9 +108,9 @@ export default function RootLayout({
               "@type": "ProfessionalService",
               name: "SEO Audit Pro",
               description: "Professional SEO audit service providing data-driven website analysis with clear scores, prioritized fixes, and actionable recommendations.",
-              url: "https://seoauditpro.netlify.app",
-              logo: "https://seoauditpro.netlify.app/logo.png",
-              image: "https://seoauditpro.netlify.app/og-image.jpg",
+              url: "https://seoauditpro.net",
+              logo: "https://seoauditpro.net/logo.png",
+              image: "https://seoauditpro.net/og-image.jpg",
               priceRange: "$19-$199",
               areaServed: "Worldwide",
               serviceType: "SEO Audit",
@@ -120,7 +120,7 @@ export default function RootLayout({
                 price: "19",
                 priceValidUntil: "2025-12-31",
                 availability: "https://schema.org/InStock",
-                url: "https://seoauditpro.netlify.app",
+                url: "https://seoauditpro.net",
               },
               aggregateRating: {
                 "@type": "AggregateRating",
@@ -139,7 +139,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "SEO Audit Pro",
-              url: "https://seoauditpro.netlify.app",
+              url: "https://seoauditpro.net",
               potentialAction: {
                 "@type": "SearchAction",
                 target: {
@@ -158,7 +158,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "SEO Audit Pro",
-              url: "https://seoauditpro.netlify.app",
+              url: "https://seoauditpro.net",
               logo: "https://seoauditpro.netlify.app/logo.png",
               contactPoint: {
                 "@type": "ContactPoint",
