@@ -35,8 +35,6 @@ export async function POST(request: NextRequest) {
   }
 
   let event: Stripe.Event;
-
-  let event: Stripe.Event;
   
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
@@ -59,10 +57,8 @@ export async function POST(request: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session;
         const metadata = session.metadata;
 
-    console.log("Session metadata:", JSON.stringify(metadata, null, 2));
-
     if (!metadata) {
-      console.warn("⚠️ No metadata in session, cannot send email");
+      logger.warn("Webhook: No metadata found in session", { sessionId: session.id });
       return NextResponse.json({ received: true });
     }
 
@@ -161,54 +157,54 @@ This email was sent from the SEO Audit Pro website.
 
     // Send email using Resend API
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    const TO_EMAIL = process.env.TO_EMAIL || "Mreoch82@hotmail.com";
+    const TO_EMAIL = process.env.TO_EMAIL || "mreoch82@hotmail.com";
 
-    console.log("📧 Preparing to send email...");
-    console.log("RESEND_API_KEY exists:", !!RESEND_API_KEY);
-    console.log("TO_EMAIL:", TO_EMAIL);
+    logger.info("Preparing to send order notification email", { 
+      to: TO_EMAIL, 
+      sessionId: session.id 
+    });
 
     if (RESEND_API_KEY) {
       try {
-        console.log("📤 Sending email via Resend API...");
         const emailResponse = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${RESEND_API_KEY}`,
           },
-            body: JSON.stringify({
-              from: "SEO Audit Pro <onboarding@resend.dev>",
-              to: [TO_EMAIL], // Resend requires array format
-              reply_to: email,
-              subject: emailSubject,
-              text: emailBody,
-            }),
+          body: JSON.stringify({
+            from: "SEO Audit Pro <onboarding@resend.dev>",
+            to: TO_EMAIL,
+            reply_to: email,
+            subject: emailSubject,
+            text: emailBody,
+          }),
         });
 
         const emailResult = await emailResponse.json();
-        
-        console.log("📧 Resend API Response Status:", emailResponse.status);
-        console.log("📧 Resend API Response:", JSON.stringify(emailResult, null, 2));
-        
+
         if (emailResponse.ok) {
-          console.log("✅ Order confirmation email sent successfully to:", TO_EMAIL);
-          console.log("✅ Email ID:", emailResult.id);
+          logger.info("Order confirmation email sent successfully", { 
+            emailId: emailResult.id,
+            to: TO_EMAIL,
+            sessionId: session.id 
+          });
         } else {
-          console.error("❌ Failed to send email. Resend API error:");
-          console.error("Status:", emailResponse.status);
-          console.error("Error details:", JSON.stringify(emailResult, null, 2));
+          logger.error("Failed to send email", new Error("Resend API error"), {
+            status: emailResponse.status,
+            error: emailResult,
+            sessionId: session.id
+          });
         }
       } catch (emailError: any) {
-        console.error("❌ Failed to send email (network/parsing error):");
-        console.error("Error:", emailError.message);
-        console.error("Stack:", emailError.stack);
+        logger.error("Failed to send email", emailError, { sessionId: session.id });
       }
     } else {
-      console.log("⚠️ RESEND_API_KEY not set in environment variables!");
-      console.log("⚠️ Email not sent. Check your .env.local file.");
-      console.log("=== SEO AUDIT REQUEST (PAID) ===");
-      console.log(emailBody);
-      console.log("================================");
+      logger.warn("RESEND_API_KEY not set. Email not sent.", { sessionId: session.id });
+      // In development, log to console
+      if (process.env.NODE_ENV === 'development') {
+        logger.info("Order details (dev only)", { emailBody, sessionId: session.id });
+      }
     }
   }
 
