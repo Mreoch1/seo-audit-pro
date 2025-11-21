@@ -18,7 +18,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: "Will you implement the fixes for me?",
-    answer: "The audit is a diagnostic service. You&apos;ll receive a detailed PDF with all issues and instructions on how to fix them. You can implement the changes yourself or share the report with your developer or SEO team.",
+    answer: "The audit is a diagnostic service. You'll receive a detailed PDF with all issues and instructions on how to fix them. You can implement the changes yourself or share the report with your developer or SEO team.",
   },
   {
     question: "Is this using the same kind of checks as SEMrush / Ahrefs / SEOptimer?",
