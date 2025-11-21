@@ -3,11 +3,11 @@ import SampleReportContent from "./SampleReportContent";
 
 export const metadata: Metadata = {
   title: "Sample SEO Audit Report",
-  description: "See exactly what you'll receive: overall SEO scores, category breakdowns, prioritized action plans, and detailed page-level metrics.",
+  description: "View a sample SEO audit report with overall scores, category breakdowns, prioritized action plans, and detailed page-level metrics. See exactly what you'll receive with your order.",
   keywords: ["sample SEO audit", "SEO audit example", "SEO report sample", "SEO audit preview"],
   openGraph: {
     title: "Sample SEO Audit Report - SEO Audit Pro",
-    description: "View a sample SEO audit report to see exactly what you'll receive with your order.",
+    description: "View a sample SEO audit report to see exactly what you'll receive with your order. Includes scores, action plans, and detailed recommendations.",
     url: "https://seoauditpro.net/sample-report",
   },
   alternates: {

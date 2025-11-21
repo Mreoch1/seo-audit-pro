@@ -17,47 +17,54 @@ interface Tier {
   price: number;
   pages: string;
   features: string[];
+  highlight?: boolean;
 }
 
 const tiers: Tier[] = [
   {
     id: "starter",
     name: "Starter",
-    subtitle: "Mini SEO Audit",
+    subtitle: "Quick Health Check",
     price: 19,
     pages: "Up to 3 pages",
     features: [
-      "Technical overview",
-      "Titles, meta, H1/H2",
-      "Basic content & alt tag check",
-      "Quick scan / key issues",
+      "Crawl Depth: 2 levels",
+      "Delivery: 1 Day",
+      "Title & Meta Optimization",
+      "Heading (H1-H3) Analysis",
+      "Image Alt Text Check",
+      "Basic Technical Check",
     ],
   },
   {
     id: "standard",
     name: "Standard",
-    subtitle: "Full SEO Audit",
+    subtitle: "Full Site Audit",
     price: 29,
     pages: "Up to 20 pages",
     features: [
       "Everything in Starter, plus:",
-      "Deeper technical analysis",
-      "Schema markup check",
-      "Detailed page audit table",
-      "More content & internal links analysis",
+      "Crawl Depth: 3 levels",
+      "5 Keywords Analyzed",
+      "Schema Markup Analysis",
+      "Core Web Vitals & Perf.",
+      "Full Technical Check",
     ],
+    highlight: true,
   },
   {
     id: "advanced",
     name: "Advanced",
-    subtitle: "SEO Audit + Competitor",
+    subtitle: "Enterprise & Competitive",
     price: 39,
     pages: "Up to 50 pages",
     features: [
       "Everything in Standard, plus:",
-      "Competitor keyword gap analysis",
-      "LLM Readability report",
-      "Extended image alt analysis",
+      "Crawl Depth: 5 levels",
+      "10 Keywords Analyzed",
+      "Competitor Gap Analysis",
+      "Enhanced Content Audit",
+      "Adv. Technical Checks",
     ],
   },
 ];
@@ -65,34 +72,34 @@ const tiers: Tier[] = [
 const addOns: AddOn[] = [
   {
     id: "fast-delivery",
-    name: "Fast Delivery (24h turnaround)",
-    description: "Get your audit delivered within 24 hours",
+    name: "Fast Delivery (24h)",
+    description: "Priority processing (Standard/Advanced tiers)",
     price: 10,
   },
   {
     id: "extra-pages",
     name: "Extra Pages",
-    description: "+ $5 per page beyond tier limit",
+    description: "+ $5 per additional page scan",
     price: 5,
     unit: "per page",
   },
   {
     id: "extra-keywords",
-    name: "Extra Keywords Researched",
-    description: "+ $1 per keyword for competitor analysis",
+    name: "Extra Keywords",
+    description: "Additional keyword analysis",
     price: 1,
     unit: "per keyword",
   },
   {
     id: "schema-deep-dive",
-    name: "Schema Markup Deep-Dive",
-    description: "Extended schema analysis and recommendations",
+    name: "Schema Deep-Dive",
+    description: "Detailed structured data validation",
     price: 15,
   },
   {
     id: "competitor-report",
-    name: "Competitor Keyword Gap Report",
-    description: "Detailed competitor analysis (if not in tier)",
+    name: "Competitor Analysis",
+    description: "Keyword gap & strategy report",
     price: 20,
   },
 ];
@@ -124,33 +131,42 @@ export default function Pricing() {
   };
 
   return (
-    <section className="bg-gray-50">
+    <section id="pricing" className="bg-gray-50">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">Pricing</h2>
+        <h2 className="heading-2 text-center mb-4">Simple, Transparent Pricing</h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          Choose the tier that fits your needs. All audits include a professional PDF report with prioritized action plans.
+          Professional SEO audits starting at just $19. No monthly fees, no subscriptions. just high-impact data.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {tiers.map((tier) => (
             <div
               key={tier.id}
-              className={`bg-white rounded-lg p-6 border-2 transition-all cursor-pointer ${
+              className={`bg-white rounded-lg p-6 border-2 transition-all cursor-pointer relative flex flex-col ${
                 selectedTier === tier.id
-                  ? "border-primary-600 shadow-lg scale-105"
+                  ? "border-primary-600 shadow-lg scale-105 z-10"
                   : "border-gray-200 hover:border-primary-300"
               }`}
               onClick={() => setTier(tier.id)}
             >
+              {tier.highlight && selectedTier !== tier.id && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-accent-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                  MOST POPULAR
+                </div>
+              )}
+              
               <div className="text-center mb-4">
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">{tier.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{tier.subtitle}</p>
                 <div className="mb-4">
                   <span className="text-4xl font-bold text-primary-600">${tier.price}</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-6">{tier.pages}</p>
+                <p className="text-sm font-semibold text-gray-800 mb-6 pb-4 border-b border-gray-100">
+                  {tier.pages}
+                </p>
               </div>
-              <ul className="space-y-2 mb-6">
+              
+              <ul className="space-y-3 mb-8 flex-grow">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
                     <svg className="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,19 +176,24 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              {selectedTier === tier.id && (
-                <div className="text-center">
-                  <div className="inline-block bg-primary-100 text-primary-700 text-xs font-semibold px-3 py-1 rounded-full">
-                    Selected
-                  </div>
-                </div>
-              )}
+              
+              <div className="mt-auto text-center">
+                 <button 
+                  className={`w-full py-2 rounded-lg font-semibold transition-colors ${
+                    selectedTier === tier.id 
+                      ? "bg-primary-600 text-white" 
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {selectedTier === tier.id ? "Selected" : "Select Tier"}
+                </button>
+              </div>
             </div>
           ))}
         </div>
 
         <div className="bg-white rounded-lg p-6 border border-gray-200 mb-6">
-          <h3 className="heading-3 mb-4">Add-Ons</h3>
+          <h3 className="heading-3 mb-4">Customize Your Audit</h3>
           
           {/* White Label Option (Free) */}
           <div className="mb-6 pb-6 border-b border-gray-200">
@@ -187,11 +208,11 @@ export default function Pricing() {
               <label htmlFor="white-label" className="flex-1 cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-semibold text-gray-900">White Label Report (No Branding)</div>
-                    <div className="text-sm text-gray-600">Receive a report without SEO Audit Pro branding - perfect for agencies or white-label services</div>
+                    <div className="font-semibold text-gray-900">White Label Report</div>
+                    <div className="text-sm text-gray-600">Remove SEO Audit Pro branding (Perfect for agencies)</div>
                   </div>
                   <div className="text-right">
-                    <div className="font-semibold text-gray-900">Free</div>
+                    <div className="font-semibold text-green-600">Free</div>
                   </div>
                 </div>
               </label>
@@ -222,7 +243,7 @@ export default function Pricing() {
                     </div>
                   </div>
                   {addOn.id === "extra-pages" && selectedAddOns.has(addOn.id) && (
-                    <div className="mt-2">
+                    <div className="mt-2 flex items-center gap-2">
                       <input
                         type="number"
                         min="1"
@@ -230,11 +251,11 @@ export default function Pricing() {
                         onChange={(e) => setExtraPages(parseInt(e.target.value) || 1)}
                         className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
                       />
-                      <span className="ml-2 text-sm text-gray-600">pages</span>
+                      <span className="text-sm text-gray-600">pages</span>
                     </div>
                   )}
                   {addOn.id === "extra-keywords" && selectedAddOns.has(addOn.id) && (
-                    <div className="mt-2">
+                    <div className="mt-2 flex items-center gap-2">
                       <input
                         type="number"
                         min="1"
@@ -242,7 +263,7 @@ export default function Pricing() {
                         onChange={(e) => setExtraKeywords(parseInt(e.target.value) || 1)}
                         className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
                       />
-                      <span className="ml-2 text-sm text-gray-600">keywords</span>
+                      <span className="text-sm text-gray-600">keywords</span>
                     </div>
                   )}
                 </label>
@@ -251,16 +272,28 @@ export default function Pricing() {
           </div>
         </div>
 
-        <div className="bg-primary-600 text-white rounded-lg p-6 text-center">
-          <div className="text-sm mb-2">Total Price</div>
-          <div className="text-5xl font-bold mb-2">${calculateTotal()}</div>
-          <div className="text-sm opacity-90">
-            {currentTier.name} Tier (${currentTier.price})
-            {selectedAddOns.size > 0 && ` + ${selectedAddOns.size} add-on${selectedAddOns.size > 1 ? "s" : ""}`}
+        <div className="sticky bottom-4 z-20 shadow-xl bg-primary-600 text-white rounded-lg p-4 sm:p-6 text-center transform transition-transform">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto">
+            <div className="text-left">
+               <div className="text-sm opacity-90">Total Estimated Price</div>
+               <div className="text-3xl font-bold">${calculateTotal()}</div>
+            </div>
+            <div className="text-left flex-1 px-4 border-l border-primary-500 hidden sm:block">
+              <div className="text-sm opacity-90">
+                 {currentTier.name} Tier included. 
+                 {selectedAddOns.size > 0 && ` + ${selectedAddOns.size} add-on${selectedAddOns.size > 1 ? "s" : ""}.`}
+              </div>
+              {orderState.whiteLabel && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
+            </div>
+            <button 
+              onClick={() => document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-white text-primary-700 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-colors"
+            >
+              Proceed to Order
+            </button>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

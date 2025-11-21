@@ -95,16 +95,22 @@ export default function SampleReportContent() {
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
               <h3 className="font-semibold text-gray-900 mb-4">Understanding Your SEO Audit Report</h3>
               <p className="text-gray-700 mb-4">
-                Our comprehensive SEO audit reports are designed to give you a complete picture of your website&apos;s search engine optimization health. Each report begins with an executive summary that provides a high-level overview of your site&apos;s performance, including an overall SEO score out of 100 and category-specific scores for Technical SEO, On-Page SEO, Content Quality, and Accessibility.
+                Our SEO audit reports give you a clear picture of your website&apos;s search engine health. Each report starts with an executive summary. This shows your site&apos;s overall performance with a score from 0 to 100. You also get separate scores for Technical SEO, On-Page SEO, Content Quality, and Accessibility. Learn more about our <Link href="/#pricing" className="text-primary-600 hover:text-primary-700 underline">pricing tiers</Link> to see which audit level fits your needs.
               </p>
               <p className="text-gray-700 mb-4">
-                The priority action plan section organizes all identified issues by severity (High, Medium, Low) and provides a week-by-week implementation timeline. This makes it easy to tackle the most critical problems first and systematically work through improvements over time. Each issue includes detailed explanations of why it matters, which pages are affected, and step-by-step instructions on how to fix it.
+                The priority action plan sorts all issues by how important they are. High priority issues need immediate attention. Medium priority issues come next. Low priority issues can wait. The plan also includes a week-by-week timeline. This helps you fix problems in the right order. Each issue explains why it matters, which pages have the problem, and exactly how to fix it. Check out our <Link href="/#features-section" className="text-primary-600 hover:text-primary-700 underline">features page</Link> to see what else is included.
               </p>
               <p className="text-gray-700 mb-4">
-                Page-level findings provide granular insights into every page analyzed, showing metrics like word count, load time, link structure, and specific issues found. Performance metrics include Core Web Vitals data from Google PageSpeed Insights, helping you understand how your site performs from both technical and user experience perspectives.
+                Page-level findings show details for every page we check. You&apos;ll see word count, load time, link structure, and specific problems. Performance metrics include Core Web Vitals from Google PageSpeed Insights. This helps you understand both technical performance and user experience. See how our <Link href="/#how-it-works" className="text-primary-600 hover:text-primary-700 underline">process works</Link> to understand how we gather this data.
+              </p>
+              <p className="text-gray-700 mb-4">
+                The report includes competitor keyword gap analysis for Advanced tier orders. This shows keywords your competitors use that you don&apos;t. It also lists keywords you already target that competitors use. This helps you find new opportunities and see where you compete. <Link href="/#order-section" className="text-primary-600 hover:text-primary-700 underline">Order an Advanced tier audit</Link> to get this analysis included.
+              </p>
+              <p className="text-gray-700 mb-4">
+                Schema markup analysis checks if your pages use structured data. Structured data helps search engines understand your content. This can improve how your pages appear in search results with rich snippets and enhanced listings. You can add schema markup as an add-on to any tier.
               </p>
               <p className="text-gray-700">
-                Whether you&apos;re a business owner looking to improve your organic visibility, a marketing agency needing detailed reports for clients, or a developer implementing SEO fixes, our reports provide the actionable insights you need to make meaningful improvements to your website&apos;s search engine performance.
+                Our reports work for everyone. Business owners can improve their search visibility. Marketing agencies get detailed reports for clients. Developers get clear instructions for implementing fixes. Every report provides actionable insights you can use right away. Ready to get started? <Link href="/#order-section" className="text-primary-600 hover:text-primary-700 underline">Order your SEO audit</Link> today or <Link href="/" className="text-primary-600 hover:text-primary-700 underline">return to the homepage</Link> to learn more.
               </p>
             </div>
 

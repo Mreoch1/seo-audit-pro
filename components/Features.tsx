@@ -1,54 +1,69 @@
 export default function Features() {
   const featureGroups = [
     {
-      title: "Technical SEO",
+      title: "Deep Technical Analysis",
       icon: "⚙️",
       features: [
-        "HTTP/2 / HTTP/3 detection",
-        "Compression (GZIP/Brotli)",
-        "robots.txt & sitemap checks",
-        "Status codes & broken pages",
-        "Schema markup & identity schema",
+        "Security (SSL, HSTS, CSP Headers)",
+        "Server Config (HTTP/2, HTTP/3, Compression)",
+        "Core Web Vitals (LCP, FID, CLS)",
+        "JavaScript Execution & Rendering",
+        "Status Codes & Redirect Chains",
       ],
     },
     {
-      title: "On-Page SEO",
+      title: "On-Page Optimization",
       icon: "📄",
       features: [
-        "Page titles (missing, duplicate, too short/long)",
-        "Meta descriptions (missing, duplicate, too short/long)",
-        "H1/H2/H3 structure (missing/multiple H1)",
-        "Canonical tags",
+        "Title Tag & Meta Description optimization",
+        "Heading Structure (H1-H6) hierarchy",
+        "Internal Linking & Anchor Text",
+        "Image Alt Text quality check",
+        "Canonical tags & Duplicate content",
       ],
     },
     {
-      title: "Content & Accessibility",
+      title: "Content Quality",
       icon: "✍️",
       features: [
-        "Word count & thin content detection",
-        "Content depth signal",
-        "Image ALT attributes",
-        "Basic mobile/viewport checks",
+        "Readability Scores (Flesch Reading Ease)",
+        "Keyword Density & Distribution",
+        "Content Depth & Freshness",
+        "Thin Content Detection",
+        "Semantic Keyword Analysis",
       ],
     },
     {
-      title: "Performance & Core Web Vitals",
-      icon: "⚡",
+      title: "Site-Wide Health",
+      icon: "🏥",
       features: [
-        "LCP, FCP, CLS, INP, TTFB",
-        "Top PageSpeed opportunities with potential savings",
-        "Real crawling with JS rendering (Puppeteer)",
+        "Robots.txt & Sitemap validation",
+        "Broken Internal/External Links",
+        "Mobile Responsiveness check",
+        "Social Media Tags (Open Graph/Twitter)",
+        "404 Error Detection",
       ],
     },
     {
-      title: "Unique Extras",
+      title: "Advanced Insights",
       icon: "🚀",
       features: [
-        "LLM Readability Analysis (initial vs rendered HTML)",
-        "Real competitor keyword gap analysis",
-        "Identity Schema validation",
-        "Consolidated issue list with affected pages",
-        "White label option - no branding (perfect for agencies)",
+        "Competitor Keyword Gap Analysis",
+        "Schema Markup Validation",
+        "Page Speed & Performance Metrics",
+        "Accessibility (ARIA, Contrast) check",
+        "White Label Reports (Agency Ready)",
+      ],
+    },
+    {
+      title: "Actionable Reports",
+      icon: "📊",
+      features: [
+        "0-100 Scoring System",
+        "Prioritized Fix Instructions",
+        "Code Snippets for Implementation",
+        "Executive Summary for Clients",
+        "Delivered as Professional PDF",
       ],
     },
   ];
@@ -56,9 +71,9 @@ export default function Features() {
   return (
     <section id="features-section" className="bg-white">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">What&apos;s Included</h2>
+        <h2 className="heading-2 text-center mb-4">Comprehensive SEO Analysis</h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          Every audit includes comprehensive checks across technical SEO, on-page optimization, content quality, and performance metrics.
+          Our enterprise-grade audits cover over 100+ checkpoints across technical infrastructure, on-page elements, content quality, and performance. <a href="/sample-report" className="text-primary-600 hover:text-primary-700 underline">View a sample report</a> to see the depth of our analysis.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featureGroups.map((group, index) => (
@@ -81,18 +96,18 @@ export default function Features() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-primary-50 border border-primary-200 rounded-lg p-6 text-center">
             <p className="text-lg font-semibold text-gray-900 mb-2">
-              No fluff, no generic advice
+              No Generic Advice
             </p>
             <p className="text-gray-700">
-              Every report is data-driven and actionable, with specific fixes for every issue found.
+              Every issue includes specific, step-by-step fix instructions tailored to your site's technology stack.
             </p>
           </div>
           <div className="bg-accent-50 border border-accent-200 rounded-lg p-6 text-center">
             <p className="text-lg font-semibold text-gray-900 mb-2">
-              White Label Available
+              Agency-Ready White Label
             </p>
             <p className="text-gray-700">
-              Perfect for agencies and resellers. Get reports without any branding - completely white label at no extra cost.
+              Perfect for agencies. We can deliver unbranded reports you can present directly to your clients.
             </p>
           </div>
         </div>
@@ -100,4 +115,3 @@ export default function Features() {
     </section>
   );
 }
-

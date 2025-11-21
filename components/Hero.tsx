@@ -7,27 +7,23 @@ export default function Hero() {
     document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToFeatures = () => {
-    document.getElementById("features-section")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white" aria-label="Hero section">
       <div className="section-container text-center">
         <h1 className="heading-1 text-white mb-6">
           Professional SEO Audit Service
           <br />
-          <span className="text-accent-400">Agency-Grade Reports Starting at $19</span>
+          <span className="text-accent-400">Enterprise-Grade Deep Analysis Starting at $19</span>
         </h1>
         <p className="text-xl sm:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-          Get an agency-grade SEO audit with clear scores, prioritized fixes, and a step-by-step action plan. You send your URL — I do the rest.
+          Get a comprehensive 100+ point inspection including Technical SEO, Core Web Vitals, Security Headers, and Content Depth. Delivered as a white-label PDF.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <button
             onClick={scrollToOrder}
-            className="btn-primary bg-accent-500 hover:bg-accent-600 text-gray-900 text-lg px-8 py-4"
+            className="btn-primary bg-accent-500 hover:bg-accent-600 text-gray-900 text-lg px-8 py-4 shadow-lg shadow-accent-500/20"
           >
-            Get Your SEO Audit
+            Start Your Audit
           </button>
           <Link
             href="/sample-report"
@@ -36,28 +32,27 @@ export default function Hero() {
             View Sample Report
           </Link>
         </div>
-        <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-300">
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 text-sm text-gray-300">
           <div className="flex items-center gap-2">
             <svg aria-hidden="true" className="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Built with Next.js, Puppeteer & Google PageSpeed Insights
+            <span>Puppeteer & Lighthouse Analysis</span>
           </div>
           <div className="flex items-center gap-2">
             <svg aria-hidden="true" className="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            Ideal for business owners, marketers, and developers
+            <span>Core Web Vitals Check</span>
           </div>
           <div className="flex items-center gap-2">
             <svg aria-hidden="true" className="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            White label option available - perfect for agencies
+            <span>Agency-Ready White Label</span>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
