@@ -150,56 +150,66 @@ ${notes}`;
 This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
-    // Send email using Resend API
+    // Send business owner notification email via Resend
+    // Note: Stripe automatically sends receipt emails to customers when customer_email is set
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     const TO_EMAIL = process.env.TO_EMAIL || "contact@seoauditpro.com";
+    // Use environment variable for from address, or fallback to a verified domain
+    const FROM_EMAIL = process.env.FROM_EMAIL || "SEO Audit Pro <contact@seoauditpro.com>";
 
-    logger.info("Preparing to send order notification email", { 
-      to: TO_EMAIL, 
-      sessionId: session.id 
-    });
-
-    if (RESEND_API_KEY) {
-      try {
-        const emailResponse = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${RESEND_API_KEY}`,
-          },
-          body: JSON.stringify({
-            from: "SEO Audit Pro <contact@seoauditpro.com>",
-            to: TO_EMAIL,
-            reply_to: email,
-            subject: emailSubject,
-            text: emailBody,
-          }),
-        });
-
-        const emailResult = await emailResponse.json();
-
-        if (emailResponse.ok) {
-          logger.info("Order confirmation email sent successfully", { 
-            emailId: emailResult.id,
-            to: TO_EMAIL,
-            sessionId: session.id 
-          });
-        } else {
-          logger.error("Failed to send email", new Error("Resend API error"), {
-            status: emailResponse.status,
-            error: emailResult,
-            sessionId: session.id
-          });
-        }
-      } catch (emailError: any) {
-        logger.error("Failed to send email", emailError, { sessionId: session.id });
-      }
-    } else {
+    if (!RESEND_API_KEY) {
       logger.warn("RESEND_API_KEY not set. Email not sent.", { sessionId: session.id });
-      // In development, log to console
       if (process.env.NODE_ENV === 'development') {
         logger.info("Order details (dev only)", { emailBody, sessionId: session.id });
       }
+      return NextResponse.json({ received: true });
+    }
+
+    // Send business owner notification email
+    logger.info("Preparing to send order notification email to business owner", { 
+      to: TO_EMAIL, 
+      from: FROM_EMAIL,
+      sessionId: session.id 
+    });
+
+    try {
+      const emailResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+        },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: TO_EMAIL,
+          reply_to: email, // Customer's email so you can reply directly
+          subject: emailSubject,
+          text: emailBody,
+        }),
+      });
+
+      const emailResult = await emailResponse.json();
+
+      if (emailResponse.ok) {
+        logger.info("Order notification email sent to business owner", { 
+          emailId: emailResult.id,
+          to: TO_EMAIL,
+          sessionId: session.id 
+        });
+      } else {
+        logger.error("Failed to send email to business owner", new Error("Resend API error"), {
+          status: emailResponse.status,
+          statusText: emailResponse.statusText,
+          error: emailResult,
+          to: TO_EMAIL,
+          sessionId: session.id
+        });
+      }
+    } catch (emailError: any) {
+      logger.error("Failed to send email to business owner", emailError, { 
+        to: TO_EMAIL,
+        sessionId: session.id 
+      });
     }
   }
 
