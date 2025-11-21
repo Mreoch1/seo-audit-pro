@@ -5,117 +5,156 @@ import Link from "next/link";
 export default function SampleReport() {
   const features = [
     {
-      title: "Clear SEO score and category breakdown",
-      description: "Get an overall score plus individual scores for Technical, On-Page, Content, and Performance.",
+      title: "Executive Summary & Score",
+      description: "Instantly understand your site's health with a clear 0-100 score and high-level breakdown.",
       icon: "📊",
     },
     {
-      title: "Priority action plan by severity and week",
-      description: "Every issue is prioritized by severity and organized into a week-by-week implementation plan.",
-      icon: "📅",
+      title: "Prioritized Fix Roadmap",
+      description: "Know exactly what to tackle first. Issues are ranked by impact (Critical, High, Medium).",
+      icon: "🚦",
     },
     {
-      title: "Page-level metrics with issues and fixes",
-      description: "Detailed tables showing every page, its issues, and step-by-step instructions to fix them.",
-      icon: "📋",
+      title: "Developer-Ready Instructions",
+      description: "Specific code snippets and technical details your dev team can implement immediately.",
+      icon: "💻",
     },
   ];
 
   return (
     <section className="bg-gray-50">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">Sample Report</h2>
+        <h2 className="heading-2 text-center mb-4">Real Sample Report</h2>
         <p className="text-center text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-          See what you&apos;ll get in your professional PDF report
+          We don't hide behind generic advice. Here is an example of the <strong>Prioritized Action Plan</strong> page you'll receive—clear, actionable, and ranked by impact.
         </p>
         
-        {/* PDF Preview Mockup */}
+        {/* PDF Preview Mockup - High Fidelity Action Plan */}
         <div className="mb-12">
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200">
-            {/* Browser Window Mockup */}
+          <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200">
+            {/* Browser Window Header */}
             <div className="bg-gray-100 px-4 py-3 flex items-center gap-2 border-b border-gray-200">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-red-400"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
                 <div className="w-3 h-3 rounded-full bg-green-400"></div>
               </div>
-              <div className="flex-1 bg-white rounded px-4 py-1.5 text-sm text-gray-500 ml-4">
-                sample-report.pdf
+              <div className="flex-1 bg-white rounded px-4 py-1.5 text-sm text-gray-500 ml-4 flex justify-between items-center">
+                <span>seo-audit-action-plan.pdf</span>
+                <span className="text-xs text-gray-400">Page 3 of 12</span>
               </div>
             </div>
             
-            {/* PDF Preview Content */}
-            <div className="bg-gradient-to-br from-gray-50 to-white p-8 md:p-12">
-              <div className="max-w-2xl mx-auto">
-                {/* PDF Header */}
-                <div className="text-center mb-8 pb-8 border-b-2 border-primary-200">
-                  <h3 className="text-3xl font-bold text-primary-900 mb-2">SEO AUDIT PRO</h3>
-                  <p className="text-gray-600">SEO Site Audit Report</p>
+            {/* PDF Page Content - Action Plan */}
+            <div className="bg-white p-8 md:p-16 text-gray-800 font-sans">
+              {/* Report Header */}
+              <div className="flex justify-between items-end border-b-2 border-gray-900 pb-4 mb-8">
+                <div>
+                  <h3 className="text-2xl font-bold uppercase tracking-wider text-gray-900">Prioritized Action Plan</h3>
+                  <p className="text-sm text-gray-500 uppercase tracking-widest mt-1">Technical & On-Page Fixes</p>
                 </div>
-                
-                {/* Sample Content Blocks */}
-                <div className="space-y-6">
-                  <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="font-bold text-gray-900">Overall Performance</h4>
-                      <div className="text-3xl font-bold text-primary-600">80/100</div>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <div className="text-gray-500">Technical SEO</div>
-                        <div className="font-semibold text-gray-900">85/100</div>
-                      </div>
-                      <div>
-                        <div className="text-gray-500">On-Page SEO</div>
-                        <div className="font-semibold text-gray-900">75/100</div>
-                      </div>
-                      <div>
-                        <div className="text-gray-500">Content Quality</div>
-                        <div className="font-semibold text-gray-900">100/100</div>
-                      </div>
-                      <div>
-                        <div className="text-gray-500">Accessibility</div>
-                        <div className="font-semibold text-gray-900">62/100</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 className="font-bold text-gray-900 mb-3">Priority Action Plan</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold">HIGH</span>
-                        <span className="text-gray-700">Week 1: Fix missing alt attributes (16 images)</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold">MEDIUM</span>
-                        <span className="text-gray-700">Week 2: Add Identity Schema markup</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold">MEDIUM</span>
-                        <span className="text-gray-700">Week 3: Optimize meta descriptions (5 pages)</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 className="font-bold text-gray-900 mb-3">Page-Level Metrics</h4>
-                    <div className="text-xs text-gray-600 space-y-1">
-                      <div className="flex justify-between">
-                        <span>Homepage</span>
-                        <span>2 issues • 3,245 words • 3.2s load</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>About Page</span>
-                        <span>1 issue • 1,892 words • 2.8s load</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Services Page</span>
-                        <span>3 issues • 2,156 words • 3.5s load</span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-right">
+                  <div className="text-sm font-bold text-gray-400">SEO AUDIT PRO</div>
+                  <div className="text-xs text-gray-400">Nov 21, 2025</div>
                 </div>
+              </div>
+
+              {/* Critical Issues Table */}
+              <div className="mb-10">
+                <h4 className="flex items-center gap-3 text-lg font-bold text-red-700 mb-4 bg-red-50 p-3 rounded-lg border-l-4 border-red-600">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                  CRITICAL PRIORITY (Immediate Fixes)
+                </h4>
+                <div className="overflow-hidden border border-gray-200 rounded-lg">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Issue</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Impact & Recommendation</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/6">Difficulty</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-6 py-4 align-top">
+                          <span className="font-semibold text-gray-900">Missing HSTS Header</span>
+                          <div className="text-xs text-gray-500 mt-1">Security / Technical</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <p className="text-sm text-gray-800 font-medium mb-1">Enforce HTTPS security</p>
+                          <p className="text-sm text-gray-600 mb-2">Your server is missing the <code>Strict-Transport-Security</code> header. This is a critical security signal for Google.</p>
+                          <div className="bg-gray-50 p-2 rounded border border-gray-200 font-mono text-xs text-gray-700">
+                            Strict-Transport-Security: max-age=31536000; includeSubDomains
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 align-top">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Easy
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 align-top">
+                          <span className="font-semibold text-gray-900">Core Web Vitals (LCP)</span>
+                          <div className="text-xs text-gray-500 mt-1">Performance</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <p className="text-sm text-gray-800 font-medium mb-1">LCP is 4.2s (Target: &lt;2.5s)</p>
+                          <p className="text-sm text-gray-600">Large hero image <code>banner-main.jpg</code> is not preloaded and lacks explicit width/height.</p>
+                          <p className="text-sm text-blue-600 mt-1 font-medium">Action: Convert to WebP & add <code>&lt;link rel="preload"&gt;</code></p>
+                        </td>
+                        <td className="px-6 py-4 align-top">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                            Medium
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* High Priority Issues Table */}
+              <div>
+                <h4 className="flex items-center gap-3 text-lg font-bold text-orange-700 mb-4 bg-orange-50 p-3 rounded-lg border-l-4 border-orange-500">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                  HIGH PRIORITY (Fix This Week)
+                </h4>
+                <div className="overflow-hidden border border-gray-200 rounded-lg">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Issue</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Impact & Recommendation</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider w-1/6">Difficulty</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-6 py-4 align-top">
+                          <span className="font-semibold text-gray-900">Multiple H1 Tags</span>
+                          <div className="text-xs text-gray-500 mt-1">On-Page SEO</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <p className="text-sm text-gray-800 font-medium mb-1">Confusing page structure</p>
+                          <p className="text-sm text-gray-600">Homepage contains 3 &lt;h1&gt; tags. Search engines expect exactly one main heading per page.</p>
+                          <p className="text-sm text-blue-600 mt-1 font-medium">Action: Change secondary headings to &lt;h2&gt;</p>
+                        </td>
+                        <td className="px-6 py-4 align-top">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Easy
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              {/* PDF Footer */}
+              <div className="mt-12 pt-6 border-t border-gray-200 flex justify-between text-xs text-gray-400">
+                <span>Confidential Audit Report</span>
+                <span>Page 3</span>
               </div>
             </div>
           </div>
@@ -136,7 +175,7 @@ export default function SampleReport() {
         </div>
 
         {/* Feature Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           {features.map((feature, index) => (
             <div key={index} className="bg-white rounded-lg p-6 border border-gray-200 hover:border-primary-300 transition-colors">
               <div className="text-4xl mb-4">{feature.icon}</div>
@@ -149,4 +188,3 @@ export default function SampleReport() {
     </section>
   );
 }
-

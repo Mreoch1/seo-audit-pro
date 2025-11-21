@@ -25,100 +25,105 @@ export default function SampleReportContent() {
           <div className="text-center mb-12">
             <h1 className="heading-1 mb-4">Sample SEO Audit Report</h1>
             <p className="text-xl text-gray-600 mb-8">
-              See exactly what you&apos;ll receive with your SEO audit
+              Don't settle for generic automated stats. See the depth of a manually-verified enterprise audit.
             </p>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="heading-3 mb-6">What&apos;s Included in Your Report</h2>
+            <h2 className="heading-3 mb-6">Inside Your Report: The "Action Plan" Page</h2>
+            <p className="text-gray-600 mb-8">
+              Every report includes a <strong>Prioritized Action Plan</strong> like the one below. It translates technical data into a clear checklist for your dev team.
+            </p>
+
+            {/* Detailed Action Plan Preview */}
+            <div className="bg-white border border-gray-300 shadow-sm mb-10 overflow-hidden rounded">
+               {/* Header simulating PDF page */}
+               <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                 <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Action Plan • Page 3</span>
+                 <span className="text-xs text-gray-400">seo-audit-pro-report.pdf</span>
+               </div>
+               
+               <div className="p-6 md:p-10">
+                 <div className="mb-8">
+                   <h3 className="text-2xl font-bold text-gray-900 border-b-2 border-gray-900 pb-2 mb-4">1. Critical Priority Fixes</h3>
+                   <p className="text-sm text-gray-600 mb-4">These issues are actively hurting your rankings or security. Fix immediately.</p>
+                   
+                   <table className="w-full text-sm text-left text-gray-600 border-collapse">
+                     <thead className="bg-gray-50 text-gray-900 font-bold uppercase text-xs">
+                       <tr>
+                         <th className="px-4 py-3 border border-gray-200">Issue</th>
+                         <th className="px-4 py-3 border border-gray-200">Technical Detail</th>
+                         <th className="px-4 py-3 border border-gray-200 w-24 text-center">Effort</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td className="px-4 py-3 border border-gray-200 font-semibold text-red-600">HTTP/2 Not Enabled</td>
+                         <td className="px-4 py-3 border border-gray-200">
+                           Server is using HTTP/1.1. HTTP/2 multiplexing is required for LCP performance.
+                           <div className="mt-1 font-mono text-xs bg-gray-100 p-1 rounded">Action: Update Nginx config `listen 443 ssl http2;`</div>
+                         </td>
+                         <td className="px-4 py-3 border border-gray-200 text-center">Low</td>
+                       </tr>
+                       <tr>
+                         <td className="px-4 py-3 border border-gray-200 font-semibold text-red-600">Missing Canonical Tags</td>
+                         <td className="px-4 py-3 border border-gray-200">
+                           5 pages (including Homepage) lack self-referencing canonicals, risking duplicate content penalties.
+                         </td>
+                         <td className="px-4 py-3 border border-gray-200 text-center">Low</td>
+                       </tr>
+                     </tbody>
+                   </table>
+                 </div>
+
+                 <div className="mb-8">
+                   <h3 className="text-2xl font-bold text-gray-900 border-b-2 border-gray-900 pb-2 mb-4">2. High Priority Fixes</h3>
+                   <p className="text-sm text-gray-600 mb-4">Optimizations that will yield significant ranking improvements.</p>
+                   
+                   <table className="w-full text-sm text-left text-gray-600 border-collapse">
+                     <thead className="bg-gray-50 text-gray-900 font-bold uppercase text-xs">
+                       <tr>
+                         <th className="px-4 py-3 border border-gray-200">Issue</th>
+                         <th className="px-4 py-3 border border-gray-200">Technical Detail</th>
+                         <th className="px-4 py-3 border border-gray-200 w-24 text-center">Effort</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td className="px-4 py-3 border border-gray-200 font-semibold text-orange-600">Unoptimized Images (LCP)</td>
+                         <td className="px-4 py-3 border border-gray-200">
+                           Hero image `hero-bg.png` is 2.4MB. 
+                           <div className="mt-1 font-mono text-xs bg-gray-100 p-1 rounded">Action: Convert to WebP/AVIF & Resize to max 1920px.</div>
+                         </td>
+                         <td className="px-4 py-3 border border-gray-200 text-center">Med</td>
+                       </tr>
+                     </tbody>
+                   </table>
+                 </div>
+               </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div className="border-l-4 border-primary-500 pl-4">
-                <h3 className="font-bold text-gray-900 mb-2">Overall SEO Score</h3>
+                <h3 className="font-bold text-gray-900 mb-2">Full 30+ Page Report</h3>
                 <p className="text-gray-600 text-sm">
-                  Comprehensive score (0-100) plus category breakdowns for Technical, On-Page, Content, and Performance.
+                  Beyond the action plan, you get deep dives into Schema, Competitor Gaps, and Content Depth.
                 </p>
               </div>
 
               <div className="border-l-4 border-primary-500 pl-4">
-                <h3 className="font-bold text-gray-900 mb-2">Priority Action Plan</h3>
+                <h3 className="font-bold text-gray-900 mb-2">Code-Level Specifics</h3>
                 <p className="text-gray-600 text-sm">
-                  Issues organized by severity (High/Medium/Low) with a week-by-week implementation timeline.
+                  We don't just say "Fix it." We give you the exact Nginx config, HTML tag, or CSS change needed.
                 </p>
               </div>
-
-              <div className="border-l-4 border-primary-500 pl-4">
-                <h3 className="font-bold text-gray-900 mb-2">Page-Level Metrics</h3>
-                <p className="text-gray-600 text-sm">
-                  Detailed tables showing every page, its issues, word count, load time, and link structure.
-                </p>
-              </div>
-
-              <div className="border-l-4 border-primary-500 pl-4">
-                <h3 className="font-bold text-gray-900 mb-2">Step-by-Step Fixes</h3>
-                <p className="text-gray-600 text-sm">
-                  Every issue includes specific instructions on how to fix it, with examples and best practices.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
-              <h3 className="font-semibold text-gray-900 mb-3">Report Highlights</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Professional PDF format - easy to share with your team</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Data-driven insights - no generic advice</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>White label option available - no branding if you prefer</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Ready to implement - actionable recommendations for every issue</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
-              <h3 className="font-semibold text-gray-900 mb-4">Understanding Your SEO Audit Report</h3>
-              <p className="text-gray-700 mb-4">
-                Our SEO audit reports give you a clear picture of your website&apos;s search engine health. Each report starts with an executive summary. This shows your site&apos;s overall performance with a score from 0 to 100. You also get separate scores for Technical SEO, On-Page SEO, Content Quality, and Accessibility. Learn more about our <Link href="/#pricing" className="text-primary-600 hover:text-primary-700 underline">pricing tiers</Link> to see which audit level fits your needs.
-              </p>
-              <p className="text-gray-700 mb-4">
-                The priority action plan sorts all issues by how important they are. High priority issues need immediate attention. Medium priority issues come next. Low priority issues can wait. The plan also includes a week-by-week timeline. This helps you fix problems in the right order. Each issue explains why it matters, which pages have the problem, and exactly how to fix it. Check out our <Link href="/#features-section" className="text-primary-600 hover:text-primary-700 underline">features page</Link> to see what else is included.
-              </p>
-              <p className="text-gray-700 mb-4">
-                Page-level findings show details for every page we check. You&apos;ll see word count, load time, link structure, and specific problems. Performance metrics include Core Web Vitals from Google PageSpeed Insights. This helps you understand both technical performance and user experience. See how our <Link href="/#how-it-works" className="text-primary-600 hover:text-primary-700 underline">process works</Link> to understand how we gather this data.
-              </p>
-              <p className="text-gray-700 mb-4">
-                The report includes competitor keyword gap analysis for Advanced tier orders. This shows keywords your competitors use that you don&apos;t. It also lists keywords you already target that competitors use. This helps you find new opportunities and see where you compete. <Link href="/#order-section" className="text-primary-600 hover:text-primary-700 underline">Order an Advanced tier audit</Link> to get this analysis included.
-              </p>
-              <p className="text-gray-700 mb-4">
-                Schema markup analysis checks if your pages use structured data. Structured data helps search engines understand your content. This can improve how your pages appear in search results with rich snippets and enhanced listings. You can add schema markup as an add-on to any tier.
-              </p>
-              <p className="text-gray-700">
-                Our reports work for everyone. Business owners can improve their search visibility. Marketing agencies get detailed reports for clients. Developers get clear instructions for implementing fixes. Every report provides actionable insights you can use right away. Ready to get started? <Link href="/#order-section" className="text-primary-600 hover:text-primary-700 underline">Order your SEO audit</Link> today or <Link href="/" className="text-primary-600 hover:text-primary-700 underline">return to the homepage</Link> to learn more.
-              </p>
             </div>
 
             <div className="text-center">
               {!pdfExists && (
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 max-w-2xl mx-auto">
                   <p className="text-sm text-yellow-800">
-                    <strong>Note:</strong> The sample PDF is currently being prepared. In the meantime, you can see a preview of the report structure above, or <a href="mailto:contact@seoauditpro.net" className="text-yellow-800 underline hover:text-yellow-900">contact us directly</a> to request a sample report.
+                    <strong>Note:</strong> The sample PDF is currently being updated. <a href="mailto:contact@seoauditpro.net" className="text-yellow-800 underline hover:text-yellow-900">Contact us</a> for a direct copy.
                   </p>
                 </div>
               )}
@@ -131,43 +136,29 @@ export default function SampleReportContent() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl text-lg mb-4"
-                    aria-label="Download sample SEO audit report PDF"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                    Download Sample Report (PDF)
+                    Download Full Sample PDF
                   </a>
                   <p className="text-sm text-gray-500 mb-6">
-                    Click to download the full PDF report.
+                    Includes full technical breakdown & competitor analysis example.
                   </p>
                 </>
-              ) : (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                  <p className="text-blue-800 mb-4">
-                    <strong>Sample PDF Available Soon</strong>
-                  </p>
-                  <p className="text-blue-700 text-sm mb-4">
-                    We&apos;re preparing a comprehensive sample report that demonstrates all the features and insights you&apos;ll receive with your SEO audit. The sample will include real examples of scores, action plans, and detailed recommendations.
-                  </p>
-                  <p className="text-blue-700 text-sm">
-                    In the meantime, you can <a href="mailto:contact@seoauditpro.net" className="text-blue-800 underline hover:text-blue-900 font-semibold">contact us directly</a> to request a sample report or ask any questions about what&apos;s included.
-                  </p>
-                </div>
-              )}
+              ) : null}
 
               <Link
                 href="/#order-section"
                 className="btn-secondary inline-block"
-                aria-label="Order your SEO audit"
               >
-                Order Your SEO Audit
+                Order Your Own Audit
               </Link>
             </div>
           </div>
 
           <div className="text-center">
-            <Link href="/" className="text-primary-600 hover:text-primary-700 font-semibold" aria-label="Back to home page">
+            <Link href="/" className="text-primary-600 hover:text-primary-700 font-semibold">
               ← Back to Home
             </Link>
           </div>
@@ -176,4 +167,3 @@ export default function SampleReportContent() {
     </div>
   );
 }
-
