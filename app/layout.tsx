@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://seoauditpro.net"),
   title: {
-    default: "SEO Audit Pro - Agency-Grade SEO Audits Without the Agency Price",
+    default: "SEO Audit Pro - Agency-Grade SEO Audits",
     template: "%s | SEO Audit Pro",
   },
-  description: "Get a professional, data-driven SEO audit with clear scores, prioritized fixes, and step-by-step action plans. Starting at $19. Trusted by businesses and agencies worldwide.",
+  description: "Get a professional, data-driven SEO audit with clear scores, prioritized fixes, and step-by-step action plans. Starting at $19.",
   keywords: [
     "SEO audit",
     "SEO analysis",

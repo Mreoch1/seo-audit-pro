@@ -92,6 +92,22 @@ export default function SampleReportContent() {
               </ul>
             </div>
 
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
+              <h3 className="font-semibold text-gray-900 mb-4">Understanding Your SEO Audit Report</h3>
+              <p className="text-gray-700 mb-4">
+                Our comprehensive SEO audit reports are designed to give you a complete picture of your website&apos;s search engine optimization health. Each report begins with an executive summary that provides a high-level overview of your site&apos;s performance, including an overall SEO score out of 100 and category-specific scores for Technical SEO, On-Page SEO, Content Quality, and Accessibility.
+              </p>
+              <p className="text-gray-700 mb-4">
+                The priority action plan section organizes all identified issues by severity (High, Medium, Low) and provides a week-by-week implementation timeline. This makes it easy to tackle the most critical problems first and systematically work through improvements over time. Each issue includes detailed explanations of why it matters, which pages are affected, and step-by-step instructions on how to fix it.
+              </p>
+              <p className="text-gray-700 mb-4">
+                Page-level findings provide granular insights into every page analyzed, showing metrics like word count, load time, link structure, and specific issues found. Performance metrics include Core Web Vitals data from Google PageSpeed Insights, helping you understand how your site performs from both technical and user experience perspectives.
+              </p>
+              <p className="text-gray-700">
+                Whether you&apos;re a business owner looking to improve your organic visibility, a marketing agency needing detailed reports for clients, or a developer implementing SEO fixes, our reports provide the actionable insights you need to make meaningful improvements to your website&apos;s search engine performance.
+              </p>
+            </div>
+
             <div className="text-center">
               {!pdfExists && (
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 max-w-2xl mx-auto">
@@ -101,22 +117,38 @@ export default function SampleReportContent() {
                 </div>
               )}
 
-              <a
-                href="/sample-report.pdf"
-                download="SEO-Audit-Pro-Sample-Report.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl text-lg mb-4"
-                aria-label="Download sample SEO audit report PDF"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Download Sample Report (PDF)
-              </a>
-              <p className="text-sm text-gray-500 mb-6">
-                Click to download the full PDF report.
-              </p>
+              {pdfExists ? (
+                <>
+                  <a
+                    href="/sample-report.pdf"
+                    download="SEO-Audit-Pro-Sample-Report.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl text-lg mb-4"
+                    aria-label="Download sample SEO audit report PDF"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download Sample Report (PDF)
+                  </a>
+                  <p className="text-sm text-gray-500 mb-6">
+                    Click to download the full PDF report.
+                  </p>
+                </>
+              ) : (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                  <p className="text-blue-800 mb-4">
+                    <strong>Sample PDF Available Soon</strong>
+                  </p>
+                  <p className="text-blue-700 text-sm mb-4">
+                    We&apos;re preparing a comprehensive sample report that demonstrates all the features and insights you&apos;ll receive with your SEO audit. The sample will include real examples of scores, action plans, and detailed recommendations.
+                  </p>
+                  <p className="text-blue-700 text-sm">
+                    In the meantime, you can <a href="mailto:contact@seoauditpro.net" className="text-blue-800 underline hover:text-blue-900 font-semibold">contact us directly</a> to request a sample report or ask any questions about what&apos;s included.
+                  </p>
+                </div>
+              )}
 
               <Link
                 href="/#order-section"
