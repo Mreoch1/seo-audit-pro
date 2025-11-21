@@ -5,7 +5,6 @@ import TrustedBy from "@/components/TrustedBy";
 import HowItWorks from "@/components/HowItWorks";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
-import TrustIndicators from "@/components/TrustIndicators";
 import Pricing from "@/components/Pricing";
 import OrderForm from "@/components/OrderForm";
 import SampleReport from "@/components/SampleReport";
@@ -21,7 +20,6 @@ export default function Home() {
         <Hero />
         {/* Trusted by section */}
         <TrustedBy />
-        <TrustIndicators />
         <HowItWorks />
         <Features />
         {/* Testimonials section */}

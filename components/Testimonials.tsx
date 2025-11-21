@@ -21,9 +21,6 @@ export default function Testimonials() {
     <section id="testimonials" className="bg-gray-50">
       <div className="section-container">
         <h2 className="heading-2 text-center mb-4">What clients say</h2>
-        <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          Here&apos;s the kind of feedback SEO Audit Pro aims for. Replace these with real client reviews as they come in.
-        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {testimonials.map((testimonial, index) => (
             <div
@@ -48,9 +45,6 @@ export default function Testimonials() {
             </div>
           ))}
         </div>
-        <p className="text-center text-sm text-gray-500">
-          *Testimonials shown are illustrative examples. Replace with real client feedback as it becomes available.
-        </p>
       </div>
     </section>
   );
