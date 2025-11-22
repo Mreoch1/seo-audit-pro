@@ -299,6 +299,27 @@ export default function Pricing() {
     return total;
   };
 
+  // Count only chargeable add-ons (exclude included ones and unavailable ones)
+  const getChargeableAddOnCount = () => {
+    let count = 0;
+    selectedAddOns.forEach((addOnId) => {
+      const addOn = addOns.find((a) => a.id === addOnId);
+      if (addOn) {
+        // Don't count add-ons that are included in the tier
+        if (addOn.includedIn?.includes(selectedTier)) {
+          return;
+        }
+        // Don't count add-ons not available in current tier
+        if (addOn.availableIn && !addOn.availableIn.includes(selectedTier)) {
+          return;
+        }
+        // Count this add-on (quantities like extra-pages/extra-keywords count as 1 add-on)
+        count++;
+      }
+    });
+    return count;
+  };
+
   const handleAddOnToggle = (addOnId: string) => {
     toggleAddOn(addOnId);
   };
@@ -531,9 +552,12 @@ export default function Pricing() {
             <div className="text-left flex-1 px-4 border-l border-primary-500 hidden sm:block">
               <div className="text-sm opacity-90">
                  {currentTier.name} Tier included. 
-                 {selectedAddOns.size > 0 && ` + ${selectedAddOns.size} add-on${selectedAddOns.size > 1 ? "s" : ""}.`}
+                 {(() => {
+                   const chargeableCount = getChargeableAddOnCount();
+                   return chargeableCount > 0 && ` + ${chargeableCount} add-on${chargeableCount > 1 ? "s" : ""}.`;
+                 })()}
               </div>
-              {orderState.whiteLabel && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
+              {orderState.whiteLabel && selectedTier !== "agency" && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
             </div>
             <button 
               onClick={() => document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' })}
