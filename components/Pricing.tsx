@@ -603,9 +603,10 @@ export default function Pricing() {
             </div>
             <button 
               onClick={() => document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-primary-700 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-colors"
+              disabled={true}
+              className="bg-gray-300 text-gray-600 px-6 py-2 rounded-full font-bold cursor-not-allowed opacity-60 transition-colors"
             >
-              Proceed to Order
+              Maintenance Mode
             </button>
           </div>
         </div>

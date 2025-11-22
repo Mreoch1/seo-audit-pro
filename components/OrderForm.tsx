@@ -428,10 +428,10 @@ export default function OrderForm() {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-bold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={true}
+              className="w-full bg-gray-400 text-gray-600 py-3 px-6 rounded-lg font-bold cursor-not-allowed transition-colors opacity-60"
             >
-              {isSubmitting ? "Processing..." : `Proceed to Payment ($${calculateTotal()})`}
+              Maintenance Mode - Purchases Temporarily Disabled
             </button>
             
             {/* Error Message */}
