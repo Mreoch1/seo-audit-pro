@@ -30,6 +30,15 @@ export async function POST(request: NextRequest) {
       "extra-keywords": "Extra Keywords",
       "extra-competitors": "Additional Competitor",
       "extra-crawl-depth": "Extra Crawl Depth",
+      "expedited": "24-Hour Expedited Report",
+    };
+
+    // Tier delivery days mapping
+    const tierDeliveryDays: Record<string, number> = {
+      starter: 2,
+      standard: 3,
+      professional: 4,
+      agency: 5,
     };
 
     // Format add-ons list for email
@@ -41,6 +50,11 @@ export async function POST(request: NextRequest) {
 
     // Get formatted tier name
     const formattedTier = tierNames[tier] || tier.charAt(0).toUpperCase() + tier.slice(1);
+    
+    // Check if expedited add-on is selected
+    const hasExpedited = Array.isArray(addOns) && addOns.includes("expedited");
+    const deliveryDays = hasExpedited ? 1 : (tierDeliveryDays[tier] || 3);
+    const deliveryText = hasExpedited ? "24 hours (expedited)" : `${deliveryDays} business day${deliveryDays > 1 ? "s" : ""}`;
 
     // Create email content
     const emailSubject = `SEO Audit Request – ${formattedTier} – ${websiteUrl}`;
@@ -60,6 +74,7 @@ Website URL: ${websiteUrl}
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Tier: ${formattedTier}
+Expected Delivery: ${deliveryText}
 
 Add-ons:`;
 

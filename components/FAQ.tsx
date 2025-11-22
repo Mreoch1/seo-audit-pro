@@ -14,7 +14,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: "How long does it take?",
-    answer: "Standard delivery: 3-5 business days. Need it fast? Add the 24-hour Fast Delivery option. Delivery time depends on your tier (number of pages) and site complexity.",
+    answer: "Delivery time varies by tier: Starter (2 days), Standard (3 days), Professional (4 days), Agency (5 days). Need it faster? Add the 24-Hour Expedited Report add-on for an extra $15 to receive your report within 24 business hours.",
   },
   {
     question: "Will you implement the fixes for me?",

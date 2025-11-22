@@ -11,6 +11,7 @@ SEO Audit Pro offers 4 pricing tiers designed to meet different needs, from smal
 ### 🟢 Starter - Essential SEO Audit
 **Price:** $19  
 **Page Limit:** Up to 50 pages  
+**Delivery Time:** 2 business days  
 **Best For:** Small websites, blogs, landing pages
 
 #### Included Features:
@@ -32,12 +33,14 @@ SEO Audit Pro offers 4 pricing tiers designed to meet different needs, from smal
 - **Competitor Gap Analysis** - $15 (3 competitor URLs)
 - **Schema Deep-Dive** - $15 (detailed structured data validation)
 - **Extra Keywords** - $1 per keyword
+- **24-Hour Expedited Report** - $15 (receive report within 24 business hours)
 
 ---
 
 ### 🔵 Standard - Complete Site Analysis
 **Price:** $39  
 **Page Limit:** Up to 200 pages  
+**Delivery Time:** 3 business days  
 **Best For:** Small to medium businesses, e-commerce sites  
 **⭐ MOST POPULAR**
 
@@ -58,6 +61,7 @@ Everything in Starter, plus:
 - **Additional Pages** - $5 per 50 pages
 - **Competitor Gap Analysis** - $15 (3 competitor URLs)
 - **Extra Keywords** - $1 per keyword
+- **24-Hour Expedited Report** - $15 (receive report within 24 business hours)
 
 **Note:** Schema Deep-Dive is not available for Standard tier (already included in base features).
 
@@ -83,6 +87,7 @@ Everything in Standard, plus:
 - **Blank Report (Unbranded)** - $10
 - **Additional Pages** - $5 per 50 pages
 - **Extra Keywords** - $1 per keyword
+- **24-Hour Expedited Report** - $15 (receive report within 24 business hours)
 
 **Note:** 
 - Competitor Gap Analysis is not available for Professional tier (upgrade to Agency for competitor analysis)
@@ -93,6 +98,7 @@ Everything in Standard, plus:
 ### 🟣 Agency / Enterprise - Full Competitive Suite
 **Price:** $99  
 **Page Limit:** Unlimited Pages  
+**Delivery Time:** 5 business days  
 **Best For:** Agencies, enterprise clients, competitive analysis
 
 #### Included Features:
@@ -110,6 +116,7 @@ Everything in Professional, plus:
 - **Blank Report (Unbranded)** - **FREE** (optional, not automatically included)
 - **Additional Competitor** - $10 (adds 1 additional competitor - 4th competitor, max 4 total)
 - **Extra Crawl Depth** - $15 (for complex sites)
+- **24-Hour Expedited Report** - $15 (receive report within 24 business hours)
 
 **Note:** 
 - Additional Pages add-on not available (unlimited pages included)
@@ -163,6 +170,12 @@ Everything in Professional, plus:
 - **Price:** $15
 - **Available For:** Agency tier only
 - **Description:** Increase crawl depth for complex sites with deep navigation structures
+
+### 24-Hour Expedited Report
+- **Price:** $15
+- **Available For:** All tiers
+- **Description:** Receive your report within 24 business hours instead of the standard delivery time for your tier
+- **Note:** Expedited delivery reduces delivery time to 24 hours regardless of tier (Starter: 2 days → 24 hours, Standard: 3 days → 24 hours, Professional: 4 days → 24 hours, Agency: 5 days → 24 hours)
 
 ---
 
@@ -218,6 +231,12 @@ The system will automatically suggest upgrading to a higher tier if:
 ### Payment & Delivery
 - All payments processed securely via Stripe
 - Reports delivered via email as PDF attachments
+- **Standard Delivery Times:**
+  - Starter: 2 business days
+  - Standard: 3 business days
+  - Professional: 4 business days
+  - Agency: 5 business days
+- **Expedited Delivery:** Add 24-Hour Expedited Report add-on ($15) to receive your report within 24 business hours
 - Reports may go to spam/junk folder - please check if not received
 - No automated dashboards - every audit is manually reviewed
 

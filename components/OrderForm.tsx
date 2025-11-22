@@ -31,6 +31,7 @@ const addOnPrices: Record<string, number> = {
   "competitor-report": 15,
   "extra-competitors": 10,
   "extra-crawl-depth": 15,
+  "expedited": 15,
 };
 
 // Helper function to ensure URL has https:// prefix

@@ -23,7 +23,7 @@ export default function HowItWorks() {
     {
       number: "3",
       title: "You Get the PDF Report",
-      description: "Within 24-48 hours, you receive a branded PDF via email containing prioritized scores, fixes, and code snippets.",
+      description: "You receive a branded PDF via email within 2-5 business days (based on tier) or 24 hours with expedited delivery. Report contains prioritized scores, fixes, and code snippets.",
       icon: (
         <svg aria-hidden="true" className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />

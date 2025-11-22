@@ -206,7 +206,7 @@ export default function RootLayout({
                   name: "How long does it take?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Standard delivery: 3-5 business days. Need it fast? Add the 24-hour Fast Delivery option.",
+                    text: "Delivery time varies by tier: Starter (2 days), Standard (3 days), Professional (4 days), Agency (5 days). Need it faster? Add the 24-Hour Expedited Report add-on for an extra $15 to receive your report within 24 business hours.",
                   },
                 },
                 {

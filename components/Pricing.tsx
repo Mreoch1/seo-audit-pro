@@ -18,6 +18,7 @@ interface Tier {
   subtitle: string;
   price: number;
   pages: string;
+  deliveryDays: number;
   features: string[];
   highlight?: boolean;
 }
@@ -29,6 +30,7 @@ const tiers: Tier[] = [
     subtitle: "Essential SEO Audit",
     price: 19,
     pages: "Up to 50 pages",
+    deliveryDays: 2,
     features: [
       "Deep Crawl & JavaScript Rendering",
       "Core Web Vitals Analysis",
@@ -49,6 +51,7 @@ const tiers: Tier[] = [
     subtitle: "Complete Site Analysis",
     price: 39,
     pages: "Up to 200 pages",
+    deliveryDays: 3,
     features: [
       "Everything in Starter, plus:",
       "Advanced Local SEO Analysis",
@@ -69,6 +72,7 @@ const tiers: Tier[] = [
     subtitle: "Deep-Dive Analysis",
     price: 59,
     pages: "Up to 500 pages",
+    deliveryDays: 4,
     features: [
       "Everything in Standard, plus:",
       "Multi-level Internal Link Mapping",
@@ -87,6 +91,7 @@ const tiers: Tier[] = [
     subtitle: "Full Competitive Suite",
     price: 99,
     pages: "Unlimited Pages",
+    deliveryDays: 5,
     features: [
       "Everything in Professional, plus:",
       "Unlimited Keywords",
@@ -155,6 +160,13 @@ const addOns: AddOn[] = [
     description: "Increase crawl depth for complex sites (Agency tier only)",
     price: 15,
     availableIn: ["agency"],
+  },
+  {
+    id: "expedited",
+    name: "24-Hour Expedited Report",
+    description: "Receive your report within 24 hours (business days)",
+    price: 15,
+    availableIn: ["starter", "standard", "professional", "agency"], // Available for all tiers
   },
 ];
 
@@ -378,8 +390,11 @@ export default function Pricing() {
                 <div className="mb-4">
                   <span className="text-4xl font-bold text-primary-600">${tier.price}</span>
                 </div>
-                <p className="text-sm font-semibold text-gray-800 mb-6 pb-4 border-b border-gray-100">
+                <p className="text-sm font-semibold text-gray-800 mb-2">
                   {tier.pages}
+                </p>
+                <p className="text-xs text-gray-600 mb-6 pb-4 border-b border-gray-100">
+                  Delivery: {tier.deliveryDays} business day{tier.deliveryDays > 1 ? "s" : ""}
                 </p>
               </div>
               
