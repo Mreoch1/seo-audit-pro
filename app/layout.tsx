@@ -88,6 +88,7 @@ export const metadata: Metadata = {
   other: {
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "google-site-verification": "S-ikIXstyBxrbcBAo63AykX7yH8V_nMa1e9Y72-9Ku4",
   },
 };
 
@@ -229,4 +230,3 @@ export default function RootLayout({
     </html>
   );
 }
-
