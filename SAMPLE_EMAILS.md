@@ -658,7 +658,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ## Agency Tier Combinations
 
 ### Example 19: Agency Only (No Add-Ons)
-**Subject:** 🎯 New SEO Audit Order - Agency / Enterprise Tier - example.com
+**Subject:** 🎯 New SEO Audit Order - Agency Tier - example.com
 
 ```
 Hello,
@@ -676,7 +676,7 @@ White Label: No
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: Agency / Enterprise
+Tier: Agency
 Expected Delivery: 5 business days
 
 Add-ons:
@@ -697,7 +697,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ---
 
 ### Example 20: Agency + Blank Report (Free)
-**Subject:** 🎯 New SEO Audit Order - Agency / Enterprise Tier - example.com
+**Subject:** 🎯 New SEO Audit Order - Agency Tier - example.com
 
 ```
 Hello,
@@ -715,7 +715,7 @@ White Label: Yes
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: Agency / Enterprise
+Tier: Agency
 Expected Delivery: 5 business days
 
 Add-ons:
@@ -736,7 +736,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ---
 
 ### Example 21: Agency + Additional Competitor
-**Subject:** 🎯 New SEO Audit Order - Agency / Enterprise Tier - example.com
+**Subject:** 🎯 New SEO Audit Order - Agency Tier - example.com
 
 ```
 Hello,
@@ -754,7 +754,7 @@ White Label: No
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: Agency / Enterprise
+Tier: Agency
 Expected Delivery: 5 business days
 
 Add-ons:
@@ -776,7 +776,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ---
 
 ### Example 22: Agency + Extra Crawl Depth
-**Subject:** 🎯 New SEO Audit Order - Agency / Enterprise Tier - example.com
+**Subject:** 🎯 New SEO Audit Order - Agency Tier - example.com
 
 ```
 Hello,
@@ -794,7 +794,7 @@ White Label: No
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: Agency / Enterprise
+Tier: Agency
 Expected Delivery: 5 business days
 
 Add-ons:
@@ -815,7 +815,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ---
 
 ### Example 23: Agency + All Add-Ons (Maximum Configuration)
-**Subject:** 🎯 New SEO Audit Order - Agency / Enterprise Tier - example.com
+**Subject:** 🎯 New SEO Audit Order - Agency Tier - example.com
 
 ```
 Hello,
@@ -833,7 +833,7 @@ White Label: Yes
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: Agency / Enterprise
+Tier: Agency
 Expected Delivery: 5 business days
 
 Add-ons:
@@ -967,7 +967,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 ---
 
 ### Example 27: Agency + Expedited + All Add-Ons
-**Subject:** 🎯 New SEO Audit Order - Agency / Enterprise Tier - example.com
+**Subject:** 🎯 New SEO Audit Order - Agency Tier - example.com
 
 ```
 Hello,
@@ -985,7 +985,7 @@ White Label: Yes
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: Agency / Enterprise
+Tier: Agency
 Expected Delivery: 24 hours (expedited)
 
 Add-ons:
@@ -1016,7 +1016,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 
 ## Summary of All Possible Combinations
 
-### Starter Tier ($19 base, 2 business days)
+### Starter Tier ($19 base, 2 business days, up to 5 pages)
 - No add-ons: $19
 - + Blank Report: $29
 - + Competitor Gap Analysis: $34
@@ -1026,7 +1026,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 - + Expedited (24 hours): $34
 - Multiple combinations possible
 
-### Standard Tier ($39 base, 3 business days)
+### Standard Tier ($39 base, 3 business days, up to 20 pages)
 - No add-ons: $39
 - + Blank Report: $49
 - + Competitor Gap Analysis: $54
@@ -1035,7 +1035,7 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 - + Expedited (24 hours): $54
 - Multiple combinations possible
 
-### Professional Tier ($59 base, 4 business days)
+### Professional Tier ($59 base, 4 business days, up to 50 pages)
 - No add-ons: $59
 - + Blank Report: $69
 - + Additional Pages (varies): $59 + ($5 × quantity)
@@ -1043,13 +1043,14 @@ This email was sent from the SEO Audit Pro website via Stripe Webhook.
 - + Expedited (24 hours): $74
 - Multiple combinations possible
 
-### Agency Tier ($99 base, 5 business days)
+### Agency Tier ($99 base, 5 business days, up to 200 pages)
 - No add-ons: $99 (includes 3 competitors)
 - + Blank Report (free): $99
+- + Additional Pages (varies): $99 + ($5 × quantity)
 - + Additional Competitor: $109 (4 competitors total)
 - + Extra Crawl Depth: $114
 - + Expedited (24 hours): $114
-- + All add-ons: $139 (Blank Report free, 4 competitors, extra crawl depth, expedited)
+- + All add-ons: $139+ (Blank Report free, 4 competitors, extra crawl depth, expedited, plus additional pages if needed)
 
 ---
 

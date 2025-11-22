@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       starter: "Starter",
       standard: "Standard",
       professional: "Professional",
-      agency: "Agency / Enterprise",
+      agency: "Agency",
     };
 
     // Tier delivery days mapping

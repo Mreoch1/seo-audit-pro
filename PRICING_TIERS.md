@@ -10,9 +10,9 @@ SEO Audit Pro offers 4 pricing tiers designed to meet different needs, from smal
 
 ### 🟢 Starter - Essential SEO Audit
 **Price:** $19  
-**Page Limit:** Up to 50 pages  
+**Page Limit:** Up to 5 pages  
 **Delivery Time:** 2 business days  
-**Best For:** Small websites, blogs, landing pages
+**Best For:** Freelancers, micro-businesses, landing pages, testing the tool
 
 #### Included Features:
 - Deep Crawl & JavaScript Rendering
@@ -39,9 +39,9 @@ SEO Audit Pro offers 4 pricing tiers designed to meet different needs, from smal
 
 ### 🔵 Standard - Complete Site Analysis
 **Price:** $39  
-**Page Limit:** Up to 200 pages  
+**Page Limit:** Up to 20 pages  
 **Delivery Time:** 3 business days  
-**Best For:** Small to medium businesses, e-commerce sites  
+**Best For:** Small businesses, local service sites, typical business websites  
 **⭐ MOST POPULAR**
 
 #### Included Features:
@@ -69,8 +69,9 @@ Everything in Starter, plus:
 
 ### 🟡 Professional - Deep-Dive Analysis
 **Price:** $59  
-**Page Limit:** Up to 500 pages  
-**Best For:** Large websites, agencies, complex sites
+**Page Limit:** Up to 50 pages  
+**Delivery Time:** 4 business days  
+**Best For:** Growing blogs, medium service businesses, agencies, ecommerce with 40-60 products
 
 #### Included Features:
 Everything in Standard, plus:
@@ -95,11 +96,21 @@ Everything in Standard, plus:
 
 ---
 
-### 🟣 Agency / Enterprise - Full Competitive Suite
+### 🟣 Agency - Full Competitive Suite
 **Price:** $99  
-**Page Limit:** Unlimited Pages  
+**Page Limit:** Up to 200 pages  
 **Delivery Time:** 5 business days  
-**Best For:** Agencies, enterprise clients, competitive analysis
+**Best For:** Large businesses, big blogs, SaaS sites, mid-size ecommerce, marketing agencies
+
+---
+
+### 🟫 Enterprise
+**Price:** Custom pricing (contact via email)  
+**Page Limit:** No page limits  
+**Delivery Time:** Custom (discussed during consultation)  
+**Best For:** Enterprise clients, very large websites, custom requirements
+
+**Note:** Enterprise tier requires direct contact. Please email us through the order form or contact page to discuss your specific needs and receive a custom quote.
 
 #### Included Features:
 Everything in Professional, plus:
@@ -114,12 +125,12 @@ Everything in Professional, plus:
 
 #### Available Add-Ons:
 - **Blank Report (Unbranded)** - **FREE** (optional, not automatically included)
+- **Additional Pages** - $5 per 50 pages
 - **Additional Competitor** - $10 (adds 1 additional competitor - 4th competitor, max 4 total)
 - **Extra Crawl Depth** - $15 (for complex sites)
 - **24-Hour Expedited Report** - $15 (receive report within 24 business hours)
 
 **Note:** 
-- Additional Pages add-on not available (unlimited pages included)
 - Extra Keywords add-on not available (unlimited keywords included)
 - Competitor Gap Analysis included (3 competitors), can add 1 more with Additional Competitor add-on (max 4 total)
 
@@ -137,9 +148,9 @@ Everything in Professional, plus:
 
 ### Additional Pages
 - **Price:** $5 per 50 pages
-- **Available For:** Starter, Standard, Professional
+- **Available For:** Starter, Standard, Professional, Agency
 - **Description:** Add 50 more pages to your crawl beyond the tier's base limit
-- **Not Available For:** Agency tier (unlimited pages included)
+- **Note:** All tiers have defined page limits, so this add-on is available for all tiers including Agency
 
 ### Competitor Gap Analysis
 - **Price:** $15
@@ -200,13 +211,18 @@ Everything in Professional, plus:
   - Additional Pages: 2 × 50 pages ($10)
 - **Total:** $79
 
-### Example 4: Enterprise (Agency Tier)
+### Example 4: Agency Tier with Add-Ons
 - **Tier:** Agency ($99)
 - **Add-Ons:**
   - Blank Report (FREE)
   - Additional Competitor ($10) - adds 4th competitor
   - Extra Crawl Depth ($15)
 - **Total:** $124
+
+### Example 5: Enterprise (Custom Pricing)
+- **Tier:** Enterprise (Contact for pricing)
+- **Page Limit:** No limits
+- **Note:** Enterprise tier requires direct contact via email for custom pricing and delivery timeline
 
 ---
 
@@ -218,10 +234,11 @@ Everything in Professional, plus:
 - **Free for Higher Tiers:** Some add-ons are included free in higher tiers (e.g., Blank Report is free for Agency)
 
 ### Tier Recommendations
-- **Starter:** Best for small websites, blogs, or quick health checks
-- **Standard:** Most popular choice for small to medium businesses
-- **Professional:** Ideal for large sites needing deep analysis
-- **Agency:** Perfect for agencies and competitive analysis needs
+- **Starter (5 pages):** Perfect for freelancers, micro-businesses, landing pages, or testing the tool
+- **Standard (20 pages):** Most popular choice for small businesses and local service sites
+- **Professional (50 pages):** Ideal for growing blogs, medium businesses, agencies, and ecommerce sites
+- **Agency (200 pages):** Perfect for large businesses, big blogs, SaaS sites, and marketing agencies
+- **Enterprise (No limits):** Contact us for custom pricing on very large websites or special requirements
 
 ### Smart Tier Suggestions
 The system will automatically suggest upgrading to a higher tier if:

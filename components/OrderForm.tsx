@@ -119,8 +119,10 @@ export default function OrderForm() {
       if (addOnId === "extra-keywords" && formData.tier === "agency") {
         return; // Unlimited keywords in Agency tier
       }
+      // Extra-pages is available for Agency tier (up to 200 pages base)
       if (addOnId === "extra-pages" && formData.tier === "agency") {
-        return; // Unlimited pages in Agency tier
+        total += addOnPrices["extra-pages"] * formData.extraPages;
+        return;
       }
       // Skip schema-deep-dive if not Starter tier
       if (addOnId === "schema-deep-dive" && formData.tier !== "starter") {

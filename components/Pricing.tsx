@@ -29,7 +29,7 @@ const tiers: Tier[] = [
     name: "Starter",
     subtitle: "Essential SEO Audit",
     price: 19,
-    pages: "Up to 50 pages",
+    pages: "Up to 5 pages",
     deliveryDays: 2,
     features: [
       "Deep Crawl & JavaScript Rendering",
@@ -50,7 +50,7 @@ const tiers: Tier[] = [
     name: "Standard",
     subtitle: "Complete Site Analysis",
     price: 39,
-    pages: "Up to 200 pages",
+    pages: "Up to 20 pages",
     deliveryDays: 3,
     features: [
       "Everything in Starter, plus:",
@@ -71,7 +71,7 @@ const tiers: Tier[] = [
     name: "Professional",
     subtitle: "Deep-Dive Analysis",
     price: 59,
-    pages: "Up to 500 pages",
+    pages: "Up to 50 pages",
     deliveryDays: 4,
     features: [
       "Everything in Standard, plus:",
@@ -87,10 +87,10 @@ const tiers: Tier[] = [
   },
   {
     id: "agency",
-    name: "Agency / Enterprise",
+    name: "Agency",
     subtitle: "Full Competitive Suite",
     price: 99,
-    pages: "Unlimited Pages",
+    pages: "Up to 200 pages",
     deliveryDays: 5,
     features: [
       "Everything in Professional, plus:",
@@ -121,7 +121,7 @@ const addOns: AddOn[] = [
     description: "Add 50 more pages to your crawl",
     price: 5,
     unit: "per 50 pages",
-    availableIn: ["starter", "standard", "professional"],
+    availableIn: ["starter", "standard", "professional", "agency"],
   },
   {
     id: "competitor-report",
@@ -257,9 +257,10 @@ export default function Pricing() {
           return;
         }
         
-        // Skip extra-pages (unlimited in Agency)
+        // Extra-pages is available for Agency tier (up to 200 pages base)
         if (addOn.id === "extra-pages") {
-          return; // Unlimited pages in Agency
+          agencyTotal += addOn.price * extraPages;
+          return;
         }
         
         // White-label is free for Agency tier

@@ -11,7 +11,7 @@ const tierPrices: Record<string, { name: string; price: number }> = {
   starter: { name: "Starter - Essential SEO Audit", price: 19 },
   standard: { name: "Standard - Complete Site Analysis", price: 39 },
   professional: { name: "Professional - Deep-Dive Analysis", price: 59 },
-  agency: { name: "Agency / Enterprise - Full Competitive Suite", price: 99 },
+  agency: { name: "Agency - Full Competitive Suite", price: 99 },
 };
 
 const addOnPrices: Record<string, { name: string; price: number }> = {
@@ -182,10 +182,8 @@ export async function POST(request: NextRequest) {
         if ((addOnId === "extra-competitors" || addOnId === "extra-crawl-depth") && tier !== "agency") {
           continue;
         }
-        // Skip extra-pages if Agency tier (unlimited pages)
-        if (addOnId === "extra-pages" && tier === "agency") {
-          continue;
-        }
+        // Extra-pages is available for Agency tier (up to 200 pages base)
+        // No skip needed - it will be processed in the add-on handling below
         
         if (addOnId === "extra-pages") {
           const pages = parseInt(extraPages?.toString() || "1");
