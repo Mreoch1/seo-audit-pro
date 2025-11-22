@@ -212,17 +212,6 @@ export default function OrderForm() {
     }
   };
 
-  const handleWebsiteUrlChange = (value: string) => {
-    setFormData({ ...formData, websiteUrl: value });
-  };
-
-  const handleWebsiteUrlBlur = () => {
-    // Add https:// when user leaves the field if it's missing
-    if (formData.websiteUrl.trim() && !formData.websiteUrl.startsWith("http://") && !formData.websiteUrl.startsWith("https://")) {
-      setFormData({ ...formData, websiteUrl: ensureHttps(formData.websiteUrl) });
-    }
-  };
-
   const handleCompetitorUrlChange = (index: number, value: string) => {
     // Ensure array is long enough
     const newUrls = [...formData.competitorUrls];
