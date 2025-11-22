@@ -45,6 +45,18 @@ const ensureHttps = (url: string): string => {
   return `https://${trimmed}`;
 };
 
+// Helper function to validate domain format (must have valid TLD)
+const isValidDomain = (domain: string): boolean => {
+  if (!domain || domain.trim() === "") return true; // Empty is valid (optional field)
+  const trimmed = domain.trim().toLowerCase();
+  // Remove https:// if present for validation
+  const cleanDomain = trimmed.replace(/^https?:\/\//, "");
+  // Check for valid TLD pattern (e.g., .com, .net, .org, .io, .co.uk, etc.)
+  const tldPattern = /\.[a-z]{2,}(\.[a-z]{2,})?$/i;
+  // Also check for basic domain structure (at least one dot)
+  return tldPattern.test(cleanDomain) && cleanDomain.includes(".");
+};
+
 export default function OrderForm() {
   const { orderState, setTier, toggleAddOn, setExtraPages, setExtraKeywords, setWhiteLabel, setCompetitorUrls } = useOrder();
   const [formData, setFormData] = useState<FormData>({
@@ -59,10 +71,24 @@ export default function OrderForm() {
     whiteLabel: false,
     competitorUrls: ["", "", ""],
   });
+  const [domainWarnings, setDomainWarnings] = useState<Record<string, boolean>>({});
 
   // Sync form with context whenever context changes
   useEffect(() => {
     const addOnsArray = Array.from(orderState.addOns);
+    const hasExtraCompetitors = orderState.tier === "agency" && addOnsArray.includes("extra-competitors");
+    const maxCompetitors = hasExtraCompetitors ? 4 : 3;
+    
+    // Ensure competitorUrls array has the right length
+    let competitorUrls = [...orderState.competitorUrls];
+    while (competitorUrls.length < maxCompetitors) {
+      competitorUrls.push("");
+    }
+    // Trim to max if too long
+    if (competitorUrls.length > maxCompetitors) {
+      competitorUrls = competitorUrls.slice(0, maxCompetitors);
+    }
+    
     setFormData((prev) => ({
       ...prev,
       tier: orderState.tier,
@@ -70,9 +96,14 @@ export default function OrderForm() {
       extraPages: orderState.extraPages,
       extraKeywords: orderState.extraKeywords,
       whiteLabel: orderState.whiteLabel,
-      competitorUrls: orderState.competitorUrls,
+      competitorUrls: competitorUrls,
     }));
-  }, [orderState.tier, orderState.extraPages, orderState.extraKeywords, orderState.addOns, orderState.whiteLabel, orderState.competitorUrls]);
+    
+    // Update context if needed
+    if (competitorUrls.length !== orderState.competitorUrls.length) {
+      setCompetitorUrls(competitorUrls);
+    }
+  }, [orderState.tier, orderState.extraPages, orderState.extraKeywords, orderState.addOns, orderState.whiteLabel, orderState.competitorUrls, setCompetitorUrls]);
 
   const calculateTotal = () => {
     let total = tierPrices[formData.tier] || 39;
@@ -121,6 +152,8 @@ export default function OrderForm() {
   });
 
   const showCompetitorFields = formData.tier === "agency" || formData.addOns.includes("competitor-report");
+  const hasExtraCompetitors = formData.tier === "agency" && formData.addOns.includes("extra-competitors");
+  const maxCompetitors = hasExtraCompetitors ? 4 : 3;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -191,20 +224,70 @@ export default function OrderForm() {
   };
 
   const handleCompetitorUrlChange = (index: number, value: string) => {
+    // Ensure array is long enough
     const newUrls = [...formData.competitorUrls];
+    while (newUrls.length <= index) {
+      newUrls.push("");
+    }
     newUrls[index] = value;
     setCompetitorUrls(newUrls);
     setFormData({ ...formData, competitorUrls: newUrls });
+    
+    // Validate domain format
+    if (value.trim() !== "") {
+      const isValid = isValidDomain(value);
+      setDomainWarnings((prev) => ({ ...prev, [`competitor-${index}`]: !isValid }));
+    } else {
+      setDomainWarnings((prev) => {
+        const newWarnings = { ...prev };
+        delete newWarnings[`competitor-${index}`];
+        return newWarnings;
+      });
+    }
   };
 
   const handleCompetitorUrlBlur = (index: number) => {
     // Add https:// when user leaves the field if it's missing
-    const url = formData.competitorUrls[index];
+    const url = formData.competitorUrls[index] || "";
     if (url.trim() && !url.startsWith("http://") && !url.startsWith("https://")) {
       const newUrls = [...formData.competitorUrls];
+      while (newUrls.length <= index) {
+        newUrls.push("");
+      }
       newUrls[index] = ensureHttps(url);
       setCompetitorUrls(newUrls);
       setFormData({ ...formData, competitorUrls: newUrls });
+      
+      // Validate domain format on blur
+      const isValid = isValidDomain(newUrls[index]);
+      setDomainWarnings((prev) => ({ ...prev, [`competitor-${index}`]: !isValid }));
+    }
+  };
+
+  const handleWebsiteUrlChange = (value: string) => {
+    setFormData({ ...formData, websiteUrl: value });
+    
+    // Validate domain format
+    if (value.trim() !== "") {
+      const isValid = isValidDomain(value);
+      setDomainWarnings((prev) => ({ ...prev, website: !isValid }));
+    } else {
+      setDomainWarnings((prev) => {
+        const newWarnings = { ...prev };
+        delete newWarnings.website;
+        return newWarnings;
+      });
+    }
+  };
+
+  const handleWebsiteUrlBlur = () => {
+    if (formData.websiteUrl) {
+      const url = ensureHttps(formData.websiteUrl);
+      setFormData({ ...formData, websiteUrl: url });
+      
+      // Validate domain format
+      const isValid = isValidDomain(url);
+      setDomainWarnings((prev) => ({ ...prev, website: !isValid }));
     }
   };
 
@@ -262,17 +345,27 @@ export default function OrderForm() {
                 <span className="px-3 py-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg text-gray-600 text-sm">
                   https://
                 </span>
-                <input
+              <input
                   type="text"
-                  id="websiteUrl"
-                  required
+                id="websiteUrl"
+                required
                   value={formData.websiteUrl.replace(/^https?:\/\//, "")}
                   onChange={(e) => handleWebsiteUrlChange(e.target.value)}
                   onBlur={handleWebsiteUrlBlur}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  className={`flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                    domainWarnings.website ? "border-red-300 bg-red-50" : "border-gray-300"
+                  }`}
                   placeholder="example.com"
-                />
-              </div>
+              />
+            </div>
+            {domainWarnings.website && (
+              <p className="mt-1 text-sm text-amber-600 flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Please enter a valid domain with a TLD (e.g., example.com, site.net, domain.org)
+              </p>
+            )}
             </div>
 
             {/* Competitor URLs - Show when competitor option is selected or Agency tier */}
@@ -281,9 +374,9 @@ export default function OrderForm() {
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
                   {formData.tier === "agency" ? (
                     <>
-                      Competitor URLs (3 included)
+                      Competitor URLs ({maxCompetitors} {hasExtraCompetitors ? "max" : "included"})
                       <span className="block text-xs font-normal text-gray-500 mt-1">
-                        Enter up to 3 competitor websites for keyword gap analysis. Just type the domain (e.g., competitor.com)
+                        Enter up to {maxCompetitors} competitor websites for keyword gap analysis. Just type the domain (e.g., competitor.com)
                       </span>
                     </>
                   ) : (
@@ -294,21 +387,33 @@ export default function OrderForm() {
                       </span>
                     </>
                   )}
-                </label>
+                  </label>
                 <div className="space-y-3">
-                  {[0, 1, 2].map((index) => (
-                    <div key={index} className="flex items-center">
-                      <span className="px-3 py-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg text-gray-600 text-sm">
-                        https://
-                      </span>
-                      <input
-                        type="text"
-                        value={formData.competitorUrls[index]?.replace(/^https?:\/\//, "") || ""}
-                        onChange={(e) => handleCompetitorUrlChange(index, e.target.value)}
-                        onBlur={() => handleCompetitorUrlBlur(index)}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
-                        placeholder={`competitor${index + 1}.com`}
-                      />
+                  {Array.from({ length: maxCompetitors }, (_, i) => i).map((index) => (
+                    <div key={index}>
+                      <div className="flex items-center">
+                        <span className="px-3 py-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg text-gray-600 text-sm">
+                          https://
+                        </span>
+                        <input
+                          type="text"
+                          value={formData.competitorUrls[index]?.replace(/^https?:\/\//, "") || ""}
+                          onChange={(e) => handleCompetitorUrlChange(index, e.target.value)}
+                          onBlur={() => handleCompetitorUrlBlur(index)}
+                          className={`flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm ${
+                            domainWarnings[`competitor-${index}`] ? "border-red-300 bg-red-50" : "border-gray-300"
+                          }`}
+                          placeholder={`competitor${index + 1}.com`}
+                        />
+                      </div>
+                      {domainWarnings[`competitor-${index}`] && (
+                        <p className="mt-1 text-xs text-amber-600 flex items-center gap-1">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                          Please enter a valid domain with a TLD (e.g., competitor.com)
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -338,7 +443,7 @@ export default function OrderForm() {
             >
               {isSubmitting ? "Processing..." : `Proceed to Payment ($${calculateTotal()})`}
             </button>
-
+            
             {/* Error Message */}
             {submitStatus.type === "error" && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
@@ -346,7 +451,7 @@ export default function OrderForm() {
               </div>
             )}
           </form>
-        </div>
+          </div>
 
         <p className="text-center text-sm text-gray-600 mt-6 max-w-2xl mx-auto">
           No automated dashboards. Every audit is manually reviewed and delivered as a detailed PDF to your inbox.

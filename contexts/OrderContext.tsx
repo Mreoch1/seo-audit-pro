@@ -117,6 +117,13 @@ export function OrderProvider({ children }: { children: ReactNode }) {
           }
         } else if (addOnId === "white-label") {
           return { ...prev, addOns: newAddOns, whiteLabel: false };
+        } else if (addOnId === "extra-competitors") {
+          // Remove 4th competitor URL when extra-competitors is unchecked
+          // Keep first 3 if Agency tier, otherwise reset to 3 empty
+          if (prev.tier === "agency") {
+            const newUrls = prev.competitorUrls.slice(0, 3);
+            return { ...prev, addOns: newAddOns, competitorUrls: newUrls };
+          }
         }
         return { ...prev, addOns: newAddOns };
       } else {
@@ -128,6 +135,13 @@ export function OrderProvider({ children }: { children: ReactNode }) {
           return { ...prev, addOns: newAddOns, extraKeywords: 1 };
         } else if (addOnId === "white-label") {
           return { ...prev, addOns: newAddOns, whiteLabel: true };
+        } else if (addOnId === "extra-competitors" && prev.tier === "agency") {
+          // Add 4th competitor URL field when extra-competitors is checked for Agency tier
+          const newUrls = [...prev.competitorUrls];
+          if (newUrls.length < 4) {
+            newUrls.push("");
+          }
+          return { ...prev, addOns: newAddOns, competitorUrls: newUrls };
         }
         return { ...prev, addOns: newAddOns };
       }
