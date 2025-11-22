@@ -151,8 +151,14 @@ export async function POST(request: NextRequest) {
     });
 
     // Add each add-on as separate line items
+    // Note: competitor-report is included in Advanced tier, so skip it if tier is advanced
     if (Array.isArray(addOns) && addOns.length > 0) {
       for (const addOnId of addOns) {
+        // Skip competitor-report if Advanced tier is selected (it's included)
+        if (addOnId === "competitor-report" && tier === "advanced") {
+          continue; // Don't charge for add-ons included in the tier
+        }
+        
         if (addOnId === "extra-pages") {
           const pages = parseInt(extraPages?.toString() || "1");
           if (pages > 0) {

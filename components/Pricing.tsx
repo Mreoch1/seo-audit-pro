@@ -8,6 +8,7 @@ interface AddOn {
   description: string;
   price: number;
   unit?: string;
+  includedIn?: string[]; // Tiers that already include this
 }
 
 interface Tier {
@@ -101,6 +102,7 @@ const addOns: AddOn[] = [
     name: "Competitor Analysis",
     description: "Keyword gap & strategy report",
     price: 20,
+    includedIn: ["advanced"], // Already included in Advanced tier
   },
 ];
 
@@ -113,11 +115,70 @@ export default function Pricing() {
 
   const currentTier = tiers.find((t) => t.id === selectedTier)!;
 
+  // Check if current selection would be better as Advanced tier
+  const getBetterTierSuggestion = () => {
+    if (selectedTier === "advanced") return null;
+    
+    const competitorAddOn = addOns.find(a => a.id === "competitor-report");
+    const hasCompetitorAddOn = selectedAddOns.has("competitor-report");
+    
+    if (!hasCompetitorAddOn || !competitorAddOn) return null;
+    
+    // Calculate current total
+    let currentTotal = currentTier.price;
+    selectedAddOns.forEach((addOnId) => {
+      const addOn = addOns.find((a) => a.id === addOnId);
+      if (addOn) {
+        if (addOn.id === "extra-pages") {
+          currentTotal += addOn.price * extraPages;
+        } else if (addOn.id === "extra-keywords") {
+          currentTotal += addOn.price * extraKeywords;
+        } else {
+          currentTotal += addOn.price;
+        }
+      }
+    });
+    
+    // Calculate Advanced tier total (excluding competitor add-on since it's included)
+    const advancedTier = tiers.find(t => t.id === "advanced")!;
+    let advancedTotal = advancedTier.price;
+    selectedAddOns.forEach((addOnId) => {
+      if (addOnId === "competitor-report") return; // Skip, it's included
+      const addOn = addOns.find((a) => a.id === addOnId);
+      if (addOn) {
+        if (addOn.id === "extra-pages") {
+          advancedTotal += addOn.price * extraPages;
+        } else if (addOn.id === "extra-keywords") {
+          advancedTotal += addOn.price * extraKeywords;
+        } else {
+          advancedTotal += addOn.price;
+        }
+      }
+    });
+    
+    // If Advanced is same price or cheaper, suggest it
+    if (advancedTotal <= currentTotal) {
+      return {
+        currentTotal,
+        advancedTotal,
+        savings: currentTotal - advancedTotal,
+      };
+    }
+    
+    return null;
+  };
+
+  const suggestion = getBetterTierSuggestion();
+
   const calculateTotal = () => {
     let total = currentTier.price;
     selectedAddOns.forEach((addOnId) => {
       const addOn = addOns.find((a) => a.id === addOnId);
       if (addOn) {
+        // Skip add-ons that are already included in the selected tier
+        if (addOn.includedIn?.includes(selectedTier)) {
+          return; // Don't charge for add-ons included in tier
+        }
         if (addOn.id === "extra-pages") {
           total += addOn.price * extraPages;
         } else if (addOn.id === "extra-keywords") {
@@ -128,6 +189,25 @@ export default function Pricing() {
       }
     });
     return total;
+  };
+
+  const handleAddOnToggle = (addOnId: string) => {
+    const addOn = addOns.find(a => a.id === addOnId);
+    
+    // If trying to add competitor analysis and not on Advanced tier, suggest upgrade
+    if (addOnId === "competitor-report" && selectedTier !== "advanced") {
+      const competitorAddOn = addOns.find(a => a.id === "competitor-report");
+      if (competitorAddOn) {
+        const wouldBeTotal = currentTier.price + competitorAddOn.price;
+        const advancedTier = tiers.find(t => t.id === "advanced")!;
+        if (wouldBeTotal >= advancedTier.price) {
+          // Show suggestion but still allow toggle
+          // User can decide
+        }
+      }
+    }
+    
+    toggleAddOn(addOnId);
   };
 
   return (
@@ -187,7 +267,7 @@ export default function Pricing() {
                 >
                   {selectedTier === tier.id ? "Selected" : "Select Tier"}
                 </button>
-              </div>
+                </div>
             </div>
           ))}
         </div>
@@ -220,57 +300,101 @@ export default function Pricing() {
           </div>
 
           <div className="space-y-4">
-            {addOns.map((addOn) => (
-              <div key={addOn.id} className="flex items-start gap-4">
-                <input
-                  type="checkbox"
-                  id={addOn.id}
-                  checked={selectedAddOns.has(addOn.id)}
-                  onChange={() => toggleAddOn(addOn.id)}
-                  className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                />
-                <label htmlFor={addOn.id} className="flex-1 cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-semibold text-gray-900">{addOn.name}</div>
-                      <div className="text-sm text-gray-600">{addOn.description}</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-semibold text-gray-900">
-                        ${addOn.price}
-                        {addOn.unit && ` ${addOn.unit}`}
+            {addOns.map((addOn) => {
+              const isIncluded = addOn.includedIn?.includes(selectedTier);
+              const isChecked = selectedAddOns.has(addOn.id);
+              
+              return (
+                <div key={addOn.id} className="flex items-start gap-4">
+                  <input
+                    type="checkbox"
+                    id={addOn.id}
+                    checked={isChecked}
+                    onChange={() => handleAddOnToggle(addOn.id)}
+                    disabled={isIncluded}
+                    className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                  <label htmlFor={addOn.id} className={`flex-1 ${isIncluded ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold text-gray-900">
+                          {addOn.name}
+                          {isIncluded && (
+                            <span className="ml-2 text-xs font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded">
+                              Included in {selectedTier === "advanced" ? "Advanced" : ""} tier
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm text-gray-600">{addOn.description}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`font-semibold ${isIncluded ? "text-green-600 line-through" : "text-gray-900"}`}>
+                          {isIncluded ? "Free" : `$${addOn.price}`}
+                          {!isIncluded && addOn.unit && ` ${addOn.unit}`}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {addOn.id === "extra-pages" && selectedAddOns.has(addOn.id) && (
-                    <div className="mt-2 flex items-center gap-2">
-                      <input
-                        type="number"
-                        min="1"
-                        value={extraPages}
-                        onChange={(e) => setExtraPages(parseInt(e.target.value) || 1)}
-                        className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
-                      />
-                      <span className="text-sm text-gray-600">pages</span>
-                    </div>
-                  )}
-                  {addOn.id === "extra-keywords" && selectedAddOns.has(addOn.id) && (
-                    <div className="mt-2 flex items-center gap-2">
-                      <input
-                        type="number"
-                        min="1"
-                        value={extraKeywords}
-                        onChange={(e) => setExtraKeywords(parseInt(e.target.value) || 1)}
-                        className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
-                      />
-                      <span className="text-sm text-gray-600">keywords</span>
-                    </div>
-                  )}
-                </label>
-              </div>
-            ))}
+                    {addOn.id === "extra-pages" && isChecked && !isIncluded && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <input
+                          type="number"
+                          min="1"
+                          value={extraPages}
+                          onChange={(e) => setExtraPages(parseInt(e.target.value) || 1)}
+                          className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                        />
+                        <span className="text-sm text-gray-600">pages</span>
+                      </div>
+                    )}
+                    {addOn.id === "extra-keywords" && isChecked && !isIncluded && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <input
+                          type="number"
+                          min="1"
+                          value={extraKeywords}
+                          onChange={(e) => setExtraKeywords(parseInt(e.target.value) || 1)}
+                          className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                        />
+                        <span className="text-sm text-gray-600">keywords</span>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              );
+            })}
           </div>
         </div>
+
+        {/* Smart Suggestion Banner */}
+        {suggestion && (
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+            <div className="flex items-start gap-3">
+              <svg className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div className="flex-1">
+                <h4 className="font-semibold text-blue-900 mb-1">Better Value Available</h4>
+                <p className="text-sm text-blue-800 mb-2">
+                  You&apos;re selecting {currentTier.name} tier + Competitor Analysis (${suggestion.currentTotal}). 
+                  The <strong>Advanced tier</strong> includes competitor analysis plus more features for ${suggestion.advancedTotal}.
+                  {suggestion.savings > 0 && ` You&apos;ll save $${suggestion.savings}!`}
+                </p>
+                <button
+                  onClick={() => {
+                    // Remove competitor add-on since it's included in Advanced
+                    if (selectedAddOns.has("competitor-report")) {
+                      toggleAddOn("competitor-report");
+                    }
+                    setTier("advanced");
+                  }}
+                  className="text-sm font-semibold text-blue-700 hover:text-blue-900 underline"
+                >
+                  Upgrade to Advanced Tier →
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="sticky bottom-4 z-20 shadow-xl bg-primary-600 text-white rounded-lg p-4 sm:p-6 text-center transform transition-transform">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto">

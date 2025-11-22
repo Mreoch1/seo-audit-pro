@@ -62,6 +62,11 @@ export default function OrderForm() {
   const calculateTotal = () => {
     let total = tierPrices[formData.tier] || 29;
     formData.addOns.forEach((addOnId) => {
+      // Skip competitor-report if Advanced tier is selected (it's included)
+      if (addOnId === "competitor-report" && formData.tier === "advanced") {
+        return; // Don't charge for add-ons included in the tier
+      }
+      
       if (addOnId === "extra-pages") {
         total += addOnPrices["extra-pages"] * formData.extraPages;
       } else if (addOnId === "extra-keywords") {
