@@ -56,9 +56,9 @@ export default function SampleReport() {
                 <div className="text-right">
                   <div className="text-sm font-bold text-gray-400">SEO AUDIT PRO</div>
                   <div className="text-xs text-gray-400">Nov 21, 2025</div>
-                </div>
-              </div>
-
+                    </div>
+                  </div>
+                  
               {/* Critical Issues Table */}
               <div className="mb-10">
                 <h4 className="flex items-center gap-3 text-lg font-bold text-red-700 mb-4 bg-red-50 p-3 rounded-lg border-l-4 border-red-600">
@@ -85,7 +85,7 @@ export default function SampleReport() {
                           <p className="text-sm text-gray-600 mb-2">Your server is missing the <code>Strict-Transport-Security</code> header. This is a critical security signal for Google.</p>
                           <div className="bg-gray-50 p-2 rounded border border-gray-200 font-mono text-xs text-gray-700">
                             Strict-Transport-Security: max-age=31536000; includeSubDomains
-                          </div>
+                      </div>
                         </td>
                         <td className="px-6 py-4 align-top">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -111,9 +111,9 @@ export default function SampleReport() {
                       </tr>
                     </tbody>
                   </table>
-                </div>
-              </div>
-
+                    </div>
+                  </div>
+                  
               {/* High Priority Issues Table */}
               <div>
                 <h4 className="flex items-center gap-3 text-lg font-bold text-orange-700 mb-4 bg-orange-50 p-3 rounded-lg border-l-4 border-orange-500">

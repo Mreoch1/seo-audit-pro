@@ -54,10 +54,10 @@ export default function HowItWorks() {
             <div key={index} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow relative overflow-hidden">
               <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary-50 rounded-full opacity-50"></div>
               <div className="relative z-10">
-                <div className="flex items-center justify-center w-16 h-16 bg-primary-100 text-primary-600 rounded-full mb-4 mx-auto">
-                  {step.icon}
-                </div>
-                <div className="text-center">
+              <div className="flex items-center justify-center w-16 h-16 bg-primary-100 text-primary-600 rounded-full mb-4 mx-auto">
+                {step.icon}
+              </div>
+              <div className="text-center">
                   <div className="text-sm font-bold tracking-widest text-accent-600 mb-2 uppercase">Step {step.number}</div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
