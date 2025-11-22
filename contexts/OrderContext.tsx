@@ -48,8 +48,8 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         } else if (addOnId === "extra-keywords") {
           return { ...prev, addOns: newAddOns, extraKeywords: 0 };
         } else if (addOnId === "competitor-report") {
-          // Reset competitor URLs if add-on is removed AND tier is not advanced
-          if (prev.tier !== "advanced") {
+          // Reset competitor URLs if add-on is removed AND tier is not agency
+          if (prev.tier !== "agency") {
              return { ...prev, addOns: newAddOns, competitorUrls: ["", "", ""] };
           }
         }

@@ -9,6 +9,7 @@ interface AddOn {
   price: number;
   unit?: string;
   includedIn?: string[]; // Tiers that already include this
+  availableIn?: string[]; // Tiers where this add-on is available
 }
 
 interface Tier {
@@ -25,84 +26,137 @@ const tiers: Tier[] = [
   {
     id: "starter",
     name: "Starter",
-    subtitle: "Quick Health Check",
+    subtitle: "Essential SEO Audit",
     price: 19,
-    pages: "Up to 3 pages",
+    pages: "Up to 50 pages",
     features: [
-      "Crawl Depth: 2 levels",
-      "Delivery: 1 Day",
-      "Title & Meta Optimization",
-      "Heading (H1-H3) Analysis",
-      "Image Alt Text Check",
-      "Basic Technical Check",
+      "Deep Crawl & JavaScript Rendering",
+      "Core Web Vitals Analysis",
+      "Technical SEO Audit",
+      "On-Page SEO Report",
+      "Content Quality & Readability",
+      "Accessibility Checks",
+      "Local SEO Signals (Basic)",
+      "Schema Detection",
+      "Broken Links & Redirect Chains",
+      "Internal Linking Overview",
+      "Branded PDF Report",
     ],
   },
   {
     id: "standard",
     name: "Standard",
-    subtitle: "Full Site Audit",
-    price: 29,
-    pages: "Up to 20 pages",
+    subtitle: "Complete Site Analysis",
+    price: 39,
+    pages: "Up to 200 pages",
     features: [
       "Everything in Starter, plus:",
-      "Crawl Depth: 3 levels",
-      "5 Keywords Analyzed",
-      "Schema Markup Analysis",
-      "Core Web Vitals & Perf.",
-      "Full Technical Check",
+      "Advanced Local SEO Analysis",
+      "Full Schema Validation",
+      "Mobile Responsiveness Diagnostics",
+      "Thin Content & Duplicate Detection",
+      "Keyword Extraction (NLP)",
+      "Readability Diagnostics",
+      "Security Checks (HTTPS, HSTS)",
+      "Platform Detection",
+      "Automated Fix Recommendations",
     ],
     highlight: true,
   },
   {
-    id: "advanced",
-    name: "Advanced",
-    subtitle: "Enterprise & Competitive",
-    price: 39,
-    pages: "Up to 50 pages",
+    id: "professional",
+    name: "Professional",
+    subtitle: "Deep-Dive Analysis",
+    price: 59,
+    pages: "Up to 500 pages",
     features: [
       "Everything in Standard, plus:",
-      "Crawl Depth: 5 levels",
-      "10 Keywords Analyzed",
-      "Competitor Gap Analysis",
-      "Enhanced Content Audit",
-      "Adv. Technical Checks",
+      "Multi-level Internal Link Mapping",
+      "Crawl Diagnostics & Insights",
+      "Enhanced Accessibility (WCAG)",
+      "Full Keyword Opportunity Mapping",
+      "Detailed Content Structure Map",
+      "JS/CSS Payload Analysis",
+      "Core Web Vitals Opportunity Report",
+      "Priority Fix Action Plan",
+    ],
+  },
+  {
+    id: "agency",
+    name: "Agency / Enterprise",
+    subtitle: "Full Competitive Suite",
+    price: 99,
+    pages: "Unlimited Pages",
+    features: [
+      "Everything in Professional, plus:",
+      "Unlimited Keywords",
+      "3 Competitor Crawls & Gap Analysis",
+      "Full Local SEO Suite",
+      "Social Signals Audit",
+      "JS Rendering Diagnostics",
+      "Full Internal Link Graph",
+      "Orphan Page Detection",
+      "Duplicate URL Cleaning",
+      "Blank Report Included (Free)",
     ],
   },
 ];
 
 const addOns: AddOn[] = [
   {
-    id: "fast-delivery",
-    name: "Fast Delivery (24h)",
-    description: "Priority processing (Standard/Advanced tiers)",
+    id: "white-label",
+    name: "Blank Report (Unbranded)",
+    description: "Remove SEO Audit Pro branding - Perfect for agencies",
     price: 10,
+    availableIn: ["starter", "standard", "professional"],
+    includedIn: ["agency"], // Free in Agency tier
   },
   {
     id: "extra-pages",
-    name: "Extra Pages",
-    description: "+ $5 per additional page scan",
+    name: "Additional Pages",
+    description: "Add 50 more pages to your crawl",
     price: 5,
-    unit: "per page",
+    unit: "per 50 pages",
+    availableIn: ["starter", "standard", "professional"],
   },
   {
-    id: "extra-keywords",
-    name: "Extra Keywords",
-    description: "Additional keyword analysis",
-    price: 1,
-    unit: "per keyword",
+    id: "competitor-report",
+    name: "Competitor Gap Analysis",
+    description: "Keyword gap & competitive strategy report",
+    price: 15,
+    availableIn: ["starter", "standard"],
+    includedIn: ["agency"], // Included in Agency tier (3 competitors)
   },
   {
     id: "schema-deep-dive",
     name: "Schema Deep-Dive",
-    description: "Detailed structured data validation",
+    description: "Detailed structured data validation & recommendations",
     price: 15,
+    availableIn: ["starter"], // Only available for Starter
   },
   {
-    id: "competitor-report",
-    name: "Competitor Analysis",
-    description: "Keyword gap & strategy report",
-    price: 20,
-    includedIn: ["advanced"], // Already included in Advanced tier
+    id: "extra-keywords",
+    name: "Extra Keywords",
+    description: "Additional keyword analysis & research",
+    price: 1,
+    unit: "per keyword",
+    availableIn: ["starter", "standard", "professional"],
+    includedIn: ["agency"], // Unlimited in Agency
+  },
+  {
+    id: "extra-competitors",
+    name: "Additional Competitors",
+    description: "Add more competitor websites to analysis (Agency tier only)",
+    price: 10,
+    unit: "per competitor",
+    availableIn: ["agency"],
+  },
+  {
+    id: "extra-crawl-depth",
+    name: "Extra Crawl Depth",
+    description: "Increase crawl depth for complex sites (Agency tier only)",
+    price: 15,
+    availableIn: ["agency"],
   },
 ];
 
@@ -115,20 +169,34 @@ export default function Pricing() {
 
   const currentTier = tiers.find((t) => t.id === selectedTier)!;
 
-  // Check if current selection would be better as Advanced tier
+  // Filter add-ons based on tier availability
+  const getAvailableAddOns = () => {
+    return addOns.filter((addOn) => {
+      // If included in tier, show it but disabled
+      if (addOn.includedIn?.includes(selectedTier)) {
+        return true;
+      }
+      // If has availableIn, check if current tier is in the list
+      if (addOn.availableIn) {
+        return addOn.availableIn.includes(selectedTier);
+      }
+      // If no restrictions, show it
+      return true;
+    });
+  };
+
+  // Check if current selection would be better as a higher tier
   const getBetterTierSuggestion = () => {
-    if (selectedTier === "advanced") return null;
+    if (selectedTier === "agency") return null;
     
     const competitorAddOn = addOns.find(a => a.id === "competitor-report");
     const hasCompetitorAddOn = selectedAddOns.has("competitor-report");
-    
-    if (!hasCompetitorAddOn || !competitorAddOn) return null;
     
     // Calculate current total
     let currentTotal = currentTier.price;
     selectedAddOns.forEach((addOnId) => {
       const addOn = addOns.find((a) => a.id === addOnId);
-      if (addOn) {
+      if (addOn && !addOn.includedIn?.includes(selectedTier)) {
         if (addOn.id === "extra-pages") {
           currentTotal += addOn.price * extraPages;
         } else if (addOn.id === "extra-keywords") {
@@ -139,30 +207,63 @@ export default function Pricing() {
       }
     });
     
-    // Calculate Advanced tier total (excluding competitor add-on since it's included)
-    const advancedTier = tiers.find(t => t.id === "advanced")!;
-    let advancedTotal = advancedTier.price;
-    selectedAddOns.forEach((addOnId) => {
-      if (addOnId === "competitor-report") return; // Skip, it's included
-      const addOn = addOns.find((a) => a.id === addOnId);
-      if (addOn) {
-        if (addOn.id === "extra-pages") {
-          advancedTotal += addOn.price * extraPages;
-        } else if (addOn.id === "extra-keywords") {
-          advancedTotal += addOn.price * extraKeywords;
-        } else {
-          advancedTotal += addOn.price;
+    // Check if Agency tier would be better
+    if (hasCompetitorAddOn || selectedTier === "professional") {
+      const agencyTier = tiers.find(t => t.id === "agency")!;
+      let agencyTotal = agencyTier.price;
+      
+      // Recalculate for Agency (excluding included items)
+      selectedAddOns.forEach((addOnId) => {
+        if (addOnId === "competitor-report" || addOnId === "white-label") return; // Included
+        const addOn = addOns.find((a) => a.id === addOnId);
+        if (addOn && addOn.availableIn?.includes("agency")) {
+          if (addOn.id === "extra-pages") {
+            agencyTotal += addOn.price * extraPages;
+          } else if (addOn.id === "extra-keywords") {
+            // Unlimited in Agency, skip
+          } else if (addOn.id === "extra-competitors" || addOn.id === "extra-crawl-depth") {
+            agencyTotal += addOn.price;
+          }
         }
+      });
+      
+      if (agencyTotal <= currentTotal + 20) { // Suggest if within $20
+        return {
+          tier: "agency",
+          currentTotal,
+          suggestedTotal: agencyTotal,
+          savings: currentTotal - agencyTotal,
+        };
       }
-    });
+    }
     
-    // If Advanced is same price or cheaper, suggest it
-    if (advancedTotal <= currentTotal) {
-      return {
-        currentTotal,
-        advancedTotal,
-        savings: currentTotal - advancedTotal,
-      };
+    // Check if Professional would be better than Standard + add-ons
+    if (selectedTier === "standard" && selectedAddOns.size > 0) {
+      const professionalTier = tiers.find(t => t.id === "professional")!;
+      let professionalTotal = professionalTier.price;
+      
+      selectedAddOns.forEach((addOnId) => {
+        if (addOnId === "competitor-report") return; // Not in Professional
+        const addOn = addOns.find((a) => a.id === addOnId);
+        if (addOn && addOn.availableIn?.includes("professional")) {
+          if (addOn.id === "extra-pages") {
+            professionalTotal += addOn.price * extraPages;
+          } else if (addOn.id === "extra-keywords") {
+            professionalTotal += addOn.price * extraKeywords;
+          } else {
+            professionalTotal += addOn.price;
+          }
+        }
+      });
+      
+      if (professionalTotal <= currentTotal) {
+        return {
+          tier: "professional",
+          currentTotal,
+          suggestedTotal: professionalTotal,
+          savings: currentTotal - professionalTotal,
+        };
+      }
     }
     
     return null;
@@ -179,10 +280,17 @@ export default function Pricing() {
         if (addOn.includedIn?.includes(selectedTier)) {
           return; // Don't charge for add-ons included in tier
         }
+        // Skip if not available in current tier
+        if (addOn.availableIn && !addOn.availableIn.includes(selectedTier)) {
+          return;
+        }
         if (addOn.id === "extra-pages") {
           total += addOn.price * extraPages;
         } else if (addOn.id === "extra-keywords") {
           total += addOn.price * extraKeywords;
+        } else if (addOn.id === "extra-competitors") {
+          // This will be handled separately if needed
+          total += addOn.price;
         } else {
           total += addOn.price;
         }
@@ -192,33 +300,20 @@ export default function Pricing() {
   };
 
   const handleAddOnToggle = (addOnId: string) => {
-    const addOn = addOns.find(a => a.id === addOnId);
-    
-    // If trying to add competitor analysis and not on Advanced tier, suggest upgrade
-    if (addOnId === "competitor-report" && selectedTier !== "advanced") {
-      const competitorAddOn = addOns.find(a => a.id === "competitor-report");
-      if (competitorAddOn) {
-        const wouldBeTotal = currentTier.price + competitorAddOn.price;
-        const advancedTier = tiers.find(t => t.id === "advanced")!;
-        if (wouldBeTotal >= advancedTier.price) {
-          // Show suggestion but still allow toggle
-          // User can decide
-        }
-      }
-    }
-    
     toggleAddOn(addOnId);
   };
+
+  const availableAddOns = getAvailableAddOns();
 
   return (
     <section id="pricing" className="bg-gray-50">
       <div className="section-container">
         <h2 className="heading-2 text-center mb-4">Simple, Transparent Pricing</h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          Professional SEO audits starting at just $19. No monthly fees, no subscriptions. Just high-impact data.
+          Professional SEO audits starting at just $19. No monthly fees, no subscriptions. Choose the tier that fits your needs.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {tiers.map((tier) => (
             <div
               key={tier.id}
@@ -246,9 +341,9 @@ export default function Pricing() {
                 </p>
               </div>
               
-              <ul className="space-y-3 mb-8 flex-grow">
+              <ul className="space-y-2 mb-8 flex-grow text-sm">
                 {tier.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
+                  <li key={index} className="flex items-start gap-2 text-gray-700">
                     <svg className="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -275,34 +370,56 @@ export default function Pricing() {
         <div className="bg-white rounded-lg p-6 border border-gray-200 mb-6">
           <h3 className="heading-3 mb-4">Customize Your Audit</h3>
           
-          {/* White Label Option (Free) */}
-          <div className="mb-6 pb-6 border-b border-gray-200">
-            <div className="flex items-start gap-4">
-              <input
-                type="checkbox"
-                id="white-label"
-                checked={orderState.whiteLabel}
-                onChange={(e) => setWhiteLabel(e.target.checked)}
-                className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-              />
-              <label htmlFor="white-label" className="flex-1 cursor-pointer">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-semibold text-gray-900">White Label Report</div>
-                    <div className="text-sm text-gray-600">Remove SEO Audit Pro branding (Perfect for agencies)</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-semibold text-green-600">Free</div>
-                  </div>
-                </div>
-              </label>
-            </div>
-          </div>
-
           <div className="space-y-4">
-            {addOns.map((addOn) => {
+            {availableAddOns.map((addOn) => {
               const isIncluded = addOn.includedIn?.includes(selectedTier);
               const isChecked = selectedAddOns.has(addOn.id);
+              const isAvailable = !addOn.availableIn || addOn.availableIn.includes(selectedTier);
+              
+              // Special handling for white-label checkbox
+              if (addOn.id === "white-label") {
+                return (
+                  <div key={addOn.id} className="flex items-start gap-4 pb-4 border-b border-gray-200">
+                    <input
+                      type="checkbox"
+                      id={addOn.id}
+                      checked={isIncluded ? true : orderState.whiteLabel}
+                      onChange={(e) => {
+                        if (!isIncluded) {
+                          setWhiteLabel(e.target.checked);
+                          if (e.target.checked) {
+                            toggleAddOn(addOn.id);
+                          } else {
+                            toggleAddOn(addOn.id);
+                          }
+                        }
+                      }}
+                      disabled={isIncluded}
+                      className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                    <label htmlFor={addOn.id} className={`flex-1 ${isIncluded ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-gray-900">
+                            {addOn.name}
+                            {isIncluded && (
+                              <span className="ml-2 text-xs font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded">
+                                Included in {selectedTier === "agency" ? "Agency" : ""} tier
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-sm text-gray-600">{addOn.description}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className={`font-semibold ${isIncluded ? "text-green-600 line-through" : "text-gray-900"}`}>
+                            {isIncluded ? "Free" : `$${addOn.price}`}
+                          </div>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                );
+              }
               
               return (
                 <div key={addOn.id} className="flex items-start gap-4">
@@ -311,17 +428,22 @@ export default function Pricing() {
                     id={addOn.id}
                     checked={isChecked}
                     onChange={() => handleAddOnToggle(addOn.id)}
-                    disabled={isIncluded}
+                    disabled={isIncluded || !isAvailable}
                     className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
-                  <label htmlFor={addOn.id} className={`flex-1 ${isIncluded ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
+                  <label htmlFor={addOn.id} className={`flex-1 ${isIncluded || !isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-semibold text-gray-900">
                           {addOn.name}
                           {isIncluded && (
                             <span className="ml-2 text-xs font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded">
-                              Included in {selectedTier === "advanced" ? "Advanced" : ""} tier
+                              Included in {selectedTier === "agency" ? "Agency" : ""} tier
+                            </span>
+                          )}
+                          {!isAvailable && !isIncluded && (
+                            <span className="ml-2 text-xs font-normal text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
+                              Not available in {currentTier.name} tier
                             </span>
                           )}
                         </div>
@@ -343,7 +465,7 @@ export default function Pricing() {
                           onChange={(e) => setExtraPages(parseInt(e.target.value) || 1)}
                           className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
                         />
-                        <span className="text-sm text-gray-600">pages</span>
+                        <span className="text-sm text-gray-600">× 50 pages</span>
                       </div>
                     )}
                     {addOn.id === "extra-keywords" && isChecked && !isIncluded && (
@@ -375,21 +497,25 @@ export default function Pricing() {
               <div className="flex-1">
                 <h4 className="font-semibold text-blue-900 mb-1">Better Value Available</h4>
                 <p className="text-sm text-blue-800 mb-2">
-                  You&apos;re selecting {currentTier.name} tier + Competitor Analysis (${suggestion.currentTotal}). 
-                  The <strong>Advanced tier</strong> includes competitor analysis plus more features for ${suggestion.advancedTotal}.
+                  You&apos;re selecting {currentTier.name} tier (${suggestion.currentTotal}). 
+                  The <strong>{suggestion.tier === "agency" ? "Agency" : "Professional"} tier</strong> includes more features for ${suggestion.suggestedTotal}.
                   {suggestion.savings > 0 && ` You&apos;ll save $${suggestion.savings}!`}
                 </p>
                 <button
                   onClick={() => {
-                    // Remove competitor add-on since it's included in Advanced
-                    if (selectedAddOns.has("competitor-report")) {
+                    // Remove add-ons that are included in the suggested tier
+                    if (selectedAddOns.has("competitor-report") && suggestion.tier === "agency") {
                       toggleAddOn("competitor-report");
                     }
-                    setTier("advanced");
+                    if (selectedAddOns.has("white-label") && suggestion.tier === "agency") {
+                      toggleAddOn("white-label");
+                      setWhiteLabel(false);
+                    }
+                    setTier(suggestion.tier);
                   }}
                   className="text-sm font-semibold text-blue-700 hover:text-blue-900 underline"
                 >
-                  Upgrade to Advanced Tier →
+                  Upgrade to {suggestion.tier === "agency" ? "Agency" : "Professional"} Tier →
                 </button>
               </div>
             </div>

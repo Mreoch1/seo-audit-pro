@@ -135,7 +135,7 @@ export function validateNotes(notes: string | undefined): ValidationResult {
  * Validate tier selection
  */
 export function validateTier(tier: string): ValidationResult {
-  const validTiers = ['starter', 'standard', 'advanced'];
+  const validTiers = ['starter', 'standard', 'professional', 'agency'];
   
   if (!tier || typeof tier !== 'string') {
     return { valid: false, error: 'Tier is required' };

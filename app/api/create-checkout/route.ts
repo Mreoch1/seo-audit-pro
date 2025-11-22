@@ -8,17 +8,20 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
 });
 
 const tierPrices: Record<string, { name: string; price: number }> = {
-  starter: { name: "Starter - Mini SEO Audit", price: 19 },
-  standard: { name: "Standard - Full SEO Audit", price: 29 },
-  advanced: { name: "Advanced - SEO Audit + Competitor", price: 39 },
+  starter: { name: "Starter - Essential SEO Audit", price: 19 },
+  standard: { name: "Standard - Complete Site Analysis", price: 39 },
+  professional: { name: "Professional - Deep-Dive Analysis", price: 59 },
+  agency: { name: "Agency / Enterprise - Full Competitive Suite", price: 99 },
 };
 
 const addOnPrices: Record<string, { name: string; price: number }> = {
-  "fast-delivery": { name: "Fast Delivery (24h turnaround)", price: 10 },
-  "extra-pages": { name: "Extra Pages", price: 5 },
-  "extra-keywords": { name: "Extra Keywords Researched", price: 1 },
+  "white-label": { name: "Blank Report (Unbranded)", price: 10 },
+  "extra-pages": { name: "Additional Pages (50 pages)", price: 5 },
+  "extra-keywords": { name: "Extra Keywords", price: 1 },
   "schema-deep-dive": { name: "Schema Markup Deep-Dive", price: 15 },
-  "competitor-report": { name: "Competitor Keyword Gap Report", price: 20 },
+  "competitor-report": { name: "Competitor Gap Analysis", price: 15 },
+  "extra-competitors": { name: "Additional Competitors", price: 10 },
+  "extra-crawl-depth": { name: "Extra Crawl Depth", price: 15 },
 };
 
 export async function POST(request: NextRequest) {
@@ -118,7 +121,7 @@ export async function POST(request: NextRequest) {
 
     // Validate price (prevent manipulation)
     const priceNum = typeof totalPrice === 'number' ? totalPrice : parseFloat(totalPrice);
-    if (isNaN(priceNum) || priceNum < 19 || priceNum > 500) {
+    if (isNaN(priceNum) || priceNum < 19 || priceNum > 1000) {
       return NextResponse.json(
         { error: "Invalid price" },
         { status: 400 }
@@ -151,12 +154,36 @@ export async function POST(request: NextRequest) {
     });
 
     // Add each add-on as separate line items
-    // Note: competitor-report is included in Advanced tier, so skip it if tier is advanced
+    // Skip add-ons that are included in the selected tier
     if (Array.isArray(addOns) && addOns.length > 0) {
       for (const addOnId of addOns) {
-        // Skip competitor-report if Advanced tier is selected (it's included)
-        if (addOnId === "competitor-report" && tier === "advanced") {
-          continue; // Don't charge for add-ons included in the tier
+        // Skip white-label if Agency tier (included free)
+        if (addOnId === "white-label" && tier === "agency") {
+          continue;
+        }
+        // Skip competitor-report if Agency tier (3 competitors included)
+        if (addOnId === "competitor-report" && tier === "agency") {
+          continue;
+        }
+        // Skip extra-keywords if Agency tier (unlimited included)
+        if (addOnId === "extra-keywords" && tier === "agency") {
+          continue;
+        }
+        // Skip schema-deep-dive if not Starter tier (not available)
+        if (addOnId === "schema-deep-dive" && tier !== "starter") {
+          continue;
+        }
+        // Skip competitor-report if not Starter/Standard (not available)
+        if (addOnId === "competitor-report" && (tier === "professional" || tier === "agency")) {
+          continue;
+        }
+        // Skip extra-competitors and extra-crawl-depth if not Agency tier
+        if ((addOnId === "extra-competitors" || addOnId === "extra-crawl-depth") && tier !== "agency") {
+          continue;
+        }
+        // Skip extra-pages if Agency tier (unlimited pages)
+        if (addOnId === "extra-pages" && tier === "agency") {
+          continue;
         }
         
         if (addOnId === "extra-pages") {
@@ -208,20 +235,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Add white label option if selected (free, but shown for clarity)
-    if (whiteLabel) {
-      lineItems.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "White Label Report (No Branding)",
-            description: "Receive a report without SEO Audit Pro branding",
-          },
-          unit_amount: 0, // Free
-        },
-        quantity: 1,
-      });
-    }
+    // Note: White label is now a paid add-on ($10) unless Agency tier (included free)
+    // It's already handled in the add-ons loop above
 
     // Create Stripe Checkout Session with itemized line items
     const session = await stripe.checkout.sessions.create({

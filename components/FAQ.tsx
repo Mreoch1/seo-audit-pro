@@ -30,11 +30,11 @@ const faqs: FAQItem[] = [
   },
   {
     question: "What if I need more pages than my tier allows?",
-    answer: "Add the Extra Pages add-on ($5 per page) to audit additional pages beyond your tier limit. Specify the quantity when placing your order.",
+    answer: "Add the Additional Pages add-on ($5 per 50 pages) to audit more pages beyond your tier limit. Specify the quantity when placing your order.",
   },
   {
     question: "Can I get a competitor analysis?",
-    answer: "Yes! The Advanced tier includes competitor keyword gap analysis. You can also add it as an add-on to Starter or Standard tiers for $20.",
+    answer: "Yes! The Agency tier includes 3 competitor keyword gap analyses. You can also add competitor analysis as an add-on to Starter or Standard tiers for $15.",
   },
 ];
 

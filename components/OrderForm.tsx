@@ -18,16 +18,19 @@ interface FormData {
 
 const tierPrices: Record<string, number> = {
   starter: 19,
-  standard: 29,
-  advanced: 39,
+  standard: 39,
+  professional: 59,
+  agency: 99,
 };
 
 const addOnPrices: Record<string, number> = {
-  "fast-delivery": 10,
+  "white-label": 10,
   "extra-pages": 5,
   "extra-keywords": 1,
   "schema-deep-dive": 15,
-  "competitor-report": 20,
+  "competitor-report": 15,
+  "extra-competitors": 10,
+  "extra-crawl-depth": 15,
 };
 
 export default function OrderForm() {
@@ -60,11 +63,32 @@ export default function OrderForm() {
   }, [orderState.tier, orderState.extraPages, orderState.extraKeywords, orderState.addOns, orderState.whiteLabel, orderState.competitorUrls]);
 
   const calculateTotal = () => {
-    let total = tierPrices[formData.tier] || 29;
+    let total = tierPrices[formData.tier] || 39;
     formData.addOns.forEach((addOnId) => {
-      // Skip competitor-report if Advanced tier is selected (it's included)
-      if (addOnId === "competitor-report" && formData.tier === "advanced") {
-        return; // Don't charge for add-ons included in the tier
+      // Skip add-ons that are included in the selected tier
+      if (addOnId === "white-label" && formData.tier === "agency") {
+        return; // Included free in Agency tier
+      }
+      if (addOnId === "competitor-report" && formData.tier === "agency") {
+        return; // 3 competitors included in Agency tier
+      }
+      if (addOnId === "extra-keywords" && formData.tier === "agency") {
+        return; // Unlimited keywords in Agency tier
+      }
+      if (addOnId === "extra-pages" && formData.tier === "agency") {
+        return; // Unlimited pages in Agency tier
+      }
+      // Skip schema-deep-dive if not Starter tier
+      if (addOnId === "schema-deep-dive" && formData.tier !== "starter") {
+        return;
+      }
+      // Skip competitor-report if not Starter/Standard
+      if (addOnId === "competitor-report" && (formData.tier === "professional" || formData.tier === "agency")) {
+        return;
+      }
+      // Skip extra-competitors and extra-crawl-depth if not Agency
+      if ((addOnId === "extra-competitors" || addOnId === "extra-crawl-depth") && formData.tier !== "agency") {
+        return;
       }
       
       if (addOnId === "extra-pages") {
@@ -84,7 +108,7 @@ export default function OrderForm() {
     message: "",
   });
 
-  const showCompetitorFields = formData.tier === "advanced" || formData.addOns.includes("competitor-report");
+  const showCompetitorFields = formData.tier === "agency" || formData.addOns.includes("competitor-report");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
