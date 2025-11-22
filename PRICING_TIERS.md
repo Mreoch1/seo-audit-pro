@@ -108,13 +108,13 @@ Everything in Professional, plus:
 
 #### Available Add-Ons:
 - **Blank Report (Unbranded)** - **FREE** (optional, not automatically included)
-- **Additional Competitors** - $10 per competitor (beyond the 3 included)
+- **Additional Competitor** - $10 (adds 1 additional competitor - 4th competitor, max 4 total)
 - **Extra Crawl Depth** - $15 (for complex sites)
 
 **Note:** 
 - Additional Pages add-on not available (unlimited pages included)
 - Extra Keywords add-on not available (unlimited keywords included)
-- Competitor Gap Analysis included (3 competitors), can add more with Additional Competitors add-on
+- Competitor Gap Analysis included (3 competitors), can add 1 more with Additional Competitor add-on (max 4 total)
 
 ---
 
@@ -153,11 +153,11 @@ Everything in Professional, plus:
 - **Description:** Additional keyword analysis & research beyond tier limits
 - **Included In:** Agency tier (unlimited keywords)
 
-### Additional Competitors
-- **Price:** $10 per competitor
+### Additional Competitor
+- **Price:** $10 (for 1 additional competitor)
 - **Available For:** Agency tier only
-- **Description:** Add more competitor websites to analysis beyond the 3 included
-- **Note:** Agency tier includes 3 competitors; this add-on allows adding more
+- **Description:** Add 1 additional competitor website (4th competitor) - Agency tier includes 3 competitors, this adds 1 more (max 4 total)
+- **Note:** This is a fixed price for one additional competitor, not per competitor
 
 ### Extra Crawl Depth
 - **Price:** $15
@@ -191,9 +191,9 @@ Everything in Professional, plus:
 - **Tier:** Agency ($99)
 - **Add-Ons:**
   - Blank Report (FREE)
-  - Additional Competitors: 2 competitors ($20)
+  - Additional Competitor ($10) - adds 4th competitor
   - Extra Crawl Depth ($15)
-- **Total:** $134
+- **Total:** $124
 
 ---
 

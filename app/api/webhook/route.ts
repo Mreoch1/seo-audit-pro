@@ -74,7 +74,27 @@ export async function POST(request: NextRequest) {
       extraPages,
       extraKeywords,
       whiteLabel,
+      competitorUrls,
     } = metadata;
+
+    // Tier name mapping
+    const tierNames: Record<string, string> = {
+      starter: "Starter",
+      standard: "Standard",
+      professional: "Professional",
+      agency: "Agency / Enterprise",
+    };
+
+    // Add-on name mapping
+    const addOnNames: Record<string, string> = {
+      "white-label": "Blank Report (Unbranded)",
+      "extra-pages": "Additional Pages",
+      "competitor-report": "Competitor Gap Analysis",
+      "schema-deep-dive": "Schema Deep-Dive",
+      "extra-keywords": "Extra Keywords",
+      "extra-competitors": "Additional Competitor",
+      "extra-crawl-depth": "Extra Crawl Depth",
+    };
 
     // Format add-ons list for email
     let addOnsList: string[] = [];
@@ -88,27 +108,24 @@ export async function POST(request: NextRequest) {
     const pages = parseInt(extraPages || "0");
     const keywords = parseInt(extraKeywords || "0");
     
-    // Update add-ons list with quantities
-    addOnsList = addOnsList.map((addOn: string) => {
-      if (addOn.toLowerCase().includes("extra pages") && pages > 0) {
-        return `Extra Pages (${pages} page${pages > 1 ? "s" : ""})`;
+    // Format add-ons with proper names and quantities
+    const formattedAddOns = addOnsList.map((addOnId: string) => {
+      const addOnName = addOnNames[addOnId] || addOnId.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase());
+      
+      if (addOnId === "extra-pages" && pages > 0) {
+        return `${addOnName} (${pages} × 50 pages)`;
       }
-      if (addOn.toLowerCase().includes("extra keywords") && keywords > 0) {
-        return `Extra Keywords (${keywords} keyword${keywords > 1 ? "s" : ""})`;
+      if (addOnId === "extra-keywords" && keywords > 0) {
+        return `${addOnName} (${keywords} keyword${keywords > 1 ? "s" : ""})`;
       }
-      return addOn;
+      return addOnName;
     });
 
-    const formattedAddOns = addOnsList.length > 0
-      ? addOnsList.map((addOn: string) => {
-          if (addOn.includes("Extra Pages")) return addOn;
-          if (addOn.includes("Extra Keywords")) return addOn;
-          return addOn.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase());
-        })
-      : [];
+    // Get formatted tier name
+    const formattedTier = tierNames[tier] || tier.charAt(0).toUpperCase() + tier.slice(1);
 
     // Create email content
-    const emailSubject = `🎯 New SEO Audit Order - ${tier.charAt(0).toUpperCase() + tier.slice(1)} Tier - ${websiteUrl}`;
+    const emailSubject = `🎯 New SEO Audit Order - ${formattedTier} Tier - ${websiteUrl}`;
     
     let emailBody = `Hello,
 
@@ -120,12 +137,12 @@ CLIENT INFORMATION
 Name: ${name}
 Email: ${email}
 Website URL: ${websiteUrl}
-White Label: ${whiteLabel ? "Yes" : "No"}
+White Label: ${whiteLabel === "true" ? "Yes" : "No"}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: ${tier.charAt(0).toUpperCase() + tier.slice(1)}
+Tier: ${formattedTier}
 
 Add-ons:`;
 
@@ -135,6 +152,17 @@ Add-ons:`;
       });
     } else {
       emailBody += `\n  • None`;
+    }
+
+    // Add competitor URLs if provided
+    if (competitorUrls && competitorUrls.trim()) {
+      const competitorUrlsList = competitorUrls.split(',').filter((url: string) => url.trim());
+      if (competitorUrlsList.length > 0) {
+        emailBody += `\n\nCompetitor URLs:`;
+        competitorUrlsList.forEach((url: string, index: number) => {
+          emailBody += `\n  ${index + 1}. ${url.trim()}`;
+        });
+      }
     }
 
     emailBody += `\n\nTotal Price: $${totalPrice}`;

@@ -13,21 +13,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Tier name mapping
+    const tierNames: Record<string, string> = {
+      starter: "Starter",
+      standard: "Standard",
+      professional: "Professional",
+      agency: "Agency / Enterprise",
+    };
+
+    // Add-on name mapping
+    const addOnNames: Record<string, string> = {
+      "white-label": "Blank Report (Unbranded)",
+      "extra-pages": "Additional Pages",
+      "competitor-report": "Competitor Gap Analysis",
+      "schema-deep-dive": "Schema Deep-Dive",
+      "extra-keywords": "Extra Keywords",
+      "extra-competitors": "Additional Competitor",
+      "extra-crawl-depth": "Extra Crawl Depth",
+    };
+
     // Format add-ons list for email
     const addOnsList = Array.isArray(addOns) && addOns.length > 0
-      ? addOns.map((addOn: string) => {
-          if (addOn.includes("Extra Pages")) {
-            return addOn;
-          }
-          if (addOn.includes("Extra Keywords")) {
-            return addOn;
-          }
-          return addOn.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase());
+      ? addOns.map((addOnId: string) => {
+          return addOnNames[addOnId] || addOnId.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase());
         })
       : [];
 
+    // Get formatted tier name
+    const formattedTier = tierNames[tier] || tier.charAt(0).toUpperCase() + tier.slice(1);
+
     // Create email content
-    const emailSubject = `SEO Audit Request – ${tier} – ${websiteUrl}`;
+    const emailSubject = `SEO Audit Request – ${formattedTier} – ${websiteUrl}`;
     
     let emailBody = `Hello,
 
@@ -43,7 +59,7 @@ Website URL: ${websiteUrl}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORDER DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tier: ${tier.charAt(0).toUpperCase() + tier.slice(1)}
+Tier: ${formattedTier}
 
 Add-ons:`;
 
