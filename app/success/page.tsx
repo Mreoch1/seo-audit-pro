@@ -103,6 +103,9 @@ function SuccessContent() {
                   <span>You&apos;ll receive your detailed PDF report via email when complete</span>
                 </li>
               </ul>
+              <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+                <strong>Important:</strong> Please check your spam/junk folder if you don&apos;t see the confirmation or report email in your inbox.
+              </div>
             </div>
 
             {sessionId && (
