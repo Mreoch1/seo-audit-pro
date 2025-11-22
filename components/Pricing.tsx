@@ -416,7 +416,10 @@ export default function Pricing() {
             {availableAddOns.map((addOn) => {
               const isIncluded = addOn.includedIn?.includes(selectedTier);
               const isChecked = selectedAddOns.has(addOn.id);
-              const isAvailable = !addOn.availableIn || addOn.availableIn.includes(selectedTier);
+              // For white-label, it's available for all tiers
+              const isAvailable = addOn.id === "white-label" 
+                ? true 
+                : (!addOn.availableIn || addOn.availableIn.includes(selectedTier));
               
               // Special handling for white-label checkbox
               if (addOn.id === "white-label") {
@@ -431,23 +434,19 @@ export default function Pricing() {
                         checked={isChecked}
                         onChange={(e) => {
                           e.stopPropagation();
-                          if (isAvailable) {
-                            // setWhiteLabel handles both whiteLabel state and addOns set
-                            setWhiteLabel(e.target.checked);
-                          }
+                          // Always allow toggle for white-label (available for all tiers)
+                          setWhiteLabel(e.target.checked);
                         }}
-                        disabled={!isAvailable}
-                        className="w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        disabled={false}
+                        className="w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer"
                       />
                     </div>
                     <label 
                       htmlFor={addOn.id} 
-                      className={`flex-1 ${!isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
+                      className="flex-1 cursor-pointer"
                       onClick={(e) => {
-                        if (isAvailable) {
-                          e.preventDefault();
-                          setWhiteLabel(!isChecked);
-                        }
+                        e.preventDefault();
+                        setWhiteLabel(!isChecked);
                       }}
                     >
                       <div className="flex items-center justify-between">
@@ -457,11 +456,6 @@ export default function Pricing() {
                             {isFreeForAgency && (
                               <span className="ml-2 text-xs font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded">
                                 Free for Agency tier
-                              </span>
-                            )}
-                            {!isAvailable && (
-                              <span className="ml-2 text-xs font-normal text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
-                                Not available in {currentTier.name} tier
                               </span>
                             )}
                           </div>
