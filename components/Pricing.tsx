@@ -421,22 +421,35 @@ export default function Pricing() {
               // Special handling for white-label checkbox
               if (addOn.id === "white-label") {
                 const isFreeForAgency = selectedTier === "agency";
+                const isChecked = orderState.whiteLabel;
                 return (
                   <div key={addOn.id} className="flex items-start gap-4 pb-4 border-b border-gray-200">
-                    <input
-                      type="checkbox"
-                      id={addOn.id}
-                      checked={orderState.whiteLabel}
-                      onChange={(e) => {
+                    <div className="flex-shrink-0 mt-1">
+                      <input
+                        type="checkbox"
+                        id={addOn.id}
+                        checked={isChecked}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          if (isAvailable) {
+                            // setWhiteLabel handles both whiteLabel state and addOns set
+                            setWhiteLabel(e.target.checked);
+                          }
+                        }}
+                        disabled={!isAvailable}
+                        className="w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      />
+                    </div>
+                    <label 
+                      htmlFor={addOn.id} 
+                      className={`flex-1 ${!isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
+                      onClick={(e) => {
                         if (isAvailable) {
-                          // setWhiteLabel handles both whiteLabel state and addOns set
-                          setWhiteLabel(e.target.checked);
+                          e.preventDefault();
+                          setWhiteLabel(!isChecked);
                         }
                       }}
-                      disabled={!isAvailable}
-                      className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
-                    <label htmlFor={addOn.id} className={`flex-1 ${!isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
+                    >
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-semibold text-gray-900">
