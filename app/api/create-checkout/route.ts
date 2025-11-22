@@ -16,7 +16,7 @@ const tierPrices: Record<string, { name: string; price: number }> = {
 
 const addOnPrices: Record<string, { name: string; price: number }> = {
   "white-label": { name: "Blank Report (Unbranded)", price: 10 },
-  "extra-pages": { name: "Additional Pages (50 pages)", price: 5 },
+  "extra-pages": { name: "Additional Pages", price: 5 },
   "extra-keywords": { name: "Extra Keywords", price: 1 },
   "schema-deep-dive": { name: "Schema Markup Deep-Dive", price: 15 },
   "competitor-report": { name: "Competitor Gap Analysis", price: 15 },
@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
               price_data: {
                 currency: "usd",
                 product_data: {
-                  name: `${addOnInfo.name} (${pages} page${pages > 1 ? "s" : ""})`,
+                  name: `${addOnInfo.name} (${pages} × 50 pages)`,
                 },
                 unit_amount: Math.round(addOnInfo.price * 100),
               },
