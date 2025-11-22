@@ -431,9 +431,13 @@ export default function Pricing() {
                       type="checkbox"
                       id={addOn.id}
                       checked={isChecked}
-                      onChange={() => {
+                      onChange={(e) => {
+                        e.stopPropagation();
                         // Use toggleAddOn like all other checkboxes
                         toggleAddOn(addOn.id);
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
                       }}
                       className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer relative z-10"
                       style={{ pointerEvents: 'auto' }}
