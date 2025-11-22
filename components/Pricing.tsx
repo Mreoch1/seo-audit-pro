@@ -97,7 +97,6 @@ const tiers: Tier[] = [
       "Full Internal Link Graph",
       "Orphan Page Detection",
       "Duplicate URL Cleaning",
-      "Blank Report Included (Free)",
     ],
   },
 ];
@@ -108,8 +107,8 @@ const addOns: AddOn[] = [
     name: "Blank Report (Unbranded)",
     description: "Remove SEO Audit Pro branding - Perfect for agencies",
     price: 10,
-    availableIn: ["starter", "standard", "professional"],
-    includedIn: ["agency"], // Free in Agency tier
+    availableIn: ["starter", "standard", "professional", "agency"], // Available for all tiers
+    // Free for Agency tier (handled in pricing logic)
   },
   {
     id: "extra-pages",
@@ -204,7 +203,7 @@ export default function Pricing() {
         const addOn = addOns.find((a) => a.id === addOnId);
         if (!addOn) return;
         
-        // Skip add-ons included in Agency (white-label, competitor-report, extra-keywords)
+        // Skip add-ons included in Agency (competitor-report, extra-keywords)
         if (addOn.includedIn?.includes("agency")) {
           return; // These are free in Agency
         }
@@ -217,6 +216,11 @@ export default function Pricing() {
         // Skip extra-pages (unlimited in Agency)
         if (addOn.id === "extra-pages") {
           return; // Unlimited pages in Agency
+        }
+        
+        // White-label is free for Agency tier
+        if (addOn.id === "white-label") {
+          return; // Free for Agency
         }
         
         // Add add-ons that are available and chargeable in Agency
@@ -293,6 +297,10 @@ export default function Pricing() {
         if (addOn.availableIn && !addOn.availableIn.includes(selectedTier)) {
           return;
         }
+        // White-label is free for Agency tier
+        if (addOn.id === "white-label" && selectedTier === "agency") {
+          return; // Free for Agency
+        }
         if (addOn.id === "extra-pages") {
           total += addOn.price * extraPages;
         } else if (addOn.id === "extra-keywords") {
@@ -320,6 +328,10 @@ export default function Pricing() {
         }
         // Don't count add-ons not available in current tier
         if (addOn.availableIn && !addOn.availableIn.includes(selectedTier)) {
+          return;
+        }
+        // Don't count white-label for Agency (it's free)
+        if (addOn.id === "white-label" && selectedTier === "agency") {
           return;
         }
         // Count this add-on (quantities like extra-pages/extra-keywords count as 1 add-on)
@@ -408,32 +420,33 @@ export default function Pricing() {
               
               // Special handling for white-label checkbox
               if (addOn.id === "white-label") {
+                const isFreeForAgency = selectedTier === "agency";
                 return (
                   <div key={addOn.id} className="flex items-start gap-4 pb-4 border-b border-gray-200">
                     <input
                       type="checkbox"
                       id={addOn.id}
-                      checked={isIncluded ? true : orderState.whiteLabel}
+                      checked={orderState.whiteLabel}
                       onChange={(e) => {
-                        if (!isIncluded && isAvailable) {
+                        if (isAvailable) {
                           // setWhiteLabel handles both whiteLabel state and addOns set
                           setWhiteLabel(e.target.checked);
                         }
                       }}
-                      disabled={isIncluded || !isAvailable}
+                      disabled={!isAvailable}
                       className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
-                    <label htmlFor={addOn.id} className={`flex-1 ${isIncluded || !isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
+                    <label htmlFor={addOn.id} className={`flex-1 ${!isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-semibold text-gray-900">
                             {addOn.name}
-                            {isIncluded && (
+                            {isFreeForAgency && (
                               <span className="ml-2 text-xs font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded">
-                                Included in {selectedTier === "agency" ? "Agency" : ""} tier
+                                Free for Agency tier
                               </span>
                             )}
-                            {!isAvailable && !isIncluded && (
+                            {!isAvailable && (
                               <span className="ml-2 text-xs font-normal text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
                                 Not available in {currentTier.name} tier
                               </span>
@@ -442,8 +455,8 @@ export default function Pricing() {
                           <div className="text-sm text-gray-600">{addOn.description}</div>
                         </div>
                         <div className="text-right">
-                          <div className={`font-semibold ${isIncluded ? "text-green-600 line-through" : "text-gray-900"}`}>
-                            {isIncluded ? "Free" : `$${addOn.price}`}
+                          <div className={`font-semibold ${isFreeForAgency ? "text-green-600" : "text-gray-900"}`}>
+                            {isFreeForAgency ? "Free" : `$${addOn.price}`}
                           </div>
                         </div>
                       </div>
@@ -567,7 +580,7 @@ export default function Pricing() {
                    return chargeableCount > 0 && ` + ${chargeableCount} add-on${chargeableCount > 1 ? "s" : ""}.`;
                  })()}
               </div>
-              {orderState.whiteLabel && selectedTier !== "agency" && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
+              {orderState.whiteLabel && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
             </div>
             <button 
               onClick={() => document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' })}
