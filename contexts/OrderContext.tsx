@@ -25,7 +25,7 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 // Define add-on availability by tier
 const addOnAvailability: Record<string, string[]> = {
-  "white-label": ["starter", "standard", "professional"], // Included free in agency
+  "white-label": ["starter", "standard", "professional", "agency"], // Available for all tiers (free for agency)
   "extra-pages": ["starter", "standard", "professional"], // Unlimited in agency
   "competitor-report": ["starter", "standard"], // Included in agency
   "schema-deep-dive": ["starter"], // Only available in starter
@@ -36,7 +36,7 @@ const addOnAvailability: Record<string, string[]> = {
 
 // Define which add-ons are included in which tiers
 const includedInTier: Record<string, string[]> = {
-  "white-label": ["agency"],
+  // white-label is NOT automatically included - it's optional (free) for agency
   "competitor-report": ["agency"],
   "extra-keywords": ["agency"],
 };
@@ -79,19 +79,14 @@ export function OrderProvider({ children }: { children: ReactNode }) {
               newCompetitorUrls = ["", "", ""];
             }
           } else if (addOnId === "white-label") {
-            // If white-label is included in new tier, uncheck the checkbox
-            if (isIncluded) {
-              newWhiteLabel = false;
-            }
+            // White-label is available for all tiers, keep it if user had it selected
+            // Don't reset it when changing tiers
           }
         }
       });
 
-      // Handle white-label checkbox state
-      // If Agency tier, white-label is included (free), so uncheck the checkbox
-      if (newTier === "agency" && newWhiteLabel) {
-        newWhiteLabel = false;
-      }
+      // White-label is optional for all tiers (free for agency, but not automatically included)
+      // Keep the user's selection when changing tiers
 
       return {
         ...prev,

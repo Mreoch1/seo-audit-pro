@@ -427,27 +427,19 @@ export default function Pricing() {
                 const isChecked = orderState.whiteLabel;
                 return (
                   <div key={addOn.id} className="flex items-start gap-4 pb-4 border-b border-gray-200">
-                    <div className="flex-shrink-0 mt-1">
-                      <input
-                        type="checkbox"
-                        id={addOn.id}
-                        checked={isChecked}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          // Always allow toggle for white-label (available for all tiers)
-                          setWhiteLabel(e.target.checked);
-                        }}
-                        disabled={false}
-                        className="w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer"
-                      />
-                    </div>
+                    <input
+                      type="checkbox"
+                      id={addOn.id}
+                      checked={isChecked}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        setWhiteLabel(e.target.checked);
+                      }}
+                      className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer flex-shrink-0"
+                    />
                     <label 
                       htmlFor={addOn.id} 
                       className="flex-1 cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setWhiteLabel(!isChecked);
-                      }}
                     >
                       <div className="flex items-center justify-between">
                         <div>
