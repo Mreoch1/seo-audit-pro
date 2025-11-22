@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    let { name, email, websiteUrl, tier, addOns, totalPrice, notes, extraPages, extraKeywords, whiteLabel } = body;
+    let { name, email, websiteUrl, tier, addOns, totalPrice, notes, extraPages, extraKeywords, whiteLabel, competitorUrls } = body;
 
     // Sanitize all string inputs
     name = sanitizeString(name || '', 100);
@@ -100,6 +100,20 @@ export async function POST(request: NextRequest) {
         { error: notesValidation.error },
         { status: 400 }
       );
+    }
+
+    // Sanitize and validate competitor URLs
+    const validCompetitorUrls: string[] = [];
+    if (Array.isArray(competitorUrls)) {
+      for (const url of competitorUrls) {
+        if (typeof url === 'string' && url.trim() !== '') {
+          const sanitizedUrl = sanitizeString(url, 2048);
+          const compUrlValidation = validateURL(sanitizedUrl);
+          if (compUrlValidation.valid) {
+            validCompetitorUrls.push(sanitizedUrl);
+          }
+        }
+      }
     }
 
     // Validate price (prevent manipulation)
@@ -204,7 +218,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Stripe Checkout Session with itemized line items
-    // Note: Stripe automatically sends receipt emails when customer_email is provided
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -223,6 +236,7 @@ export async function POST(request: NextRequest) {
         extraPages: (extraPages || 0).toString(),
         extraKeywords: (extraKeywords || 0).toString(),
         whiteLabel: (whiteLabel || false).toString(),
+        competitorUrls: validCompetitorUrls.join(','),
       },
     });
 
@@ -236,4 +250,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

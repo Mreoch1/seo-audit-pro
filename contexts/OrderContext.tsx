@@ -8,6 +8,7 @@ interface OrderState {
   extraPages: number;
   extraKeywords: number;
   whiteLabel: boolean;
+  competitorUrls: string[];
 }
 
 interface OrderContextType {
@@ -17,6 +18,7 @@ interface OrderContextType {
   setExtraPages: (pages: number) => void;
   setExtraKeywords: (keywords: number) => void;
   setWhiteLabel: (whiteLabel: boolean) => void;
+  setCompetitorUrls: (urls: string[]) => void;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -28,6 +30,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     extraPages: 0,
     extraKeywords: 0,
     whiteLabel: false,
+    competitorUrls: ["", "", ""],
   });
 
   const setTier = (tier: string) => {
@@ -44,6 +47,11 @@ export function OrderProvider({ children }: { children: ReactNode }) {
           return { ...prev, addOns: newAddOns, extraPages: 0 };
         } else if (addOnId === "extra-keywords") {
           return { ...prev, addOns: newAddOns, extraKeywords: 0 };
+        } else if (addOnId === "competitor-report") {
+          // Reset competitor URLs if add-on is removed AND tier is not advanced
+          if (prev.tier !== "advanced") {
+             return { ...prev, addOns: newAddOns, competitorUrls: ["", "", ""] };
+          }
         }
         return { ...prev, addOns: newAddOns };
       } else {
@@ -71,6 +79,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     setOrderState((prev) => ({ ...prev, whiteLabel }));
   };
 
+  const setCompetitorUrls = (urls: string[]) => {
+    setOrderState((prev) => ({ ...prev, competitorUrls: urls }));
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -80,6 +92,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setExtraPages,
         setExtraKeywords,
         setWhiteLabel,
+        setCompetitorUrls,
       }}
     >
       {children}
@@ -94,4 +107,3 @@ export function useOrder() {
   }
   return context;
 }
-

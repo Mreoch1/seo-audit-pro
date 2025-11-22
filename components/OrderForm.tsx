@@ -13,6 +13,7 @@ interface FormData {
   extraPages: number;
   extraKeywords: number;
   whiteLabel: boolean;
+  competitorUrls: string[];
 }
 
 const tierPrices: Record<string, number> = {
@@ -30,7 +31,7 @@ const addOnPrices: Record<string, number> = {
 };
 
 export default function OrderForm() {
-  const { orderState, setTier, toggleAddOn, setExtraPages, setExtraKeywords, setWhiteLabel } = useOrder();
+  const { orderState, setTier, toggleAddOn, setExtraPages, setExtraKeywords, setWhiteLabel, setCompetitorUrls } = useOrder();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -41,6 +42,7 @@ export default function OrderForm() {
     extraPages: 0,
     extraKeywords: 0,
     whiteLabel: false,
+    competitorUrls: ["", "", ""],
   });
 
   // Sync form with context whenever context changes
@@ -53,8 +55,9 @@ export default function OrderForm() {
       extraPages: orderState.extraPages,
       extraKeywords: orderState.extraKeywords,
       whiteLabel: orderState.whiteLabel,
+      competitorUrls: orderState.competitorUrls,
     }));
-  }, [orderState.tier, orderState.extraPages, orderState.extraKeywords, orderState.addOns, orderState.whiteLabel]);
+  }, [orderState.tier, orderState.extraPages, orderState.extraKeywords, orderState.addOns, orderState.whiteLabel, orderState.competitorUrls]);
 
   const calculateTotal = () => {
     let total = tierPrices[formData.tier] || 29;
@@ -76,12 +79,17 @@ export default function OrderForm() {
     message: "",
   });
 
+  const showCompetitorFields = formData.tier === "advanced" || formData.addOns.includes("competitor-report");
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: "" });
 
     const totalPrice = calculateTotal();
+
+    // Filter out empty competitor URLs
+    const validCompetitorUrls = formData.competitorUrls.filter(url => url.trim() !== "");
 
     try {
       const response = await fetch("/api/create-checkout", {
@@ -100,6 +108,7 @@ export default function OrderForm() {
           extraPages: formData.extraPages,
           extraKeywords: formData.extraKeywords,
           whiteLabel: formData.whiteLabel,
+          competitorUrls: validCompetitorUrls,
         }),
       });
 
@@ -122,6 +131,13 @@ export default function OrderForm() {
       });
       setIsSubmitting(false);
     }
+  };
+
+  const handleCompetitorUrlChange = (index: number, value: string) => {
+    const newUrls = [...formData.competitorUrls];
+    newUrls[index] = value;
+    setCompetitorUrls(newUrls);
+    setFormData({ ...formData, competitorUrls: newUrls });
   };
 
   return (
@@ -296,6 +312,29 @@ export default function OrderForm() {
               </div>
             </div>
 
+            {showCompetitorFields && (
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Competitor URLs (Optional)
+                  <span className="block text-xs font-normal text-gray-500 mt-1">
+                    Enter up to 3 competitor websites for the keyword gap analysis.
+                  </span>
+                </label>
+                <div className="space-y-3">
+                  {[0, 1, 2].map((index) => (
+                    <input
+                      key={index}
+                      type="url"
+                      value={formData.competitorUrls[index]}
+                      onChange={(e) => handleCompetitorUrlChange(index, e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
+                      placeholder={`https://competitor${index + 1}.com`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Report Options
@@ -369,4 +408,3 @@ export default function OrderForm() {
     </section>
   );
 }
-
