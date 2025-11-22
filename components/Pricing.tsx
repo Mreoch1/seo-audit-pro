@@ -421,21 +421,22 @@ export default function Pricing() {
                 ? true 
                 : (!addOn.availableIn || addOn.availableIn.includes(selectedTier));
               
-              // Special handling for white-label checkbox
+              // Special handling for white-label checkbox - use same pattern as other checkboxes
               if (addOn.id === "white-label") {
                 const isFreeForAgency = selectedTier === "agency";
-                const isChecked = orderState.whiteLabel;
+                const isChecked = selectedAddOns.has(addOn.id);
                 return (
-                  <div key={addOn.id} className="flex items-start gap-4 pb-4 border-b border-gray-200">
+                  <div key={addOn.id} className="flex items-start gap-4 pb-4 border-b border-gray-200 relative">
                     <input
                       type="checkbox"
                       id={addOn.id}
                       checked={isChecked}
-                      onChange={(e) => {
-                        e.stopPropagation();
-                        setWhiteLabel(e.target.checked);
+                      onChange={() => {
+                        // Use toggleAddOn like all other checkboxes
+                        toggleAddOn(addOn.id);
                       }}
-                      className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer flex-shrink-0"
+                      className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer relative z-10"
+                      style={{ pointerEvents: 'auto' }}
                     />
                     <label 
                       htmlFor={addOn.id} 
@@ -579,7 +580,7 @@ export default function Pricing() {
                    return chargeableCount > 0 && ` + ${chargeableCount} add-on${chargeableCount > 1 ? "s" : ""}.`;
                  })()}
               </div>
-              {orderState.whiteLabel && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
+              {(orderState.whiteLabel || selectedAddOns.has("white-label")) && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
             </div>
             <button 
               onClick={() => document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' })}
