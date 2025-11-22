@@ -415,19 +415,15 @@ export default function Pricing() {
                       id={addOn.id}
                       checked={isIncluded ? true : orderState.whiteLabel}
                       onChange={(e) => {
-                        if (!isIncluded) {
+                        if (!isIncluded && isAvailable) {
+                          // setWhiteLabel handles both whiteLabel state and addOns set
                           setWhiteLabel(e.target.checked);
-                          if (e.target.checked) {
-                            toggleAddOn(addOn.id);
-                          } else {
-                            toggleAddOn(addOn.id);
-                          }
                         }
                       }}
-                      disabled={isIncluded}
+                      disabled={isIncluded || !isAvailable}
                       className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
-                    <label htmlFor={addOn.id} className={`flex-1 ${isIncluded ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
+                    <label htmlFor={addOn.id} className={`flex-1 ${isIncluded || !isAvailable ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}>
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-semibold text-gray-900">
@@ -435,6 +431,11 @@ export default function Pricing() {
                             {isIncluded && (
                               <span className="ml-2 text-xs font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded">
                                 Included in {selectedTier === "agency" ? "Agency" : ""} tier
+                              </span>
+                            )}
+                            {!isAvailable && !isIncluded && (
+                              <span className="ml-2 text-xs font-normal text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
+                                Not available in {currentTier.name} tier
                               </span>
                             )}
                           </div>
