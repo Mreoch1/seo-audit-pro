@@ -184,6 +184,39 @@ export default function Pricing() {
     });
   };
 
+  // Calculate total price - must be defined before getBetterTierSuggestion
+  const calculateTotal = () => {
+    let total = currentTier.price;
+    selectedAddOns.forEach((addOnId) => {
+      const addOn = addOns.find((a) => a.id === addOnId);
+      if (addOn) {
+        // Skip add-ons that are already included in the selected tier
+        if (addOn.includedIn?.includes(selectedTier)) {
+          return; // Don't charge for add-ons included in tier
+        }
+        // Skip if not available in current tier
+        if (addOn.availableIn && !addOn.availableIn.includes(selectedTier)) {
+          return;
+        }
+        // White-label is free for Agency tier
+        if (addOn.id === "white-label" && selectedTier === "agency") {
+          return; // Free for Agency
+        }
+        if (addOn.id === "extra-pages") {
+          total += addOn.price * extraPages;
+        } else if (addOn.id === "extra-keywords") {
+          total += addOn.price * extraKeywords;
+        } else if (addOn.id === "extra-competitors") {
+          // This will be handled separately if needed
+          total += addOn.price;
+        } else {
+          total += addOn.price;
+        }
+      }
+    });
+    return total;
+  };
+
   // Check if current selection would be better as a higher tier
   const getBetterTierSuggestion = () => {
     if (selectedTier === "agency") return null;
@@ -283,38 +316,6 @@ export default function Pricing() {
   };
 
   const suggestion = getBetterTierSuggestion();
-
-  const calculateTotal = () => {
-    let total = currentTier.price;
-    selectedAddOns.forEach((addOnId) => {
-      const addOn = addOns.find((a) => a.id === addOnId);
-      if (addOn) {
-        // Skip add-ons that are already included in the selected tier
-        if (addOn.includedIn?.includes(selectedTier)) {
-          return; // Don't charge for add-ons included in tier
-        }
-        // Skip if not available in current tier
-        if (addOn.availableIn && !addOn.availableIn.includes(selectedTier)) {
-          return;
-        }
-        // White-label is free for Agency tier
-        if (addOn.id === "white-label" && selectedTier === "agency") {
-          return; // Free for Agency
-        }
-        if (addOn.id === "extra-pages") {
-          total += addOn.price * extraPages;
-        } else if (addOn.id === "extra-keywords") {
-          total += addOn.price * extraKeywords;
-        } else if (addOn.id === "extra-competitors") {
-          // This will be handled separately if needed
-          total += addOn.price;
-        } else {
-          total += addOn.price;
-        }
-      }
-    });
-    return total;
-  };
 
   // Count only chargeable add-ons (exclude included ones and unavailable ones)
   const getChargeableAddOnCount = () => {
