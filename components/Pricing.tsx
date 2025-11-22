@@ -189,45 +189,45 @@ export default function Pricing() {
   const getBetterTierSuggestion = () => {
     if (selectedTier === "agency") return null;
     
-    const competitorAddOn = addOns.find(a => a.id === "competitor-report");
-    const hasCompetitorAddOn = selectedAddOns.has("competitor-report");
-    
-    // Calculate current total
-    let currentTotal = currentTier.price;
-    selectedAddOns.forEach((addOnId) => {
-      const addOn = addOns.find((a) => a.id === addOnId);
-      if (addOn && !addOn.includedIn?.includes(selectedTier)) {
-        if (addOn.id === "extra-pages") {
-          currentTotal += addOn.price * extraPages;
-        } else if (addOn.id === "extra-keywords") {
-          currentTotal += addOn.price * extraKeywords;
-        } else {
-          currentTotal += addOn.price;
-        }
-      }
-    });
+    // Calculate current total using the same logic as calculateTotal()
+    const currentTotal = calculateTotal();
     
     // Check if Agency tier would be better
-    if (hasCompetitorAddOn || selectedTier === "professional") {
+    if (selectedTier !== "agency") {
       const agencyTier = tiers.find(t => t.id === "agency")!;
       let agencyTotal = agencyTier.price;
       
-      // Recalculate for Agency (excluding included items)
+      // Recalculate for Agency tier - only add add-ons that:
+      // 1. Are available in Agency tier
+      // 2. Are NOT included in Agency tier
       selectedAddOns.forEach((addOnId) => {
-        if (addOnId === "competitor-report" || addOnId === "white-label") return; // Included
         const addOn = addOns.find((a) => a.id === addOnId);
-        if (addOn && addOn.availableIn?.includes("agency")) {
-          if (addOn.id === "extra-pages") {
-            agencyTotal += addOn.price * extraPages;
-          } else if (addOn.id === "extra-keywords") {
-            // Unlimited in Agency, skip
-          } else if (addOn.id === "extra-competitors" || addOn.id === "extra-crawl-depth") {
-            agencyTotal += addOn.price;
-          }
+        if (!addOn) return;
+        
+        // Skip add-ons included in Agency (white-label, competitor-report, extra-keywords)
+        if (addOn.includedIn?.includes("agency")) {
+          return; // These are free in Agency
         }
+        
+        // Skip add-ons not available in Agency
+        if (addOn.availableIn && !addOn.availableIn.includes("agency")) {
+          return;
+        }
+        
+        // Skip extra-pages (unlimited in Agency)
+        if (addOn.id === "extra-pages") {
+          return; // Unlimited pages in Agency
+        }
+        
+        // Add add-ons that are available and chargeable in Agency
+        if (addOn.id === "extra-competitors" || addOn.id === "extra-crawl-depth") {
+          agencyTotal += addOn.price;
+        }
+        // Note: extra-keywords is unlimited in Agency, so we don't charge for it
       });
       
-      if (agencyTotal <= currentTotal + 20) { // Suggest if within $20
+      // Suggest Agency if it's same price or cheaper, or within $25
+      if (agencyTotal <= currentTotal + 25) {
         return {
           tier: "agency",
           currentTotal,
@@ -243,19 +243,28 @@ export default function Pricing() {
       let professionalTotal = professionalTier.price;
       
       selectedAddOns.forEach((addOnId) => {
-        if (addOnId === "competitor-report") return; // Not in Professional
         const addOn = addOns.find((a) => a.id === addOnId);
-        if (addOn && addOn.availableIn?.includes("professional")) {
-          if (addOn.id === "extra-pages") {
-            professionalTotal += addOn.price * extraPages;
-          } else if (addOn.id === "extra-keywords") {
-            professionalTotal += addOn.price * extraKeywords;
-          } else {
-            professionalTotal += addOn.price;
-          }
+        if (!addOn) return;
+        
+        // Skip competitor-report (not available in Professional)
+        if (addOnId === "competitor-report") return;
+        
+        // Skip add-ons not available in Professional
+        if (addOn.availableIn && !addOn.availableIn.includes("professional")) {
+          return;
+        }
+        
+        // Add chargeable add-ons
+        if (addOn.id === "extra-pages") {
+          professionalTotal += addOn.price * extraPages;
+        } else if (addOn.id === "extra-keywords") {
+          professionalTotal += addOn.price * extraKeywords;
+        } else if (addOn.id === "white-label") {
+          professionalTotal += addOn.price;
         }
       });
       
+      // Suggest Professional if it's same price or cheaper
       if (professionalTotal <= currentTotal) {
         return {
           tier: "professional",
