@@ -144,10 +144,9 @@ const addOns: AddOn[] = [
   },
   {
     id: "extra-competitors",
-    name: "Additional Competitors",
-    description: "Add more competitor websites to analysis (Agency tier only)",
+    name: "Additional Competitor",
+    description: "Add 1 additional competitor website (4th competitor) - Agency tier only",
     price: 10,
-    unit: "per competitor",
     availableIn: ["agency"],
   },
   {

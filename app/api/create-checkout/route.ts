@@ -20,7 +20,7 @@ const addOnPrices: Record<string, { name: string; price: number }> = {
   "extra-keywords": { name: "Extra Keywords", price: 1 },
   "schema-deep-dive": { name: "Schema Markup Deep-Dive", price: 15 },
   "competitor-report": { name: "Competitor Gap Analysis", price: 15 },
-  "extra-competitors": { name: "Additional Competitors", price: 10 },
+    "extra-competitors": { name: "Additional Competitor", price: 10 },
   "extra-crawl-depth": { name: "Extra Crawl Depth", price: 15 },
 };
 
