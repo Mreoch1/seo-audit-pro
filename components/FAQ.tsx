@@ -46,19 +46,21 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-white">
+    <section className="bg-gradient-to-b from-white to-gray-50">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-12">Frequently Asked Questions</h2>
+        <h2 className="heading-2 text-center mb-12">
+          <span className="gradient-text">Frequently Asked Questions</span>
+        </h2>
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
+            <div key={index} className="group border-2 border-gray-200 rounded-xl overflow-hidden hover:border-primary-300 transition-all duration-300 hover:shadow-lg">
               <button
                 onClick={() => toggle(index)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors"
+                className="w-full px-6 py-4 text-left flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
               >
-                <span className="font-semibold text-gray-900">{faq.question}</span>
+                <span className="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors duration-300">{faq.question}</span>
                 <svg
-                  className={`w-5 h-5 text-gray-600 transition-transform ${openIndex === index ? "rotate-180" : ""}`}
+                  className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${openIndex === index ? "rotate-180 text-primary-600" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -67,7 +69,7 @@ export default function FAQ() {
                 </svg>
               </button>
               {openIndex === index && (
-                <div className="px-6 py-4 bg-white text-gray-700 border-t border-gray-200">
+                <div className="px-6 py-4 bg-gradient-to-br from-primary-50/50 to-white text-gray-700 border-t-2 border-primary-200 animate-slide-up">
                   {faq.answer}
                 </div>
               )}

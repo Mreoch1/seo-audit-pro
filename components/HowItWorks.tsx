@@ -43,23 +43,29 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="bg-gray-50">
+    <section id="how-it-works" className="bg-gradient-to-b from-gray-50 to-white">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">How It Works</h2>
+        <h2 className="heading-2 text-center mb-4">
+          <span className="gradient-text">How It Works</span>
+        </h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
           No automated &quot;instant&quot; fluff. This is a comprehensive service where I use advanced tools to inspect your site structure, security, and content depth.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow relative overflow-hidden">
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary-50 rounded-full opacity-50"></div>
+            <div key={index} className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden card-hover">
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
               <div className="relative z-10">
-              <div className="flex items-center justify-center w-16 h-16 bg-primary-100 text-primary-600 rounded-full mb-4 mx-auto">
-                {step.icon}
-              </div>
-              <div className="text-center">
-                  <div className="text-sm font-bold tracking-widest text-accent-600 mb-2 uppercase">Step {step.number}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
+                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 text-primary-600 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-md">
+                  <div className="group-hover:animate-pulse">
+                    {step.icon}
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-sm font-bold tracking-widest bg-gradient-to-r from-accent-500 to-accent-600 bg-clip-text text-transparent mb-2 uppercase">Step {step.number}</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300">{step.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
                 </div>
               </div>

@@ -79,7 +79,7 @@ export default function OrderForm() {
     const addOnsArray = Array.from(orderState.addOns);
     const hasExtraCompetitors = orderState.tier === "agency" && addOnsArray.includes("extra-competitors");
     const maxCompetitors = hasExtraCompetitors ? 4 : 3;
-    
+
     // Ensure competitorUrls array has the right length
     let competitorUrls = [...orderState.competitorUrls];
     while (competitorUrls.length < maxCompetitors) {
@@ -89,7 +89,7 @@ export default function OrderForm() {
     if (competitorUrls.length > maxCompetitors) {
       competitorUrls = competitorUrls.slice(0, maxCompetitors);
     }
-    
+
     setFormData((prev) => ({
       ...prev,
       tier: orderState.tier,
@@ -99,7 +99,7 @@ export default function OrderForm() {
       whiteLabel: orderState.whiteLabel,
       competitorUrls: competitorUrls,
     }));
-    
+
     // Update context if needed
     if (competitorUrls.length !== orderState.competitorUrls.length) {
       setCompetitorUrls(competitorUrls);
@@ -136,7 +136,7 @@ export default function OrderForm() {
       if ((addOnId === "extra-competitors" || addOnId === "extra-crawl-depth") && formData.tier !== "agency") {
         return;
       }
-      
+
       if (addOnId === "extra-pages") {
         total += addOnPrices["extra-pages"] * formData.extraPages;
       } else if (addOnId === "extra-keywords") {
@@ -224,7 +224,7 @@ export default function OrderForm() {
     newUrls[index] = value;
     setCompetitorUrls(newUrls);
     setFormData({ ...formData, competitorUrls: newUrls });
-    
+
     // Validate domain format
     if (value.trim() !== "") {
       const isValid = isValidDomain(value);
@@ -249,7 +249,7 @@ export default function OrderForm() {
       newUrls[index] = ensureHttps(url);
       setCompetitorUrls(newUrls);
       setFormData({ ...formData, competitorUrls: newUrls });
-      
+
       // Validate domain format on blur
       const isValid = isValidDomain(newUrls[index]);
       setDomainWarnings((prev) => ({ ...prev, [`competitor-${index}`]: !isValid }));
@@ -258,7 +258,7 @@ export default function OrderForm() {
 
   const handleWebsiteUrlChange = (value: string) => {
     setFormData({ ...formData, websiteUrl: value });
-    
+
     // Validate domain format
     if (value.trim() !== "") {
       const isValid = isValidDomain(value);
@@ -276,7 +276,7 @@ export default function OrderForm() {
     if (formData.websiteUrl) {
       const url = ensureHttps(formData.websiteUrl);
       setFormData({ ...formData, websiteUrl: url });
-      
+
       // Validate domain format
       const isValid = isValidDomain(url);
       setDomainWarnings((prev) => ({ ...prev, website: !isValid }));
@@ -284,14 +284,16 @@ export default function OrderForm() {
   };
 
   return (
-    <section id="order-form" className="bg-white">
+    <section id="order-form" className="bg-gradient-to-b from-white to-gray-50">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">Request Your SEO Audit</h2>
+        <h2 className="heading-2 text-center mb-4">
+          <span className="gradient-text">Request Your SEO Audit</span>
+        </h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
           Pick a tier, choose any add-ons, and send your details. I&apos;ll confirm by email and start your audit.
         </p>
 
-        <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg p-8 border border-gray-200">
+        <div className="max-w-2xl mx-auto bg-white rounded-xl p-8 border-2 border-gray-200 shadow-xl hover:shadow-2xl transition-shadow duration-300">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
@@ -304,7 +306,7 @@ export default function OrderForm() {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg input-glow transition-all duration-200"
                 placeholder="John Doe"
               />
             </div>
@@ -320,7 +322,7 @@ export default function OrderForm() {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg input-glow transition-all duration-200"
                 placeholder="john@example.com"
               />
             </div>
@@ -337,27 +339,26 @@ export default function OrderForm() {
                 <span className="px-3 py-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg text-gray-600 text-sm">
                   https://
                 </span>
-              <input
+                <input
                   type="text"
-                id="websiteUrl"
-                required
+                  id="websiteUrl"
+                  required
                   value={formData.websiteUrl.replace(/^https?:\/\//, "")}
                   onChange={(e) => handleWebsiteUrlChange(e.target.value)}
                   onBlur={handleWebsiteUrlBlur}
-                  className={`flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                    domainWarnings.website ? "border-red-300 bg-red-50" : "border-gray-300"
-                  }`}
+                  className={`flex-1 px-4 py-3 border rounded-r-lg input-glow transition-all duration-200 ${domainWarnings.website ? "border-red-300 bg-red-50" : "border-gray-300"
+                    }`}
                   placeholder="example.com"
-              />
-            </div>
-            {domainWarnings.website && (
-              <p className="mt-1 text-sm text-amber-600 flex items-center gap-1">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                Please enter a valid domain with a TLD (e.g., example.com, site.net, domain.org)
-              </p>
-            )}
+                />
+              </div>
+              {domainWarnings.website && (
+                <p className="mt-1 text-sm text-amber-600 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  Please enter a valid domain with a TLD (e.g., example.com, site.net, domain.org)
+                </p>
+              )}
             </div>
 
             {/* Competitor URLs - Show when competitor option is selected or Agency tier */}
@@ -379,7 +380,7 @@ export default function OrderForm() {
                       </span>
                     </>
                   )}
-                  </label>
+                </label>
                 <div className="space-y-3">
                   {Array.from({ length: maxCompetitors }, (_, i) => i).map((index) => (
                     <div key={index}>
@@ -392,9 +393,8 @@ export default function OrderForm() {
                           value={formData.competitorUrls[index]?.replace(/^https?:\/\//, "") || ""}
                           onChange={(e) => handleCompetitorUrlChange(index, e.target.value)}
                           onBlur={() => handleCompetitorUrlBlur(index)}
-                          className={`flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm ${
-                            domainWarnings[`competitor-${index}`] ? "border-red-300 bg-red-50" : "border-gray-300"
-                          }`}
+                          className={`flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm ${domainWarnings[`competitor-${index}`] ? "border-red-300 bg-red-50" : "border-gray-300"
+                            }`}
                           placeholder={`competitor${index + 1}.com`}
                         />
                       </div>
@@ -435,7 +435,7 @@ export default function OrderForm() {
             >
               Maintenance Mode - Purchases Temporarily Disabled
             </button>
-            
+
             {/* Error Message */}
             {submitStatus.type === "error" && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
@@ -443,7 +443,7 @@ export default function OrderForm() {
               </div>
             )}
           </form>
-          </div>
+        </div>
 
         <p className="text-center text-sm text-gray-600 mt-6 max-w-2xl mx-auto">
           No automated dashboards. Every audit is manually reviewed and delivered as a detailed PDF to your inbox.

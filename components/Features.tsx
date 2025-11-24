@@ -69,32 +69,43 @@ export default function Features() {
   ];
 
   return (
-    <section id="features-section" className="bg-white">
+    <section id="features-section" className="bg-gradient-to-b from-white to-gray-50">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">Comprehensive SEO Analysis</h2>
+        <h2 className="heading-2 text-center mb-4">
+          <span className="gradient-text">Comprehensive SEO Analysis</span>
+        </h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-          Our enterprise-grade audits cover over 100+ checkpoints across technical infrastructure, on-page elements, content quality, and performance. <a href="/sample-report" className="text-primary-600 hover:text-primary-700 underline">View a sample report</a> to see the depth of our analysis.
+          Our enterprise-grade audits cover over 100+ checkpoints across technical infrastructure, on-page elements, content quality, and performance. <a href="/sample-report" className="text-primary-600 hover:text-primary-700 underline font-semibold">View a sample report</a> to see the depth of our analysis.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featureGroups.map((group, index) => (
-            <div key={index} className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:border-primary-300 transition-colors">
-              <div className="text-4xl mb-4">{group.icon}</div>
-              <h3 className="heading-3 mb-4">{group.title}</h3>
-              <ul className="space-y-2">
-                {group.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-2 text-gray-700">
-                    <svg className="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+            <div
+              key={index}
+              className="group bg-white rounded-xl p-6 border-2 border-gray-200 hover:border-primary-400 card-hover relative overflow-hidden"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+
+              <div className="relative z-10">
+                <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">{group.icon}</div>
+                <h3 className="heading-3 mb-4 group-hover:text-primary-600 transition-colors duration-300">{group.title}</h3>
+                <ul className="space-y-2">
+                  {group.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start gap-2 text-gray-700">
+                      <svg className="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-primary-50 border border-primary-200 rounded-lg p-6 text-center">
+          <div className="bg-gradient-to-br from-primary-50 to-primary-100 border-2 border-primary-200 rounded-xl p-6 text-center card-hover">
             <p className="text-lg font-semibold text-gray-900 mb-2">
               No Generic Advice
             </p>
@@ -102,7 +113,7 @@ export default function Features() {
               Every issue includes specific, step-by-step fix instructions tailored to your site&apos;s technology stack.
             </p>
           </div>
-          <div className="bg-accent-50 border border-accent-200 rounded-lg p-6 text-center">
+          <div className="bg-gradient-to-br from-accent-50 to-accent-100 border-2 border-accent-200 rounded-xl p-6 text-center card-hover">
             <p className="text-lg font-semibold text-gray-900 mb-2">
               Agency-Ready White Label
             </p>

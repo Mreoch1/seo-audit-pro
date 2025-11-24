@@ -231,50 +231,50 @@ export default function Pricing() {
   // Check if current selection would be better as a higher tier
   const getBetterTierSuggestion = () => {
     if (selectedTier === "agency") return null;
-    
+
     // Calculate current total using the same logic as calculateTotal()
     const currentTotal = calculateTotal();
-    
+
     // Check if Agency tier would be better
     if (selectedTier !== "agency") {
       const agencyTier = tiers.find(t => t.id === "agency")!;
       let agencyTotal = agencyTier.price;
-      
+
       // Recalculate for Agency tier - only add add-ons that:
       // 1. Are available in Agency tier
       // 2. Are NOT included in Agency tier
       selectedAddOns.forEach((addOnId) => {
         const addOn = addOns.find((a) => a.id === addOnId);
         if (!addOn) return;
-        
+
         // Skip add-ons included in Agency (competitor-report, extra-keywords)
         if (addOn.includedIn?.includes("agency")) {
           return; // These are free in Agency
         }
-        
+
         // Skip add-ons not available in Agency
         if (addOn.availableIn && !addOn.availableIn.includes("agency")) {
           return;
         }
-        
+
         // Extra-pages is available for Agency tier (up to 200 pages base)
         if (addOn.id === "extra-pages") {
           agencyTotal += addOn.price * extraPages;
           return;
         }
-        
+
         // White-label is free for Agency tier
         if (addOn.id === "white-label") {
           return; // Free for Agency
         }
-        
+
         // Add add-ons that are available and chargeable in Agency
         if (addOn.id === "extra-competitors" || addOn.id === "extra-crawl-depth") {
           agencyTotal += addOn.price;
         }
         // Note: extra-keywords is unlimited in Agency, so we don't charge for it
       });
-      
+
       // Suggest Agency if it's same price or cheaper, or within $25
       if (agencyTotal <= currentTotal + 25) {
         return {
@@ -285,24 +285,24 @@ export default function Pricing() {
         };
       }
     }
-    
+
     // Check if Professional would be better than Standard + add-ons
     if (selectedTier === "standard" && selectedAddOns.size > 0) {
       const professionalTier = tiers.find(t => t.id === "professional")!;
       let professionalTotal = professionalTier.price;
-      
+
       selectedAddOns.forEach((addOnId) => {
         const addOn = addOns.find((a) => a.id === addOnId);
         if (!addOn) return;
-        
+
         // Skip competitor-report (not available in Professional)
         if (addOnId === "competitor-report") return;
-        
+
         // Skip add-ons not available in Professional
         if (addOn.availableIn && !addOn.availableIn.includes("professional")) {
           return;
         }
-        
+
         // Add chargeable add-ons
         if (addOn.id === "extra-pages") {
           professionalTotal += addOn.price * extraPages;
@@ -312,7 +312,7 @@ export default function Pricing() {
           professionalTotal += addOn.price;
         }
       });
-      
+
       // Suggest Professional if it's same price or cheaper
       if (professionalTotal <= currentTotal) {
         return {
@@ -323,7 +323,7 @@ export default function Pricing() {
         };
       }
     }
-    
+
     return null;
   };
 
@@ -361,9 +361,11 @@ export default function Pricing() {
   const availableAddOns = getAvailableAddOns();
 
   return (
-    <section id="pricing" className="bg-gray-50">
+    <section id="pricing" className="bg-gradient-to-b from-gray-50 to-white">
       <div className="section-container">
-        <h2 className="heading-2 text-center mb-4">Simple, Transparent Pricing</h2>
+        <h2 className="heading-2 text-center mb-4">
+          <span className="gradient-text">Simple, Transparent Pricing</span>
+        </h2>
         <p className="text-center text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
           Professional SEO audits starting at just $19. No monthly fees, no subscriptions. Choose the tier that fits your needs.
         </p>
@@ -372,24 +374,28 @@ export default function Pricing() {
           {tiers.map((tier) => (
             <div
               key={tier.id}
-              className={`bg-white rounded-lg p-6 border-2 transition-all cursor-pointer relative flex flex-col ${
-                selectedTier === tier.id
-                  ? "border-primary-600 shadow-lg scale-105 z-10"
-                  : "border-gray-200 hover:border-primary-300"
-              }`}
+              className={`group bg-white rounded-xl p-6 border-2 transition-all duration-300 cursor-pointer relative flex flex-col overflow-hidden ${selectedTier === tier.id
+                  ? "border-primary-600 shadow-glow scale-105 z-10"
+                  : "border-gray-200 hover:border-primary-300 hover:shadow-lg"
+                }`}
               onClick={() => setTier(tier.id)}
             >
+              {/* Gradient overlay on selected */}
+              {selectedTier === tier.id && (
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-purple-500/5 pointer-events-none"></div>
+              )}
+
               {tier.highlight && selectedTier !== tier.id && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-accent-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-500 to-accent-600 text-gray-900 text-xs font-bold px-3 py-1 rounded-full animate-pulse-slow shadow-lg">
                   MOST POPULAR
                 </div>
               )}
-              
-              <div className="text-center mb-4">
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">{tier.name}</h3>
+
+              <div className="text-center mb-4 relative z-10">
+                <h3 className="text-2xl font-bold text-gray-900 mb-1 group-hover:text-primary-600 transition-colors duration-300">{tier.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{tier.subtitle}</p>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold text-primary-600">${tier.price}</span>
+                  <span className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">${tier.price}</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-800 mb-2">
                   {tier.pages}
@@ -398,7 +404,7 @@ export default function Pricing() {
                   Delivery: {tier.deliveryDays} business day{tier.deliveryDays > 1 ? "s" : ""}
                 </p>
               </div>
-              
+
               <ul className="space-y-2 mb-8 flex-grow text-sm">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-2 text-gray-700">
@@ -409,34 +415,33 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              
+
               <div className="mt-auto text-center">
-                 <button 
-                  className={`w-full py-2 rounded-lg font-semibold transition-colors ${
-                    selectedTier === tier.id 
-                      ? "bg-primary-600 text-white" 
+                <button
+                  className={`w-full py-2 rounded-lg font-semibold transition-colors ${selectedTier === tier.id
+                      ? "bg-primary-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+                    }`}
                 >
                   {selectedTier === tier.id ? "Selected" : "Select Tier"}
                 </button>
-                </div>
+              </div>
             </div>
           ))}
         </div>
 
         <div className="bg-white rounded-lg p-6 border border-gray-200 mb-6">
           <h3 className="heading-3 mb-4">Customize Your Audit</h3>
-          
+
           <div className="space-y-4">
             {availableAddOns.map((addOn) => {
               const isIncluded = addOn.includedIn?.includes(selectedTier);
               const isChecked = selectedAddOns.has(addOn.id);
               // For white-label, it's available for all tiers
-              const isAvailable = addOn.id === "white-label" 
-                ? true 
+              const isAvailable = addOn.id === "white-label"
+                ? true
                 : (!addOn.availableIn || addOn.availableIn.includes(selectedTier));
-              
+
               // Special handling for white-label checkbox - use same pattern as other checkboxes
               if (addOn.id === "white-label") {
                 const isFreeForAgency = selectedTier === "agency";
@@ -458,8 +463,8 @@ export default function Pricing() {
                       className="mt-1 w-5 h-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500 cursor-pointer relative z-10"
                       style={{ pointerEvents: 'auto' }}
                     />
-                    <label 
-                      htmlFor={addOn.id} 
+                    <label
+                      htmlFor={addOn.id}
                       className="flex-1 cursor-pointer"
                     >
                       <div className="flex items-center justify-between">
@@ -484,7 +489,7 @@ export default function Pricing() {
                   </div>
                 );
               }
-              
+
               return (
                 <div key={addOn.id} className="flex items-start gap-4">
                   <input
@@ -561,7 +566,7 @@ export default function Pricing() {
               <div className="flex-1">
                 <h4 className="font-semibold text-blue-900 mb-1">Better Value Available</h4>
                 <p className="text-sm text-blue-800 mb-2">
-                  You&apos;re selecting {currentTier.name} tier (${suggestion.currentTotal}). 
+                  You&apos;re selecting {currentTier.name} tier (${suggestion.currentTotal}).
                   The <strong>{suggestion.tier === "agency" ? "Agency" : "Professional"} tier</strong> includes more features for ${suggestion.suggestedTotal}.
                   {suggestion.savings > 0 && ` You&apos;ll save $${suggestion.savings}!`}
                 </p>
@@ -586,23 +591,23 @@ export default function Pricing() {
           </div>
         )}
 
-        <div className="sticky bottom-4 z-20 shadow-xl bg-primary-600 text-white rounded-lg p-4 sm:p-6 text-center transform transition-transform">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto">
+        <div className="sticky bottom-4 z-20 shadow-2xl bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl p-4 sm:p-6 text-center transform transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm border border-primary-500/20">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto relative z-10">
             <div className="text-left">
-               <div className="text-sm opacity-90">Total Estimated Price</div>
-               <div className="text-3xl font-bold">${calculateTotal()}</div>
+              <div className="text-sm opacity-90">Total Estimated Price</div>
+              <div className="text-3xl font-bold">${calculateTotal()}</div>
             </div>
             <div className="text-left flex-1 px-4 border-l border-primary-500 hidden sm:block">
               <div className="text-sm opacity-90">
-                 {currentTier.name} Tier included. 
-                 {(() => {
-                   const chargeableCount = getChargeableAddOnCount();
-                   return chargeableCount > 0 && ` + ${chargeableCount} add-on${chargeableCount > 1 ? "s" : ""}.`;
-                 })()}
+                {currentTier.name} Tier included.
+                {(() => {
+                  const chargeableCount = getChargeableAddOnCount();
+                  return chargeableCount > 0 && ` + ${chargeableCount} add-on${chargeableCount > 1 ? "s" : ""}.`;
+                })()}
               </div>
               {(orderState.whiteLabel || selectedAddOns.has("white-label")) && <div className="text-xs font-semibold text-accent-200">White Label Enabled</div>}
             </div>
-            <button 
+            <button
               onClick={() => document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' })}
               disabled={true}
               className="bg-gray-300 text-gray-600 px-6 py-2 rounded-full font-bold cursor-not-allowed opacity-60 transition-colors"
